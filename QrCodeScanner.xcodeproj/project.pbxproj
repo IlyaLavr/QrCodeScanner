@@ -20,6 +20,7 @@
 		0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */; };
 		0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63A29BDEED6003259AB /* QrScannerViewController.swift */; };
 		0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */; };
+		0933C63F29BDF56B003259AB /* 127489-camera-qr-scan-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 0933C63E29BDF56A003259AB /* 127489-camera-qr-scan-animation.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPresenter.swift; sourceTree = "<group>"; };
 		0933C63A29BDEED6003259AB /* QrScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerViewController.swift; sourceTree = "<group>"; };
 		0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerPresenter.swift; sourceTree = "<group>"; };
+		0933C63E29BDF56A003259AB /* 127489-camera-qr-scan-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "127489-camera-qr-scan-animation.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				0933C62729BDEB30003259AB /* Helpers */,
 				0933C62629BDEB18003259AB /* Resources */,
 				0933C61729BDE922003259AB /* Main.storyboard */,
+				0933C63E29BDF56A003259AB /* 127489-camera-qr-scan-animation.json */,
 				0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */,
 				0933C61A29BDE923003259AB /* Assets.xcassets */,
 				0933C61F29BDE923003259AB /* Info.plist */,
@@ -200,6 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0933C63F29BDF56B003259AB /* 127489-camera-qr-scan-animation.json in Resources */,
 				0933C61B29BDE923003259AB /* Assets.xcassets in Resources */,
 				0933C61929BDE922003259AB /* Main.storyboard in Resources */,
 				0933C63229BDECAB003259AB /* 62699-qr-code-scanner.json in Resources */,
@@ -367,7 +371,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -396,7 +400,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
