@@ -14,7 +14,6 @@ protocol MainViewProtocol: AnyObject {
 }
 
 class ViewController: UIViewController, MainViewProtocol {
-    
     var presenter: MainPresenterProtocol?
     
     // MARK: - Elements

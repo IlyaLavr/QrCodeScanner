@@ -15,11 +15,6 @@ protocol PDFGeneratorViewProtocol: AnyObject {
     func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?)
 }
 
-protocol PDFGeneratorPresenterProtocol {
-    func saveAsPDF(from webView: WKWebView?)
-    func showAlertNoInternet()
-}
-
 class QrScannerViewController: UIViewController {
     var presenter: PDFGeneratorPresenterProtocol?
     var capture = AVCaptureSession()
@@ -136,7 +131,6 @@ class QrScannerViewController: UIViewController {
             videoPreviewLayer?.frame = view.layer.bounds
             view.layer.addSublayer(videoPreviewLayer!)
             progressView.isHidden = false
-            // TODO: Очередь поменять
             DispatchQueue.global(qos: .userInteractive).async {
                 self.capture.startRunning()
             }

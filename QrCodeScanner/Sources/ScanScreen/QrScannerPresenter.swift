@@ -8,11 +8,15 @@
 import UIKit
 import WebKit
 
-protocol QrScannerPresenterProtocol: AnyObject {
+//protocol QrScannerPresenterProtocol: AnyObject {
+//    func saveAsPDF(from webView: WKWebView?)
+//}
+protocol PDFGeneratorPresenterProtocol {
     func saveAsPDF(from webView: WKWebView?)
+    func showAlertNoInternet()
 }
 
-class QrScannerPresenter: QrScannerPresenterProtocol, PDFGeneratorPresenterProtocol {
+class QrScannerPresenter: PDFGeneratorPresenterProtocol {
     var router: RouterProtocol?
     var model: ModelProtocol?
     weak var view: PDFGeneratorViewProtocol?
