@@ -42,4 +42,8 @@ class QrScannerPresenter: QrScannerPresenterProtocol, PDFGeneratorPresenterProto
             self.view?.showAlert(title: "Error", message: "Failed to save PDF.")
         }
     }
+    
+    func showAlertNoInternet() {
+        view?.showAlert(title: "Нет Интернета", message: "Проверьте соеднение с интернетом")
+    }
 }

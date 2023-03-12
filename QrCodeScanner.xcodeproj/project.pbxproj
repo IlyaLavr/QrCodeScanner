@@ -23,6 +23,7 @@
 		0939926529BE129300F9EB66 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926429BE129300F9EB66 /* Model.swift */; };
 		0939926829BE12DD00F9EB66 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926729BE12DD00F9EB66 /* Extension.swift */; };
 		0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926929BE25F200F9EB66 /* Reachability.swift */; };
+		0939926C29BE2D4400F9EB66 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926B29BE2D4400F9EB66 /* Strings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		0939926429BE129300F9EB66 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		0939926729BE12DD00F9EB66 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0939926929BE25F200F9EB66 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		0939926B29BE2D4400F9EB66 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,11 +78,11 @@
 		0933C61029BDE922003259AB /* QrCodeScanner */ = {
 			isa = PBXGroup;
 			children = (
+				0933C62529BDEB0C003259AB /* Sources */,
+				0933C62629BDEB18003259AB /* Resources */,
+				0933C62729BDEB30003259AB /* Helpers */,
 				0939926629BE12CE00F9EB66 /* Extensions */,
 				0939925F29BE04F900F9EB66 /* Animation */,
-				0933C62529BDEB0C003259AB /* Sources */,
-				0933C62729BDEB30003259AB /* Helpers */,
-				0933C62629BDEB18003259AB /* Resources */,
 				0933C61A29BDE923003259AB /* Assets.xcassets */,
 				0933C61F29BDE923003259AB /* Info.plist */,
 			);
@@ -112,6 +114,7 @@
 				0933C63329BDEDF7003259AB /* Router.swift */,
 				0933C63629BDEE26003259AB /* ModuleBuilder.swift */,
 				0939926929BE25F200F9EB66 /* Reachability.swift */,
+				0939926B29BE2D4400F9EB66 /* Strings.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */,
 				0933C61429BDE922003259AB /* SceneDelegate.swift in Sources */,
 				0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */,
+				0939926C29BE2D4400F9EB66 /* Strings.swift in Sources */,
 				0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,7 +21,7 @@ class ViewController: UIViewController, MainViewProtocol {
     
     lazy var imageAnimation: LottieAnimationView = {
         let animation = LottieAnimationView()
-        animation.animation = LottieAnimation.named("main")
+        animation.animation = LottieAnimation.named(Strings.MainScreen.animation)
         animation.loopMode = .loop
         animation.animationSpeed = 0.8
         animation.play()
@@ -32,7 +32,7 @@ class ViewController: UIViewController, MainViewProtocol {
         let button = UIButton()
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
-        button.setTitle("Scan", for: .normal)
+        button.setTitle(Strings.MainScreen.textButton, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: CGFloat(35))
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.black.cgColor

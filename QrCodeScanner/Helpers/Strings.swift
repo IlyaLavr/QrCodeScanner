@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+enum Strings {
+    enum MainScreen {
+        static let animation = "main"
+        static let textButton = "Scan"
+    }
+    
+    enum ScanAnimationScreen {
+        static let animationName = "qr-scannig-process"
+        static let labelDetectedText = "Наведите камеру на QR код"
+        static let shareButtonText = "Поделиться"
+    }
+}
