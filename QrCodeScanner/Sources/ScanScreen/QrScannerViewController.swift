@@ -140,6 +140,36 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
     }
 }
 
+func openLink(_ link: String) {
+    let webConfiguration = WKWebViewConfiguration()
+    let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+    webView.navigationDelegate = self
+    
+    view.addSubview(webView)
+    
+    webView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+        webView.topAnchor.constraint(equalTo: view.topAnchor),
+        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    ])
+    
+    guard let url = URL(string: link) ?? nil else { return  }
+    let request = URLRequest(url: url)
+    let task = URLSession.shared.dataTask(with: request)
+    
+    webView.load(request)
+    self.webView = webView
+    saveButton.isHidden = false
+    setupProgressView()
+    progressView.setProgress(0.1, animated: true)
+    webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+    task.resume()
+    capture.stopRunning()
+    
+}
+
 // MARK: - Extensions
 
 extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
