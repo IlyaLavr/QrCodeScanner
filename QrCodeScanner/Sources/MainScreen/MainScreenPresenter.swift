@@ -24,6 +24,5 @@ class MainScreenPresenter: MainPresenterProtocol {
     
     func goToScanVc() {
         router?.showQrScanner()
-        
     }
 }

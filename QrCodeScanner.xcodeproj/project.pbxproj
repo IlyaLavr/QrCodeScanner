@@ -13,7 +13,6 @@
 		0933C61B29BDE923003259AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0933C61A29BDE923003259AB /* Assets.xcassets */; };
 		0933C62D29BDEC31003259AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0933C62C29BDEC31003259AB /* SnapKit */; };
 		0933C63029BDEC4E003259AB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0933C62F29BDEC4E003259AB /* Lottie */; };
-		0933C63229BDECAB003259AB /* 62699-qr-code-scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */; };
 		0933C63429BDEDF7003259AB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63329BDEDF7003259AB /* Router.swift */; };
 		0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63629BDEE26003259AB /* ModuleBuilder.swift */; };
 		0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */; };
@@ -23,6 +22,7 @@
 		0939926329BE076500F9EB66 /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 0939926229BE076500F9EB66 /* main.json */; };
 		0939926529BE129300F9EB66 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926429BE129300F9EB66 /* Model.swift */; };
 		0939926829BE12DD00F9EB66 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926729BE12DD00F9EB66 /* Extension.swift */; };
+		0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926929BE25F200F9EB66 /* Reachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,6 @@
 		0933C61529BDE922003259AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0933C61A29BDE923003259AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0933C61F29BDE923003259AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "62699-qr-code-scanner.json"; sourceTree = "<group>"; };
 		0933C63329BDEDF7003259AB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0933C63629BDEE26003259AB /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPresenter.swift; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		0939926229BE076500F9EB66 /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
 		0939926429BE129300F9EB66 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		0939926729BE12DD00F9EB66 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		0939926929BE25F200F9EB66 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +111,7 @@
 			children = (
 				0933C63329BDEDF7003259AB /* Router.swift */,
 				0933C63629BDEE26003259AB /* ModuleBuilder.swift */,
+				0939926929BE25F200F9EB66 /* Reachability.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -146,7 +147,6 @@
 			children = (
 				0939926229BE076500F9EB66 /* main.json */,
 				0933C63E29BDF56A003259AB /* qr-scannig-process.json */,
-				0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -228,7 +228,6 @@
 				0939926329BE076500F9EB66 /* main.json in Resources */,
 				0933C63F29BDF56B003259AB /* qr-scannig-process.json in Resources */,
 				0933C61B29BDE923003259AB /* Assets.xcassets in Resources */,
-				0933C63229BDECAB003259AB /* 62699-qr-code-scanner.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +245,7 @@
 				0933C61229BDE922003259AB /* AppDelegate.swift in Sources */,
 				0939926829BE12DD00F9EB66 /* Extension.swift in Sources */,
 				0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */,
+				0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */,
 				0933C61429BDE922003259AB /* SceneDelegate.swift in Sources */,
 				0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */,
 				0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */,

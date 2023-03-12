@@ -10,12 +10,20 @@ import Lottie
 import AVFoundation
 import WebKit
 
+protocol PDFGeneratorViewProtocol: AnyObject {
+    func showAlert(title: String, message: String)
+    func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?)
+}
+
+protocol PDFGeneratorPresenterProtocol {
+    func saveAsPDF(from webView: WKWebView?)
+}
 protocol QRScannerControllerProtocol: AnyObject {
     
 }
 
-class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
-    var presenter: QrScannerPresenterProtocol?
+class QrScannerViewController: UIViewController {
+    var presenter: PDFGeneratorPresenterProtocol?
     var capture = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -108,6 +116,7 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
     // MARK: - Actions
     
     @objc func saveAsPDF() {
+        presenter?.saveAsPDF(from: webView)
     }
     
     // MARK: - Functions
@@ -177,7 +186,7 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
     }
 }
 
-    // MARK: - Extensions
+// MARK: - Extensions
 
 extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -215,4 +224,12 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 extension QrScannerViewController: WKNavigationDelegate {
     
+}
+
+extension QrScannerViewController: PDFGeneratorViewProtocol {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }

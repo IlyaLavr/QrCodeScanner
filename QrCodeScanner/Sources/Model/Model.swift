@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import WebKit
+
+protocol ModelProtocol: AnyObject {
+    func exportAsPDF(from webView: WKWebView?) -> NSData?
+}
+
+class Model: ModelProtocol {
+    func exportAsPDF(from webView: WKWebView?) -> NSData? {
+        guard let pdfData = webView?.exportAsPdfFromWebView() else { return nil }
+        return pdfData
+    }
+}
