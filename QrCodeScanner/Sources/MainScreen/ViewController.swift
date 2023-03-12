@@ -15,7 +15,7 @@ protocol MainViewProtocol: AnyObject {
 
 class ViewController: UIViewController, MainViewProtocol {
     
-//    var presenter: MainPresenterProtocol?
+    var presenter: MainPresenterProtocol?
     
     // MARK: - Elements
     
@@ -74,5 +74,6 @@ class ViewController: UIViewController, MainViewProtocol {
     // MARK: - Actions
     
     @objc func startScan() {
+        presenter?.goToScanVc()
     }
 }

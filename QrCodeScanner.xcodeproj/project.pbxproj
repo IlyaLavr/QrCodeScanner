@@ -15,6 +15,11 @@
 		0933C62D29BDEC31003259AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0933C62C29BDEC31003259AB /* SnapKit */; };
 		0933C63029BDEC4E003259AB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0933C62F29BDEC4E003259AB /* Lottie */; };
 		0933C63229BDECAB003259AB /* 62699-qr-code-scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */; };
+		0933C63429BDEDF7003259AB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63329BDEDF7003259AB /* Router.swift */; };
+		0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63629BDEE26003259AB /* ModuleBuilder.swift */; };
+		0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */; };
+		0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63A29BDEED6003259AB /* QrScannerViewController.swift */; };
+		0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,11 @@
 		0933C61A29BDE923003259AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0933C61F29BDE923003259AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "62699-qr-code-scanner.json"; sourceTree = "<group>"; };
+		0933C63329BDEDF7003259AB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		0933C63629BDEE26003259AB /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPresenter.swift; sourceTree = "<group>"; };
+		0933C63A29BDEED6003259AB /* QrScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerViewController.swift; sourceTree = "<group>"; };
+		0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +103,8 @@
 		0933C62729BDEB30003259AB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0933C63329BDEDF7003259AB /* Router.swift */,
+				0933C63629BDEE26003259AB /* ModuleBuilder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -108,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				0933C61529BDE922003259AB /* ViewController.swift */,
+				0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -115,6 +128,8 @@
 		0933C62A29BDEB6F003259AB /* ScanScreen */ = {
 			isa = PBXGroup;
 			children = (
+				0933C63A29BDEED6003259AB /* QrScannerViewController.swift */,
+				0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */,
 			);
 			path = ScanScreen;
 			sourceTree = "<group>";
@@ -198,9 +213,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */,
+				0933C63429BDEDF7003259AB /* Router.swift in Sources */,
 				0933C61629BDE922003259AB /* ViewController.swift in Sources */,
 				0933C61229BDE922003259AB /* AppDelegate.swift in Sources */,
+				0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */,
 				0933C61429BDE922003259AB /* SceneDelegate.swift in Sources */,
+				0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */,
+				0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
