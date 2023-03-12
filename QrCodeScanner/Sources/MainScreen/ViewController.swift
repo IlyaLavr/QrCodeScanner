@@ -21,23 +21,26 @@ class ViewController: UIViewController, MainViewProtocol {
     
     lazy var imageAnimation: LottieAnimationView = {
         let animation = LottieAnimationView()
-        animation.animation = LottieAnimation.named("62699-qr-code-scanner")
+        animation.animation = LottieAnimation.named("main")
         animation.loopMode = .loop
-        animation.animationSpeed = 1
+        animation.animationSpeed = 0.8
         animation.play()
         return animation
     }()
     
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemGreen
+        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
         button.setTitle("Scan", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: CGFloat(16))
-        button.layer.cornerRadius = 45
+        button.titleLabel?.font = .systemFont(ofSize: CGFloat(35))
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.cornerRadius = 25
         button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.4
+        button.layer.shadowOpacity = 0.2
         button.layer.shadowOffset = .zero
-        button.layer.shadowRadius = 20
+        button.layer.shadowRadius = 10
         button.addTarget(self, action: #selector(startScan), for: .touchUpInside)
         return button
     }()
@@ -46,6 +49,7 @@ class ViewController: UIViewController, MainViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupHierarhy()
         makeConstraints()
     }
@@ -60,14 +64,15 @@ class ViewController: UIViewController, MainViewProtocol {
     func makeConstraints() {
         imageAnimation.snp.makeConstraints { make in
             make.centerX.equalTo(view)
-            make.top.equalTo(view).offset(90)
-            make.height.width.equalTo(400)
+            make.top.equalTo(view).offset(110)
+            make.height.width.equalTo(350)
         }
         
         button.snp.makeConstraints { make in
             make.centerX.equalTo(view)
-            make.top.equalTo(imageAnimation.snp.bottom).offset(30)
-            make.height.width.equalTo(90)
+            make.top.equalTo(imageAnimation.snp.bottom).offset(90)
+            make.height.equalTo(70)
+            make.width.equalTo(180)
         }
     }
     
