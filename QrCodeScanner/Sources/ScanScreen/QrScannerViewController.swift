@@ -131,7 +131,7 @@ class QrScannerViewController: UIViewController {
             videoPreviewLayer?.frame = view.layer.bounds
             view.layer.addSublayer(videoPreviewLayer!)
             progressView.isHidden = false
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.global().async {
                 self.capture.startRunning()
             }
             view.bringSubviewToFront(labelDetected)
@@ -163,7 +163,6 @@ class QrScannerViewController: UIViewController {
                 make.right.equalTo(view.snp.right)
                 make.bottom.equalTo(view.snp.bottom)
             }
-            
             guard let url = URL(string: link) ?? nil else { return  }
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request)
