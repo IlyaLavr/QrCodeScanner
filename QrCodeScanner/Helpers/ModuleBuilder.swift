@@ -24,8 +24,8 @@ class ModuleBuilder: BuilderProtocol {
 
     func createScanScreen(router: RouterProtocol) -> UIViewController {
         let view = QrScannerViewController()
-//        let model = Model(label:  UILabel(), animation: LottieAnimationView(), vc: UIViewController())
-        let presenter = QrScannerPresenter(view: view, router: router)
+        let model = Model()
+        let presenter = QrScannerPresenter(router: router, model: model, view: view)
         view.presenter = presenter
         let navigationController = UINavigationController(rootViewController: view)
         navigationController.modalPresentationStyle = .pageSheet

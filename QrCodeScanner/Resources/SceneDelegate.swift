@@ -18,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let router = Router(navigationController: navigationController, assemblyBuilder: builder)
         router.initialViewController()
         window?.rootViewController = navigationController
+        window?.overrideUserInterfaceStyle = .light
         window?.makeKeyAndVisible()
     }
     

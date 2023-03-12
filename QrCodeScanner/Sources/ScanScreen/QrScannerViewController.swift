@@ -10,12 +10,20 @@ import Lottie
 import AVFoundation
 import WebKit
 
+protocol PDFGeneratorViewProtocol: AnyObject {
+    func showAlert(title: String, message: String)
+    func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?)
+}
+
+protocol PDFGeneratorPresenterProtocol {
+    func saveAsPDF(from webView: WKWebView?)
+}
 protocol QRScannerControllerProtocol: AnyObject {
     
 }
 
-class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
-    var presenter: QrScannerPresenterProtocol?
+class QrScannerViewController: UIViewController {
+    var presenter: PDFGeneratorPresenterProtocol?
     var capture = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -25,7 +33,7 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
     
     lazy var scanAnimation: LottieAnimationView = {
         let obj = LottieAnimationView()
-        obj.animation = LottieAnimation.named("127489-camera-qr-scan-animation")
+        obj.animation = LottieAnimation.named("qr-scannig-process")
         obj.loopMode = .loop
         obj.isHidden = false
         obj.layer.opacity = 0.6
@@ -108,12 +116,12 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
     // MARK: - Actions
     
     @objc func saveAsPDF() {
+        presenter?.saveAsPDF(from: webView)
     }
     
     // MARK: - Functions
     
     func scanView() {
-        // builtInWideAngleCamera
         guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
             print("Error")
             return
@@ -128,9 +136,7 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: capture)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer?.frame = view.layer.bounds
-            
             view.layer.addSublayer(videoPreviewLayer!)
-            //            scanAnimation.isHidden = false
             progressView.isHidden = false
             // TODO: Очередь поменять
             DispatchQueue.global(qos: .userInteractive).async {
@@ -139,6 +145,7 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
             view.bringSubviewToFront(labelDetected)
             view.bringSubviewToFront(scanAnimation)
             qrCodeFrameView = UIView()
+            
             if let qrcodeFrameView = qrCodeFrameView {
                 qrcodeFrameView.layer.borderColor = UIColor.yellow.cgColor
                 qrcodeFrameView.layer.borderWidth = 2
@@ -155,9 +162,8 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
         let webConfiguration = WKWebViewConfiguration()
         let webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.navigationDelegate = self
-    
-        view.addSubview(webView)
         
+        view.addSubview(webView)
         webView.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top)
             make.left.equalTo(view.snp.left)
@@ -189,17 +195,14 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             labelDetected.text = "Наведите камеру на QR код"
             return
         }
-        
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         if metadataObj.type == AVMetadataObject.ObjectType.qr {
-            
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
             if let link = metadataObj.stringValue {
                 labelDetected.text = link
                 // TODO: очередь
                 openLink(link)
-                
             }
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue
@@ -221,4 +224,12 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 extension QrScannerViewController: WKNavigationDelegate {
     
+}
+
+extension QrScannerViewController: PDFGeneratorViewProtocol {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
