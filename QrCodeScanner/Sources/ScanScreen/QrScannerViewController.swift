@@ -11,7 +11,7 @@ import AVFoundation
 import WebKit
 
 protocol QRScannerControllerProtocol: AnyObject {
-   
+    
 }
 
 class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
@@ -94,6 +94,17 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
         }
     }
     
+    func setupProgressView() {
+        view.addSubview(progressView)
+        
+        progressView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.left.equalTo(view.snp.left).offset(3)
+            make.right.equalTo(view.snp.right).offset(-3)
+            make.height.equalTo(15)
+        }
+    }
+    
     // MARK: - Actions
     
     @objc func saveAsPDF() {
@@ -117,6 +128,7 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: capture)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer?.frame = view.layer.bounds
+            
             view.layer.addSublayer(videoPreviewLayer!)
             //            scanAnimation.isHidden = false
             progressView.isHidden = false
@@ -138,36 +150,34 @@ class QrScannerViewController: UIViewController, QRScannerControllerProtocol {
             return
         }
     }
-}
-
-func openLink(_ link: String) {
-    let webConfiguration = WKWebViewConfiguration()
-    let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-    webView.navigationDelegate = self
     
-    view.addSubview(webView)
+    func openLink(_ link: String) {
+        let webConfiguration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.navigationDelegate = self
     
-    webView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-        webView.topAnchor.constraint(equalTo: view.topAnchor),
-        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-    ])
-    
-    guard let url = URL(string: link) ?? nil else { return  }
-    let request = URLRequest(url: url)
-    let task = URLSession.shared.dataTask(with: request)
-    
-    webView.load(request)
-    self.webView = webView
-    saveButton.isHidden = false
-    setupProgressView()
-    progressView.setProgress(0.1, animated: true)
-    webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-    task.resume()
-    capture.stopRunning()
-    
+        view.addSubview(webView)
+        
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.bottom.equalTo(view.snp.bottom)
+        }
+        
+        guard let url = URL(string: link) ?? nil else { return  }
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request)
+        
+        webView.load(request)
+        self.webView = webView
+        saveButton.isHidden = false
+        setupProgressView()
+        progressView.setProgress(0.1, animated: true)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        task.resume()
+        capture.stopRunning()
+    }
 }
 
 // MARK: - Extensions
@@ -188,7 +198,7 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             if let link = metadataObj.stringValue {
                 labelDetected.text = link
                 // TODO: очередь
-//                openLink(link)
+                openLink(link)
                 
             }
             if metadataObj.stringValue != nil {
@@ -207,4 +217,8 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             }
         }
     }
+}
+
+extension QrScannerViewController: WKNavigationDelegate {
+    
 }
