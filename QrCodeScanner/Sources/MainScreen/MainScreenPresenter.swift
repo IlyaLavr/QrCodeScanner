@@ -13,7 +13,6 @@ protocol MainPresenterProtocol: AnyObject {
 }
 
 class MainScreenPresenter: MainPresenterProtocol {
-    
     weak var view: MainViewProtocol?
     var router: RouterProtocol?
     

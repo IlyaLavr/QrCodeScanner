@@ -8,11 +8,12 @@
 import UIKit
 import WebKit
 
-protocol QrScannerPresenterProtocol: AnyObject {
+protocol PDFGeneratorPresenterProtocol {
     func saveAsPDF(from webView: WKWebView?)
+    func showAlertNoInternet()
 }
 
-class QrScannerPresenter: QrScannerPresenterProtocol, PDFGeneratorPresenterProtocol {
+class QrScannerPresenter: PDFGeneratorPresenterProtocol {
     var router: RouterProtocol?
     var model: ModelProtocol?
     weak var view: PDFGeneratorViewProtocol?
@@ -41,5 +42,9 @@ class QrScannerPresenter: QrScannerPresenterProtocol, PDFGeneratorPresenterProto
         } else {
             self.view?.showAlert(title: "Error", message: "Failed to save PDF.")
         }
+    }
+    
+    func showAlertNoInternet() {
+        view?.showAlert(title: "Нет Интернета", message: "Проверьте соеднение с интернетом")
     }
 }

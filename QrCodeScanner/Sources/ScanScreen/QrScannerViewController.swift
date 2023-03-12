@@ -15,13 +15,6 @@ protocol PDFGeneratorViewProtocol: AnyObject {
     func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?)
 }
 
-protocol PDFGeneratorPresenterProtocol {
-    func saveAsPDF(from webView: WKWebView?)
-}
-protocol QRScannerControllerProtocol: AnyObject {
-    
-}
-
 class QrScannerViewController: UIViewController {
     var presenter: PDFGeneratorPresenterProtocol?
     var capture = AVCaptureSession()
@@ -33,7 +26,7 @@ class QrScannerViewController: UIViewController {
     
     lazy var scanAnimation: LottieAnimationView = {
         let obj = LottieAnimationView()
-        obj.animation = LottieAnimation.named("qr-scannig-process")
+        obj.animation = LottieAnimation.named(Strings.ScanAnimationScreen.animationName)
         obj.loopMode = .loop
         obj.isHidden = false
         obj.layer.opacity = 0.6
@@ -44,7 +37,7 @@ class QrScannerViewController: UIViewController {
     
     lazy var labelDetected: UILabel = {
         let label = UILabel()
-        label.text = "Наведите камеру на QR код"
+        label.text = Strings.ScanAnimationScreen.labelDetectedText
         label.textColor = .black
         label.backgroundColor = .lightGray
         label.layer.opacity = 0.8
@@ -59,8 +52,8 @@ class QrScannerViewController: UIViewController {
         return progressView
     }()
     
-    lazy var saveButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "Поделиться",
+    lazy var shareButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: Strings.ScanAnimationScreen.shareButtonText,
                                      style: .plain,
                                      target: self,
                                      action: #selector(saveAsPDF))
@@ -75,7 +68,7 @@ class QrScannerViewController: UIViewController {
         super.viewDidLoad()
         setupHierarhy()
         makeConstraints()
-        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.rightBarButtonItem = shareButton
         scanView()
     }
     
@@ -138,8 +131,7 @@ class QrScannerViewController: UIViewController {
             videoPreviewLayer?.frame = view.layer.bounds
             view.layer.addSublayer(videoPreviewLayer!)
             progressView.isHidden = false
-            // TODO: Очередь поменять
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.global().async {
                 self.capture.startRunning()
             }
             view.bringSubviewToFront(labelDetected)
@@ -159,30 +151,33 @@ class QrScannerViewController: UIViewController {
     }
     
     func openLink(_ link: String) {
-        let webConfiguration = WKWebViewConfiguration()
-        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.navigationDelegate = self
-        
-        view.addSubview(webView)
-        webView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-            make.bottom.equalTo(view.snp.bottom)
+        if Reachability.isConnectedToNetwork() == true {
+            let webConfiguration = WKWebViewConfiguration()
+            let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+            webView.navigationDelegate = self
+            
+            view.addSubview(webView)
+            webView.snp.makeConstraints { make in
+                make.top.equalTo(view.snp.top)
+                make.left.equalTo(view.snp.left)
+                make.right.equalTo(view.snp.right)
+                make.bottom.equalTo(view.snp.bottom)
+            }
+            guard let url = URL(string: link) ?? nil else { return  }
+            let request = URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request)
+            
+            webView.load(request)
+            self.webView = webView
+            shareButton.isHidden = false
+            setupProgressView()
+            progressView.setProgress(0.1, animated: true)
+            webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+            task.resume()
+            capture.stopRunning()
+        } else {
+            presenter?.showAlertNoInternet()
         }
-        
-        guard let url = URL(string: link) ?? nil else { return  }
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request)
-        
-        webView.load(request)
-        self.webView = webView
-        saveButton.isHidden = false
-        setupProgressView()
-        progressView.setProgress(0.1, animated: true)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        task.resume()
-        capture.stopRunning()
     }
 }
 
@@ -192,7 +187,7 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            labelDetected.text = "Наведите камеру на QR код"
+            labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
             return
         }
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
