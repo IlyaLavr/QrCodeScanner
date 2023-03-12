@@ -12,6 +12,14 @@
 		0933C61629BDE922003259AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C61529BDE922003259AB /* ViewController.swift */; };
 		0933C61929BDE922003259AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0933C61729BDE922003259AB /* Main.storyboard */; };
 		0933C61B29BDE923003259AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0933C61A29BDE923003259AB /* Assets.xcassets */; };
+		0933C62D29BDEC31003259AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0933C62C29BDEC31003259AB /* SnapKit */; };
+		0933C63029BDEC4E003259AB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0933C62F29BDEC4E003259AB /* Lottie */; };
+		0933C63229BDECAB003259AB /* 62699-qr-code-scanner.json in Resources */ = {isa = PBXBuildFile; fileRef = 0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */; };
+		0933C63429BDEDF7003259AB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63329BDEDF7003259AB /* Router.swift */; };
+		0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63629BDEE26003259AB /* ModuleBuilder.swift */; };
+		0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */; };
+		0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63A29BDEED6003259AB /* QrScannerViewController.swift */; };
+		0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +30,12 @@
 		0933C61829BDE922003259AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0933C61A29BDE923003259AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0933C61F29BDE923003259AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "62699-qr-code-scanner.json"; sourceTree = "<group>"; };
+		0933C63329BDEDF7003259AB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		0933C63629BDEE26003259AB /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPresenter.swift; sourceTree = "<group>"; };
+		0933C63A29BDEED6003259AB /* QrScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerViewController.swift; sourceTree = "<group>"; };
+		0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0933C62D29BDEC31003259AB /* SnapKit in Frameworks */,
+				0933C63029BDEC4E003259AB /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +74,7 @@
 				0933C62729BDEB30003259AB /* Helpers */,
 				0933C62629BDEB18003259AB /* Resources */,
 				0933C61729BDE922003259AB /* Main.storyboard */,
+				0933C63129BDECAA003259AB /* 62699-qr-code-scanner.json */,
 				0933C61A29BDE923003259AB /* Assets.xcassets */,
 				0933C61F29BDE923003259AB /* Info.plist */,
 			);
@@ -70,7 +87,6 @@
 				0933C62A29BDEB6F003259AB /* ScanScreen */,
 				0933C62929BDEB63003259AB /* MainScreen */,
 				0933C62829BDEB57003259AB /* Model */,
-				0933C61529BDE922003259AB /* ViewController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -87,6 +103,8 @@
 		0933C62729BDEB30003259AB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0933C63329BDEDF7003259AB /* Router.swift */,
+				0933C63629BDEE26003259AB /* ModuleBuilder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -101,6 +119,8 @@
 		0933C62929BDEB63003259AB /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				0933C61529BDE922003259AB /* ViewController.swift */,
+				0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -108,6 +128,8 @@
 		0933C62A29BDEB6F003259AB /* ScanScreen */ = {
 			isa = PBXGroup;
 			children = (
+				0933C63A29BDEED6003259AB /* QrScannerViewController.swift */,
+				0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */,
 			);
 			path = ScanScreen;
 			sourceTree = "<group>";
@@ -128,6 +150,10 @@
 			dependencies = (
 			);
 			name = QrCodeScanner;
+			packageProductDependencies = (
+				0933C62C29BDEC31003259AB /* SnapKit */,
+				0933C62F29BDEC4E003259AB /* Lottie */,
+			);
 			productName = QrCodeScanner;
 			productReference = 0933C60E29BDE922003259AB /* QrCodeScanner.app */;
 			productType = "com.apple.product-type.application";
@@ -156,6 +182,10 @@
 				Base,
 			);
 			mainGroup = 0933C60529BDE922003259AB;
+			packageReferences = (
+				0933C62B29BDEC31003259AB /* XCRemoteSwiftPackageReference "SnapKit" */,
+				0933C62E29BDEC4E003259AB /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 0933C60F29BDE922003259AB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -172,6 +202,7 @@
 			files = (
 				0933C61B29BDE923003259AB /* Assets.xcassets in Resources */,
 				0933C61929BDE922003259AB /* Main.storyboard in Resources */,
+				0933C63229BDECAB003259AB /* 62699-qr-code-scanner.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,9 +213,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */,
+				0933C63429BDEDF7003259AB /* Router.swift in Sources */,
 				0933C61629BDE922003259AB /* ViewController.swift in Sources */,
 				0933C61229BDE922003259AB /* AppDelegate.swift in Sources */,
+				0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */,
 				0933C61429BDE922003259AB /* SceneDelegate.swift in Sources */,
+				0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */,
+				0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +365,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -357,7 +394,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -394,6 +432,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0933C62B29BDEC31003259AB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+		0933C62E29BDEC4E003259AB /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LottieFiles/lottie-ios";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0933C62C29BDEC31003259AB /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0933C62B29BDEC31003259AB /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		0933C62F29BDEC4E003259AB /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0933C62E29BDEC4E003259AB /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0933C60629BDE922003259AB /* Project object */;
 }
