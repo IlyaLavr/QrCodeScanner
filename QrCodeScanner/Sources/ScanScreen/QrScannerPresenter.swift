@@ -31,7 +31,7 @@ class QrScannerPresenter: PDFGeneratorPresenterProtocol {
         let pdfData = model?.exportAsPDF(from: webView)
         if pdfData != nil {
             let activityViewController = UIActivityViewController(activityItems: [pdfData as Any], applicationActivities: nil)
-            activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
+            activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
                 if completed {
                     self.view?.showAlert(title: "PDF Saved", message: "Файл был успешно сохранен")
                 } else {
