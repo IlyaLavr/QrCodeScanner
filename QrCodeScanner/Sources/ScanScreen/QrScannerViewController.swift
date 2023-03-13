@@ -29,7 +29,7 @@ class QrScannerViewController: UIViewController {
         obj.animation = LottieAnimation.named(Strings.ScanAnimationScreen.animationName)
         obj.loopMode = .loop
         obj.isHidden = false
-        obj.layer.opacity = 0.6
+        obj.layer.opacity = 0.5
         obj.animationSpeed = 0.8
         obj.play()
         return obj
@@ -48,7 +48,7 @@ class QrScannerViewController: UIViewController {
     
     lazy var progressView: UIProgressView = {
         let progressView = UIProgressView()
-        progressView.progressTintColor = .green
+        progressView.progressTintColor = .systemBlue
         return progressView
     }()
     
@@ -58,7 +58,7 @@ class QrScannerViewController: UIViewController {
                                      target: self,
                                      action: #selector(saveAsPDF))
         button.isHidden = true
-        button.tintColor = .orange
+        button.tintColor = .systemBlue
         return button
     }()
     
@@ -99,10 +99,10 @@ class QrScannerViewController: UIViewController {
         view.addSubview(progressView)
         
         progressView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(0)
             make.left.equalTo(view.snp.left).offset(3)
             make.right.equalTo(view.snp.right).offset(-3)
-            make.height.equalTo(15)
+            make.height.equalTo(6)
         }
     }
     
@@ -149,6 +149,7 @@ class QrScannerViewController: UIViewController {
             return
         }
     }
+
     
     func openLink(_ link: String) {
         if Reachability.isConnectedToNetwork() == true {
@@ -196,7 +197,6 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             if let link = metadataObj.stringValue {
                 labelDetected.text = link
-                // TODO: очередь
                 openLink(link)
             }
             if metadataObj.stringValue != nil {
