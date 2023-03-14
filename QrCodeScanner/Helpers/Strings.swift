@@ -15,7 +15,7 @@ enum Strings {
     
     enum ScanAnimationScreen {
         static let animationName = "qr-scannig-process"
-        static let labelDetectedText = "Наведите камеру на QR код"
+        static let labelDetectedText = "Наведите камеру на код"
         static let shareButtonText = "Поделиться"
     }
 }

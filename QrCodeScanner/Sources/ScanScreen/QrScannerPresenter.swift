@@ -8,9 +8,10 @@
 import UIKit
 import WebKit
 
-protocol PDFGeneratorPresenterProtocol {
+protocol PDFGeneratorPresenterProtocol: AnyObject {
     func saveAsPDF(from webView: WKWebView?)
     func showAlertNoInternet()
+    func openLinkBarCode(barcode: String)
 }
 
 class QrScannerPresenter: PDFGeneratorPresenterProtocol {
@@ -33,18 +34,35 @@ class QrScannerPresenter: PDFGeneratorPresenterProtocol {
             let activityViewController = UIActivityViewController(activityItems: [pdfData as Any], applicationActivities: nil)
             activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
                 if completed {
-                    self.view?.showAlert(title: "PDF Saved", message: "Файл был успешно сохранен")
+                    let alert = Alert.succefulSave
+                    self.view?.displayAlertStatusSave(with: alert)
                 } else {
-                    self.view?.showAlert(title: "Failed to save PDF.", message: "Не удалось сохранить файл")
+                    let alert = Alert.failedSave
+                    self.view?.displayAlertStatusSave(with: alert)
                 }
             }
             self.viewController?.present(activityViewController, animated: true, completion: nil)
         } else {
-            self.view?.showAlert(title: "Error", message: "Failed to save PDF.")
+            let alert = Alert.failedSave
+            self.view?.displayAlertStatusSave(with: alert)
         }
     }
     
     func showAlertNoInternet() {
-        view?.showAlert(title: "Нет Интернета", message: "Проверьте соеднение с интернетом")
+        let alert = Alert.noInternet
+        self.view?.displayAlertStatusSave(with: alert)
+    }
+    
+    func openLinkBarCode(barcode: String) {
+        let alertType = Alert.openBrowser
+        view?.displayAlert(with: alertType,
+                           okHandler: { action in
+            Network.shared.searchProductByCode(barcode)
+        },
+                           cancelHandler: { cancelAction in
+            self.view?.qrCodeFrameView?.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            self.view?.startScan()
+            self.view?.labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
+        })
     }
 }
