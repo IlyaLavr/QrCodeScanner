@@ -58,6 +58,9 @@ class QrScannerPresenter: PDFGeneratorPresenterProtocol {
         view?.displayAlert(with: alertType,
                            okHandler: { action in
             Network.shared.searchProductByCode(barcode)
+            self.view?.qrCodeFrameView?.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            self.view?.startScan()
+            self.view?.labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
         },
                            cancelHandler: { cancelAction in
             self.view?.qrCodeFrameView?.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
