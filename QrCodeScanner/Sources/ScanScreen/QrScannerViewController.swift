@@ -207,7 +207,7 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 labelDetected.text = metadataObj.stringValue
             }
         }
-        if metadataObj.type == AVMetadataObject.ObjectType.ean8 {
+        if metadataObj.type == AVMetadataObject.ObjectType.ean8 || metadataObj.type == AVMetadataObject.ObjectType.ean13 || metadataObj.type == AVMetadataObject.ObjectType.pdf417 {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject!.bounds
             if let link = metadataObj.stringValue {

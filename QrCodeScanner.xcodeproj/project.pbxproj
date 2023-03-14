@@ -96,9 +96,9 @@
 		0933C62529BDEB0C003259AB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				09AF28BD29BFD7FD0091839D /* Alert */,
-				0933C62A29BDEB6F003259AB /* ScanScreen */,
 				0933C62929BDEB63003259AB /* MainScreen */,
+				0933C62A29BDEB6F003259AB /* ScanScreen */,
+				09AF28BD29BFD7FD0091839D /* Alert */,
 				0933C62829BDEB57003259AB /* Model */,
 			);
 			path = Sources;
