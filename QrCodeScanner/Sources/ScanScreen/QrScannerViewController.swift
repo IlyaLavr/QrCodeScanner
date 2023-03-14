@@ -11,8 +11,13 @@ import AVFoundation
 import WebKit
 
 protocol PDFGeneratorViewProtocol: AnyObject {
-    func showAlert(title: String, message: String)
+    var labelDetected: UILabel { get }
+    var qrCodeFrameView: UIView? { get set }
+    
     func present(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?)
+    func displayAlert(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?)
+    func displayAlertStatusSave(with type: Alert)
+    func startScan()
 }
 
 class QrScannerViewController: UIViewController {
@@ -109,7 +114,7 @@ class QrScannerViewController: UIViewController {
     // MARK: - Actions
     
     @objc func saveAsPDF() {
-        presenter?.saveAsPDF(from: webView)
+        self.presenter?.saveAsPDF(from: webView)
     }
     
     // MARK: - Functions
@@ -125,7 +130,7 @@ class QrScannerViewController: UIViewController {
             let captureMetaDataOutput = AVCaptureMetadataOutput()
             capture.addOutput(captureMetaDataOutput)
             captureMetaDataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            captureMetaDataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+            captureMetaDataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr, .ean8, .ean13]
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: capture)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer?.frame = view.layer.bounds
@@ -149,7 +154,6 @@ class QrScannerViewController: UIViewController {
             return
         }
     }
-
     
     func openLink(_ link: String) {
         if Reachability.isConnectedToNetwork() == true {
@@ -175,7 +179,6 @@ class QrScannerViewController: UIViewController {
             progressView.setProgress(0.1, animated: true)
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
             task.resume()
-            capture.stopRunning()
         } else {
             presenter?.showAlertNoInternet()
         }
@@ -198,6 +201,18 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             if let link = metadataObj.stringValue {
                 labelDetected.text = link
                 openLink(link)
+                capture.stopRunning()
+            }
+            if metadataObj.stringValue != nil {
+                labelDetected.text = metadataObj.stringValue
+            }
+        }
+        if metadataObj.type == AVMetadataObject.ObjectType.ean8 {
+            let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
+            qrCodeFrameView?.frame = barCodeObject!.bounds
+            if let link = metadataObj.stringValue {
+                presenter?.openLinkBarCode(barcode: link)
+                capture.stopRunning()
             }
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue
@@ -222,9 +237,18 @@ extension QrScannerViewController: WKNavigationDelegate {
 }
 
 extension QrScannerViewController: PDFGeneratorViewProtocol {
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+    
+    func displayAlert(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
+        AlertView.showAlert(type: type, okHandler: okHandler, cancelHandler: cancelHandler, view: self)
+    }
+    
+    func displayAlertStatusSave(with type: Alert) {
+        AlertView.showAlertStatusSave(type: type, view: self)
+    }
+    
+    func startScan() {
+        DispatchQueue.global().async {
+            self.capture.startRunning()
+        }
     }
 }

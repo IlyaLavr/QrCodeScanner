@@ -24,6 +24,8 @@
 		0939926829BE12DD00F9EB66 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926729BE12DD00F9EB66 /* Extension.swift */; };
 		0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926929BE25F200F9EB66 /* Reachability.swift */; };
 		0939926C29BE2D4400F9EB66 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926B29BE2D4400F9EB66 /* Strings.swift */; };
+		09AF28BC29BFC6D10091839D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BB29BFC6D10091839D /* Network.swift */; };
+		09AF28BF29BFD8180091839D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BE29BFD8180091839D /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		0939926729BE12DD00F9EB66 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0939926929BE25F200F9EB66 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0939926B29BE2D4400F9EB66 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		09AF28BB29BFC6D10091839D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		09AF28BE29BFD8180091839D /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 		0933C62529BDEB0C003259AB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				09AF28BD29BFD7FD0091839D /* Alert */,
 				0933C62A29BDEB6F003259AB /* ScanScreen */,
 				0933C62929BDEB63003259AB /* MainScreen */,
 				0933C62829BDEB57003259AB /* Model */,
@@ -123,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				0939926429BE129300F9EB66 /* Model.swift */,
+				09AF28BB29BFC6D10091839D /* Network.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -160,6 +166,14 @@
 				0939926729BE12DD00F9EB66 /* Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		09AF28BD29BFD7FD0091839D /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				09AF28BE29BFD8180091839D /* AlertView.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09AF28BC29BFC6D10091839D /* Network.swift in Sources */,
 				0939926529BE129300F9EB66 /* Model.swift in Sources */,
 				0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */,
 				0933C63429BDEDF7003259AB /* Router.swift in Sources */,
@@ -249,6 +264,7 @@
 				0939926829BE12DD00F9EB66 /* Extension.swift in Sources */,
 				0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */,
 				0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */,
+				09AF28BF29BFD8180091839D /* AlertView.swift in Sources */,
 				0933C61429BDE922003259AB /* SceneDelegate.swift in Sources */,
 				0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */,
 				0939926C29BE2D4400F9EB66 /* Strings.swift in Sources */,
