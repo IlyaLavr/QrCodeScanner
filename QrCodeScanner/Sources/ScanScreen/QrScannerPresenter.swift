@@ -5,47 +5,28 @@
 //  Created by Илья on 12.03.2023.
 //
 
-import UIKit
-import WebKit
+import Foundation
 
 protocol PDFGeneratorPresenterProtocol: AnyObject {
-    func saveAsPDF(from webView: WKWebView?)
+    var router: RouterProtocol? { get }
+    var view: PDFGeneratorViewProtocol? { get }
+    
+    func saveAsPDF(data: NSData)
     func showAlertNoInternet()
     func openLinkBarCode(barcode: String)
 }
 
-class QrScannerPresenter: PDFGeneratorPresenterProtocol {
+final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
     var router: RouterProtocol?
-    var model: ModelProtocol?
     weak var view: PDFGeneratorViewProtocol?
-    var viewController: UIViewController? {
-        return view as? UIViewController
-    }
     
-    required init(router: RouterProtocol, model: ModelProtocol, view: PDFGeneratorViewProtocol) {
+    required init(router: RouterProtocol, view: PDFGeneratorViewProtocol) {
         self.router = router
-        self.model = model
         self.view = view
     }
     
-    func saveAsPDF(from webView: WKWebView?) {
-        let pdfData = model?.exportAsPDF(from: webView)
-        if pdfData != nil {
-            let activityViewController = UIActivityViewController(activityItems: [pdfData as Any], applicationActivities: nil)
-            activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
-                if completed {
-                    let alert = Alert.succefulSave
-                    self.view?.displayAlertStatusSave(with: alert)
-                } else {
-                    let alert = Alert.failedSave
-                    self.view?.displayAlertStatusSave(with: alert)
-                }
-            }
-            self.viewController?.present(activityViewController, animated: true, completion: nil)
-        } else {
-            let alert = Alert.failedSave
-            self.view?.displayAlertStatusSave(with: alert)
-        }
+    func saveAsPDF(data: NSData) {
+        view?.saveFile(data: data)
     }
     
     func showAlertNoInternet() {
@@ -61,11 +42,13 @@ class QrScannerPresenter: PDFGeneratorPresenterProtocol {
             self.view?.qrCodeFrameView?.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
             self.view?.startScan()
             self.view?.labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
+            self.view?.scanAnimation.play()
         },
                            cancelHandler: { cancelAction in
             self.view?.qrCodeFrameView?.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
             self.view?.startScan()
             self.view?.labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
+            self.view?.scanAnimation.play()
         })
     }
 }

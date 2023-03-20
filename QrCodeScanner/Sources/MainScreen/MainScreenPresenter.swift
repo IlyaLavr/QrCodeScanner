@@ -12,7 +12,7 @@ protocol MainPresenterProtocol: AnyObject {
     init(view: MainViewProtocol, router: RouterProtocol)
 }
 
-class MainScreenPresenter: MainPresenterProtocol {
+final class MainScreenPresenter: MainPresenterProtocol {
     weak var view: MainViewProtocol?
     var router: RouterProtocol?
     

@@ -10,15 +10,14 @@ import SnapKit
 import Lottie
 
 protocol MainViewProtocol: AnyObject {
-    func startScan()
 }
 
-class ViewController: UIViewController, MainViewProtocol {
+final class ViewController: UIViewController, MainViewProtocol {
     var presenter: MainPresenterProtocol?
     
     // MARK: - Elements
     
-    lazy var imageAnimation: LottieAnimationView = {
+    private lazy var imageAnimation: LottieAnimationView = {
         let animation = LottieAnimationView()
         animation.animation = LottieAnimation.named(Strings.MainScreen.animation)
         animation.loopMode = .loop
@@ -29,13 +28,7 @@ class ViewController: UIViewController, MainViewProtocol {
     
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
-        button.setTitle(Strings.MainScreen.textButton, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: CGFloat(35))
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.cornerRadius = 25
+        button.setImage(UIImage(named: "button"), for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.2
         button.layer.shadowOffset = .zero
@@ -55,12 +48,12 @@ class ViewController: UIViewController, MainViewProtocol {
     
     // MARK: - Setup
     
-    func setupHierarhy() {
+    private func setupHierarhy() {
         view.addSubview(imageAnimation)
         view.addSubview(button)
     }
     
-    func makeConstraints() {
+    private func makeConstraints() {
         imageAnimation.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.top.equalTo(view).offset(110)
@@ -70,14 +63,13 @@ class ViewController: UIViewController, MainViewProtocol {
         button.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.top.equalTo(imageAnimation.snp.bottom).offset(90)
-            make.height.equalTo(70)
-            make.width.equalTo(180)
+            make.height.width.equalTo(100)
         }
     }
     
     // MARK: - Actions
     
-    @objc func startScan() {
+    @objc private func startScan() {
         presenter?.goToScanVc()
     }
 }
