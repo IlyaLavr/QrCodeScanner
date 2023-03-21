@@ -17,6 +17,11 @@ final class ViewController: UIViewController, MainViewProtocol {
     
     // MARK: - Elements
     
+    private lazy var background: UIImageView = {
+         let obj = UIImageView(image: UIImage(named: "background"))
+         return obj
+     }()
+    
     private lazy var imageAnimation: LottieAnimationView = {
         let animation = LottieAnimationView()
         animation.animation = LottieAnimation.named(Strings.MainScreen.animation)
@@ -49,11 +54,16 @@ final class ViewController: UIViewController, MainViewProtocol {
     // MARK: - Setup
     
     private func setupHierarhy() {
+        view.addSubview(background)
         view.addSubview(imageAnimation)
         view.addSubview(button)
     }
     
     private func makeConstraints() {
+        background.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         imageAnimation.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.top.equalTo(view).offset(110)
@@ -62,7 +72,7 @@ final class ViewController: UIViewController, MainViewProtocol {
         
         button.snp.makeConstraints { make in
             make.centerX.equalTo(view)
-            make.top.equalTo(imageAnimation.snp.bottom).offset(90)
+            make.bottom.equalTo(view.snp.bottom).offset(-150)
             make.height.width.equalTo(100)
         }
     }

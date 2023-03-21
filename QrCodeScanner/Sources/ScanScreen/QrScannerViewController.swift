@@ -255,7 +255,7 @@ extension QrScannerViewController: PDFGeneratorViewProtocol {
     }
     
     func displayAlertStatusSave(with type: Alert) {
-        AlertView.showAlertStatusSave(type: type, view: self)
+        AlertView.showAlertStatus(type: type, view: self)
     }
     
     func startScan() {

@@ -15,7 +15,7 @@ struct Alert: Equatable {
 }
 
 final class AlertView {
-    static func showAlertStatusSave(type: Alert, okHandler: ((UIAlertAction) -> Void)? = nil, view: QrScannerViewController) {
+    static func showAlertStatus(type: Alert, okHandler: ((UIAlertAction) -> Void)? = nil, view: UIViewController) {
         let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: type.textButtonOk, style: .default, handler: okHandler))
         view.present(alert, animated: true, completion: nil)
@@ -46,6 +46,11 @@ extension Alert {
     
     static let noInternet = Alert(title: "Нет Интернета",
                                   message: "Проверьте соеднение с интернетом",
+                                  textButtonOk: "Ok",
+                                  textButtonCancel: "")
+    
+    static let emptyStrig = Alert(title: "Пустая строка",
+                                  message: "Введите текст для генерации QR кода",
                                   textButtonOk: "Ok",
                                   textButtonCancel: "")
 }

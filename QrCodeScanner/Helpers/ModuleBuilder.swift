@@ -42,14 +42,21 @@ class ModuleBuilder: BuilderProtocol {
     
     func createTabBar(router: RouterProtocol) -> UITabBarController {
             let firstVC = createMainModule(router: router)
-            firstVC.tabBarItem = UITabBarItem(title: "Scan", image: UIImage(systemName: "qrcode.viewfinder"), selectedImage: UIImage(named: "first_icon_selected"))
+            firstVC.tabBarItem = UITabBarItem(
+                title: "Scan",
+                image: UIImage(systemName: "qrcode.viewfinder"),
+                selectedImage: UIImage(named: "first_icon_selected")
+            )
 
             let secondVC = createGenerateModule(router: router)
-            secondVC.tabBarItem = UITabBarItem(title: "Generate", image: UIImage(systemName: "livephoto.play"), selectedImage: UIImage(named: "second_icon_selected"))
+            secondVC.tabBarItem = UITabBarItem(
+                title: "Generate",
+                image: UIImage(systemName: "livephoto.play"),
+                selectedImage: UIImage(named: "second_icon_selected")
+            )
 
             let tabBar = UITabBarController()
             tabBar.viewControllers = [firstVC, secondVC]
-
             return tabBar
         }
 }

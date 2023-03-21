@@ -18,4 +18,8 @@ enum Strings {
         static let labelDetectedText = "Наведите камеру на код"
         static let shareButtonText = "Поделиться"
     }
+    
+    enum GenerateScreen {
+        static let background = "background"
+    }
 }
