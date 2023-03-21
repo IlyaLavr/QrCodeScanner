@@ -18,7 +18,7 @@ final class ViewController: UIViewController, MainViewProtocol {
     // MARK: - Elements
     
     private lazy var background: UIImageView = {
-         let obj = UIImageView(image: UIImage(named: "background"))
+        let obj = UIImageView(image: UIImage(named: Strings.MainScreen.background))
          return obj
      }()
     
@@ -33,7 +33,7 @@ final class ViewController: UIViewController, MainViewProtocol {
     
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "button"), for: .normal)
+        button.setImage(UIImage(named: Strings.MainScreen.button), for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.2
         button.layer.shadowOffset = .zero

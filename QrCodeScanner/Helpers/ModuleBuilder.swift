@@ -12,7 +12,7 @@ import Lottie
 protocol BuilderProtocol {
     func createMainModule(router: RouterProtocol) -> UIViewController
     func createScanScreen(router: RouterProtocol) -> UIViewController
-    func createTabBar(router: RouterProtocol) -> UITabBarController 
+    func createTabBar(router: RouterProtocol) -> UITabBarController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -22,7 +22,7 @@ class ModuleBuilder: BuilderProtocol {
         view.presenter = presenter
         return view
     }
-
+    
     func createScanScreen(router: RouterProtocol) -> UIViewController {
         let view = QrScannerViewController()
         let presenter = QrScannerPresenter(router: router, view: view)
@@ -41,22 +41,23 @@ class ModuleBuilder: BuilderProtocol {
     }
     
     func createTabBar(router: RouterProtocol) -> UITabBarController {
-            let firstVC = createMainModule(router: router)
-            firstVC.tabBarItem = UITabBarItem(
-                title: "Scan",
-                image: UIImage(systemName: "qrcode.viewfinder"),
-                selectedImage: UIImage(named: "first_icon_selected")
-            )
-
-            let secondVC = createGenerateModule(router: router)
-            secondVC.tabBarItem = UITabBarItem(
-                title: "Generate",
-                image: UIImage(systemName: "livephoto.play"),
-                selectedImage: UIImage(named: "second_icon_selected")
-            )
-
-            let tabBar = UITabBarController()
-            tabBar.viewControllers = [firstVC, secondVC]
-            return tabBar
-        }
+        let firstVC = createMainModule(router: router)
+        firstVC.tabBarItem = UITabBarItem(
+            title: Strings.TabBar.firstTitle,
+            image: UIImage(systemName: Strings.TabBar.firstImage),
+            selectedImage: nil
+        )
+        
+        let secondVC = createGenerateModule(router: router)
+        secondVC.tabBarItem = UITabBarItem(
+            title: Strings.TabBar.secondTitle,
+            image: UIImage(systemName: Strings.TabBar.secondImage),
+            selectedImage: nil
+        )
+        
+        let tabBar = UITabBarController()
+        tabBar.tabBar.tintColor = UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1)
+        tabBar.viewControllers = [firstVC, secondVC]
+        return tabBar
+    }
 }

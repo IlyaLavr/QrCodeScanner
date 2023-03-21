@@ -9,8 +9,9 @@ import Foundation
 
 enum Strings {
     enum MainScreen {
+        static let background = "background"
         static let animation = "main"
-        static let textButton = "Scan"
+        static let button = "buttonscan"
     }
     
     enum ScanAnimationScreen {
@@ -21,11 +22,18 @@ enum Strings {
     
     enum GenerateScreen {
         static let background = "background"
-        
         static let textFieldLinkPlaceholder = "Введите текст или URL"
         
-        static let buttonGenerate = "button"
+        static let buttonGenerate = "buttongenerate"
         static let buttonSave = "camera.circle"
         static let buttonShare = "square.and.arrow.up.circle"
+    }
+    
+    enum TabBar {
+        static let firstTitle = "Scan"
+        static let firstImage = "qrcode.viewfinder"
+        
+        static let secondTitle = "Generate"
+        static let secondImage = "circle.hexagonpath"
     }
 }
