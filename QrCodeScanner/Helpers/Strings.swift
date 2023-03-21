@@ -21,5 +21,11 @@ enum Strings {
     
     enum GenerateScreen {
         static let background = "background"
+        
+        static let textFieldLinkPlaceholder = "Введите текст или URL"
+        
+        static let buttonGenerate = "button"
+        static let buttonSave = "camera.circle"
+        static let buttonShare = "square.and.arrow.up.circle"
     }
 }

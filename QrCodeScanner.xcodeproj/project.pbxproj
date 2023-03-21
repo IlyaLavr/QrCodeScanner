@@ -104,10 +104,10 @@
 		0933C62529BDEB0C003259AB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				094F0FAB29C7DD2C00E8BC81 /* Tabbar */,
-				094F0FA629C7D79F00E8BC81 /* GenerateScreen */,
 				0933C62929BDEB63003259AB /* MainScreen */,
 				0933C62A29BDEB6F003259AB /* ScanScreen */,
+				094F0FA629C7D79F00E8BC81 /* GenerateScreen */,
+				094F0FAB29C7DD2C00E8BC81 /* Tabbar */,
 				09AF28BD29BFD7FD0091839D /* Alert */,
 				0933C62829BDEB57003259AB /* Model */,
 			);

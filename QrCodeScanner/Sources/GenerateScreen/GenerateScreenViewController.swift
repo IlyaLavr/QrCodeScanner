@@ -10,7 +10,9 @@ import SnapKit
 
 protocol GenerateScreenViewProtocol: AnyObject {
     func shareImageQrCode()
-    func showAlertEmptyString(with type: Alert)
+    func showAlert(with type: Alert)
+    func showAlertSaveToGalery(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?)
+    func saveQr()
 }
 
 class GenerateScreenViewController: UIViewController {
@@ -19,7 +21,7 @@ class GenerateScreenViewController: UIViewController {
     // MARK: - Elements
     
     private lazy var background: UIImageView = {
-        let obj = UIImageView(image: UIImage(named: "background"))
+        let obj = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
         return obj
     }()
     
@@ -28,7 +30,7 @@ class GenerateScreenViewController: UIViewController {
         textField.textColor = .black
         textField.backgroundColor = nil
         textField.textAlignment = .center
-        textField.placeholder = "Введите адрес сайта"
+        textField.placeholder = Strings.GenerateScreen.textFieldLinkPlaceholder
         textField.layer.borderColor = UIColor.white.cgColor
         textField.layer.borderWidth = 3
         textField.layer.cornerRadius = 17
@@ -51,7 +53,7 @@ class GenerateScreenViewController: UIViewController {
     
     private lazy var buttonGenerate: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "button"), for: .normal)
+        button.setImage(UIImage(named: Strings.GenerateScreen.buttonGenerate), for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.2
         button.layer.shadowOffset = .zero
@@ -62,15 +64,16 @@ class GenerateScreenViewController: UIViewController {
     
     private lazy var buttonSave: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "square.and.arrow.down")?.resized(to: CGSize(width: 30, height: 30)).withTintColor(.systemBlue)
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonSave)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
         button.setImage(image, for: .normal)
-        button.addTarget(self, action: #selector(generate), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveToGalery), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
     private lazy var buttonShare: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "square.and.arrow.up")?.resized(to: CGSize(width: 30, height: 30)).withTintColor(.systemBlue)
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonShare)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(shareQrCode), for: .touchUpInside)
         button.isHidden = true
@@ -143,14 +146,29 @@ class GenerateScreenViewController: UIViewController {
                 self.imageQrCode.isHidden = true
             }
             presenter?.showAlertEmptyString()
+            buttonShare.isHidden = true
+            buttonSave.isHidden = true
             return
         }
         imageQrCode.image = generateQRCode(from: text, size: imageQrCode.bounds.size)
         imageQrCode.isHidden = false
+        buttonSave.isHidden = false
     }
     
     @objc private func shareQrCode() {
         presenter?.shareQr()
+    }
+    
+    @objc private func saveToGalery() {
+        presenter?.saveInPhone()
+    }
+    
+    @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("Error saving image to gallery: \(error.localizedDescription)")
+        } else {
+            presenter?.showAlertSuccefulSave()
+        }
     }
     
     // MARK: - Functions
@@ -170,6 +188,11 @@ class GenerateScreenViewController: UIViewController {
             guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
             buttonShare.isHidden = false
             return UIImage(cgImage: cgImage)
+    }
+    
+    func saveQr() {
+        guard let image = imageQrCode.image else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
 }
 
@@ -218,7 +241,11 @@ extension GenerateScreenViewController: GenerateScreenViewProtocol {
            self.present(activityViewController, animated: true, completion: nil)
    }
    
-   func showAlertEmptyString(with type: Alert) {
+   func showAlert(with type: Alert) {
            AlertView.showAlertStatus(type: type, view: self)
    }
+    
+    func showAlertSaveToGalery(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
+        AlertView.showAlert(type: type, okHandler: okHandler, cancelHandler: cancelHandler, view: self)
+    }
 }

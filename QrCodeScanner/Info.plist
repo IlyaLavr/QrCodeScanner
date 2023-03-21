@@ -4,6 +4,8 @@
 <dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Без камеры не получится сканировать код!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Чтобы сохранить изображение в галерею предоставьте доступ к галерее!</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

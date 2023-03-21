@@ -10,6 +10,9 @@ import Foundation
 protocol GenerateScreenPresenterProtocol: AnyObject {
     func shareQr()
     func showAlertEmptyString()
+    func saveInPhone()
+    func showAlertSuccefulSave()
+    
     init(view: GenerateScreenViewProtocol, router: RouterProtocol)
 }
 
@@ -28,7 +31,20 @@ final class GenerateScreenPresenter: GenerateScreenPresenterProtocol {
     
     func showAlertEmptyString() {
         let alert = Alert.emptyStrig
-        view?.showAlertEmptyString(with: alert)
-        
+        view?.showAlert(with: alert)
+    }
+    
+    func showAlertSuccefulSave() {
+        let alert = Alert.succefulSaveInGalery
+        view?.showAlert(with: alert)
+    }
+    
+    func saveInPhone() {
+        let alertType = Alert.saveInGaleryStatus
+        view?.showAlertSaveToGalery(with: alertType, okHandler: { action in
+            self.view?.saveQr()
+        }, cancelHandler: { cancelAction in
+            print(cancelAction)
+        })
     }
 }
