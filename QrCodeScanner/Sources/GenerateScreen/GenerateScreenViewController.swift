@@ -27,10 +27,11 @@ class GenerateScreenViewController: UIViewController {
     
     lazy var textFieldLink: UITextField = {
         let textField = UITextField()
-        textField.textColor = .black
+        textField.textColor = .darkGray
         textField.backgroundColor = nil
         textField.textAlignment = .center
         textField.placeholder = Strings.GenerateScreen.textFieldLinkPlaceholder
+        textField.font = UIFont.systemFont(ofSize: 20, weight: .light)
         textField.layer.borderColor = UIColor.white.cgColor
         textField.layer.borderWidth = 3
         textField.layer.cornerRadius = 17
@@ -234,7 +235,7 @@ extension GenerateScreenViewController: GenerateScreenViewProtocol {
        guard let qrCodeImage = imageQrCode.image else { return }
        let activityViewController = UIActivityViewController(activityItems: [qrCodeImage.jpegData(compressionQuality: 1.0) as Any], applicationActivities: nil)
        activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
-                   let alert = completed ? Alert.succefulSave : Alert.failedSave
+           let alert = completed ? Alert.succefulShare : Alert.errorShare
                    self.displayAlertStatusSave(with: alert)
            
        }

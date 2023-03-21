@@ -38,7 +38,7 @@ final class QrScannerViewController: UIViewController {
         obj.loopMode = .loop
         obj.isHidden = false
         obj.layer.opacity = 1
-        obj.animationSpeed = 1.7
+        obj.animationSpeed = 0.8
         obj.play()
         return obj
     }()
@@ -47,8 +47,8 @@ final class QrScannerViewController: UIViewController {
         let label = UILabel()
         label.text = Strings.ScanAnimationScreen.labelDetectedText
         label.textColor = .black
-        label.backgroundColor = .lightGray
-        label.layer.opacity = 0.7
+        label.backgroundColor = UIColor(red: 86/255, green: 141/255, blue: 223/255, alpha: 1)
+        label.layer.opacity = 0.8
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold, width: .compressed)
         return label
