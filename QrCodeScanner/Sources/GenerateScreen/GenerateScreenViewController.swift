@@ -172,23 +172,27 @@ class GenerateScreenViewController: UIViewController {
         }
     }
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     // MARK: - Functions
     
     private func generateQRCode(from string: String, size: CGSize) -> UIImage? {
-            let data = string.data(using: String.Encoding.ascii)
-            guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
-            qrFilter.setValue(data, forKey: "inputMessage")
-            qrFilter.setValue("Q", forKey: "inputCorrectionLevel")
-            
-            guard let qrCodeImage = qrFilter.outputImage else { return nil }
-            let scaleX = size.width / qrCodeImage.extent.size.width
-            let scaleY = size.height / qrCodeImage.extent.size.height
-            let scale = min(scaleX, scaleY)
-            let scaledImage = qrCodeImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
-            let context = CIContext(options: nil)
-            guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
-            buttonShare.isHidden = false
-            return UIImage(cgImage: cgImage)
+        let data = string.data(using: String.Encoding.ascii)
+        guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        qrFilter.setValue(data, forKey: "inputMessage")
+        qrFilter.setValue("Q", forKey: "inputCorrectionLevel")
+        
+        guard let qrCodeImage = qrFilter.outputImage else { return nil }
+        let scaleX = size.width / qrCodeImage.extent.size.width
+        let scaleY = size.height / qrCodeImage.extent.size.height
+        let scale = min(scaleX, scaleY)
+        let scaledImage = qrCodeImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
+        let context = CIContext(options: nil)
+        guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
+        buttonShare.isHidden = false
+        return UIImage(cgImage: cgImage)
     }
     
     func saveQr() {
@@ -213,38 +217,26 @@ extension GenerateScreenViewController {
         view.addGestureRecognizer(tap)
     }
     
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    // TODO: Передалать Алерт под сохранение
     func displayAlertStatusSave(with type: Alert) {
         AlertView.showAlertStatus(type: type, view: self)
     }
 }
 
-extension UIImage {
-    func resized(to size: CGSize) -> UIImage {
-        return UIGraphicsImageRenderer(size: size).image { _ in
-            draw(in: CGRect(origin: .zero, size: size))
-        }
-    }
-}
-
 extension GenerateScreenViewController: GenerateScreenViewProtocol {
     func shareImageQrCode() {
-       guard let qrCodeImage = imageQrCode.image else { return }
-       let activityViewController = UIActivityViewController(activityItems: [qrCodeImage.jpegData(compressionQuality: 1.0) as Any], applicationActivities: nil)
-       activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
-           let alert = completed ? Alert.succefulShare : Alert.errorShare
-                   self.displayAlertStatusSave(with: alert)
-           
-       }
-           self.present(activityViewController, animated: true, completion: nil)
-   }
-   
-   func showAlert(with type: Alert) {
-           AlertView.showAlertStatus(type: type, view: self)
-   }
+        guard let qrCodeImage = imageQrCode.image else { return }
+        let activityViewController = UIActivityViewController(activityItems: [qrCodeImage.jpegData(compressionQuality: 1.0) as Any], applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
+            let alert = completed ? Alert.succefulShare : Alert.errorShare
+            self.displayAlertStatusSave(with: alert)
+            
+        }
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func showAlert(with type: Alert) {
+        AlertView.showAlertStatus(type: type, view: self)
+    }
     
     func showAlertSaveToGalery(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
         AlertView.showAlert(type: type, okHandler: okHandler, cancelHandler: cancelHandler, view: self)

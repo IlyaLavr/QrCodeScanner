@@ -55,22 +55,22 @@ extension Alert {
                                   textButtonCancel: "")
     
     static let saveInGaleryStatus = Alert(title: "Файл будет сохранен в галерее телефона",
-                                   message: "Сохранить файл?",
-                                   textButtonOk: "Сохранить",
-                                   textButtonCancel: "Не сохранять")
+                                          message: "Сохранить файл?",
+                                          textButtonOk: "Сохранить",
+                                          textButtonCancel: "Не сохранять")
     
     static let succefulSaveInGalery = Alert(title: "Файл успешно сохранен в галерею",
-                                   message: "",
-                                   textButtonOk: "Ok",
-                                   textButtonCancel: "")
+                                            message: "",
+                                            textButtonOk: "Ok",
+                                            textButtonCancel: "")
     
     static let succefulShare = Alert(title: "Все прошло хорошо!",
-                                   message: "Вы успешно поделились QR кодом",
-                                   textButtonOk: "Ok",
-                                   textButtonCancel: "")
+                                     message: "Вы успешно поделились QR кодом",
+                                     textButtonOk: "Ok",
+                                     textButtonCancel: "")
     
     static let errorShare = Alert(title: "Не удалось поделиться файлом",
-                                   message: "Попробуйте еще раз или сохраните QR код в галерею",
-                                   textButtonOk: "Ok",
-                                   textButtonCancel: "")
+                                  message: "Попробуйте еще раз или сохраните QR код в галерею",
+                                  textButtonOk: "Ok",
+                                  textButtonCancel: "")
 }

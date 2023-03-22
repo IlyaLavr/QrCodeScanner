@@ -26,6 +26,7 @@
 		094F0FAA29C7D7DA00E8BC81 /* GenerateScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FA929C7D7DA00E8BC81 /* GenerateScreenPresenter.swift */; };
 		094F0FAF29C904AA00E8BC81 /* background.json in Resources */ = {isa = PBXBuildFile; fileRef = 094F0FAE29C904AA00E8BC81 /* background.json */; };
 		094F0FB129CA4F9C00E8BC81 /* qr-scannig-process.json in Resources */ = {isa = PBXBuildFile; fileRef = 094F0FB029CA4F9C00E8BC81 /* qr-scannig-process.json */; };
+		094F0FB329CA828300E8BC81 /* ExtensionUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FB229CA828300E8BC81 /* ExtensionUIImage.swift */; };
 		09AF28BC29BFC6D10091839D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BB29BFC6D10091839D /* Network.swift */; };
 		09AF28BF29BFD8180091839D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BE29BFD8180091839D /* AlertView.swift */; };
 		09AF291429C1217E0091839D /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 09AF291329C1217E0091839D /* main.json */; };
@@ -51,6 +52,7 @@
 		094F0FA929C7D7DA00E8BC81 /* GenerateScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateScreenPresenter.swift; sourceTree = "<group>"; };
 		094F0FAE29C904AA00E8BC81 /* background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = background.json; sourceTree = "<group>"; };
 		094F0FB029CA4F9C00E8BC81 /* qr-scannig-process.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "qr-scannig-process.json"; sourceTree = "<group>"; };
+		094F0FB229CA828300E8BC81 /* ExtensionUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIImage.swift; sourceTree = "<group>"; };
 		09AF28BB29BFC6D10091839D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		09AF28BE29BFD8180091839D /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		09AF291329C1217E0091839D /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			children = (
 				0939926729BE12DD00F9EB66 /* ExtensionWKWebView.swift */,
 				094F0FA229C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift */,
+				094F0FB229CA828300E8BC81 /* ExtensionUIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09AF28BC29BFC6D10091839D /* Network.swift in Sources */,
+				094F0FB329CA828300E8BC81 /* ExtensionUIImage.swift in Sources */,
 				0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */,
 				0933C63429BDEDF7003259AB /* Router.swift in Sources */,
 				094F0FA829C7D7CF00E8BC81 /* GenerateScreenViewController.swift in Sources */,
