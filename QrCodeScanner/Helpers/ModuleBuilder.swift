@@ -40,24 +40,38 @@ class ModuleBuilder: BuilderProtocol {
         return view
     }
     
+    func createHistoryScreen(router: RouterProtocol) -> UIViewController {
+        let view = HistoryScreenViewController()
+        let presenter = HistoryScreenPresenter(view: view, router: router)
+        view.presenter = presenter
+        return view
+    }
+    
     func createTabBar(router: RouterProtocol) -> UITabBarController {
-        let firstVC = createMainModule(router: router)
-        firstVC.tabBarItem = UITabBarItem(
+        let scanViewController = createMainModule(router: router)
+        scanViewController.tabBarItem = UITabBarItem(
             title: Strings.TabBar.firstTitle,
             image: UIImage(systemName: Strings.TabBar.firstImage),
             selectedImage: nil
         )
         
-        let secondVC = createGenerateModule(router: router)
-        secondVC.tabBarItem = UITabBarItem(
+        let generateViewController = createGenerateModule(router: router)
+        generateViewController.tabBarItem = UITabBarItem(
             title: Strings.TabBar.secondTitle,
             image: UIImage(systemName: Strings.TabBar.secondImage),
             selectedImage: nil
         )
         
+        let historyViewController = createHistoryScreen(router: router)
+        historyViewController.tabBarItem = UITabBarItem(
+            title: Strings.TabBar.thirdTitle,
+            image: UIImage(systemName: Strings.TabBar.thirdImage),
+            selectedImage: nil
+        )
+        
         let tabBar = UITabBarController()
         tabBar.tabBar.tintColor = UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1)
-        tabBar.viewControllers = [firstVC, secondVC]
+        tabBar.viewControllers = [scanViewController, generateViewController, historyViewController]
         return tabBar
     }
 }
