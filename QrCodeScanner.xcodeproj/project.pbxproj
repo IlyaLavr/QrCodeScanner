@@ -18,14 +18,17 @@
 		0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */; };
 		0933C63B29BDEED6003259AB /* QrScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63A29BDEED6003259AB /* QrScannerViewController.swift */; };
 		0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */; };
-		0933C63F29BDF56B003259AB /* qr-scannig-process.json in Resources */ = {isa = PBXBuildFile; fileRef = 0933C63E29BDF56A003259AB /* qr-scannig-process.json */; };
-		0939926329BE076500F9EB66 /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 0939926229BE076500F9EB66 /* main.json */; };
-		0939926529BE129300F9EB66 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926429BE129300F9EB66 /* Model.swift */; };
-		0939926829BE12DD00F9EB66 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926729BE12DD00F9EB66 /* Extension.swift */; };
+		0939926829BE12DD00F9EB66 /* ExtensionWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926729BE12DD00F9EB66 /* ExtensionWKWebView.swift */; };
 		0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926929BE25F200F9EB66 /* Reachability.swift */; };
 		0939926C29BE2D4400F9EB66 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939926B29BE2D4400F9EB66 /* Strings.swift */; };
+		094F0FA329C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FA229C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift */; };
+		094F0FA829C7D7CF00E8BC81 /* GenerateScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FA729C7D7CE00E8BC81 /* GenerateScreenViewController.swift */; };
+		094F0FAA29C7D7DA00E8BC81 /* GenerateScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FA929C7D7DA00E8BC81 /* GenerateScreenPresenter.swift */; };
+		094F0FAF29C904AA00E8BC81 /* background.json in Resources */ = {isa = PBXBuildFile; fileRef = 094F0FAE29C904AA00E8BC81 /* background.json */; };
+		094F0FB129CA4F9C00E8BC81 /* qr-scannig-process.json in Resources */ = {isa = PBXBuildFile; fileRef = 094F0FB029CA4F9C00E8BC81 /* qr-scannig-process.json */; };
 		09AF28BC29BFC6D10091839D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BB29BFC6D10091839D /* Network.swift */; };
 		09AF28BF29BFD8180091839D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BE29BFD8180091839D /* AlertView.swift */; };
+		09AF291429C1217E0091839D /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 09AF291329C1217E0091839D /* main.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,14 +43,17 @@
 		0933C63829BDEE7C003259AB /* MainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenPresenter.swift; sourceTree = "<group>"; };
 		0933C63A29BDEED6003259AB /* QrScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerViewController.swift; sourceTree = "<group>"; };
 		0933C63C29BDEF33003259AB /* QrScannerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrScannerPresenter.swift; sourceTree = "<group>"; };
-		0933C63E29BDF56A003259AB /* qr-scannig-process.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "qr-scannig-process.json"; sourceTree = "<group>"; };
-		0939926229BE076500F9EB66 /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
-		0939926429BE129300F9EB66 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		0939926729BE12DD00F9EB66 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		0939926729BE12DD00F9EB66 /* ExtensionWKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionWKWebView.swift; sourceTree = "<group>"; };
 		0939926929BE25F200F9EB66 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0939926B29BE2D4400F9EB66 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		094F0FA229C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIPrintPageRenderer.swift; sourceTree = "<group>"; };
+		094F0FA729C7D7CE00E8BC81 /* GenerateScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateScreenViewController.swift; sourceTree = "<group>"; };
+		094F0FA929C7D7DA00E8BC81 /* GenerateScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateScreenPresenter.swift; sourceTree = "<group>"; };
+		094F0FAE29C904AA00E8BC81 /* background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = background.json; sourceTree = "<group>"; };
+		094F0FB029CA4F9C00E8BC81 /* qr-scannig-process.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "qr-scannig-process.json"; sourceTree = "<group>"; };
 		09AF28BB29BFC6D10091839D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		09AF28BE29BFD8180091839D /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		09AF291329C1217E0091839D /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,9 +102,10 @@
 		0933C62529BDEB0C003259AB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				09AF28BD29BFD7FD0091839D /* Alert */,
-				0933C62A29BDEB6F003259AB /* ScanScreen */,
 				0933C62929BDEB63003259AB /* MainScreen */,
+				0933C62A29BDEB6F003259AB /* ScanScreen */,
+				094F0FA629C7D79F00E8BC81 /* GenerateScreen */,
+				09AF28BD29BFD7FD0091839D /* Alert */,
 				0933C62829BDEB57003259AB /* Model */,
 			);
 			path = Sources;
@@ -127,7 +134,6 @@
 		0933C62829BDEB57003259AB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0939926429BE129300F9EB66 /* Model.swift */,
 				09AF28BB29BFC6D10091839D /* Network.swift */,
 			);
 			path = Model;
@@ -154,8 +160,9 @@
 		0939925F29BE04F900F9EB66 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				0939926229BE076500F9EB66 /* main.json */,
-				0933C63E29BDF56A003259AB /* qr-scannig-process.json */,
+				09AF291329C1217E0091839D /* main.json */,
+				094F0FAE29C904AA00E8BC81 /* background.json */,
+				094F0FB029CA4F9C00E8BC81 /* qr-scannig-process.json */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -163,9 +170,19 @@
 		0939926629BE12CE00F9EB66 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				0939926729BE12DD00F9EB66 /* Extension.swift */,
+				0939926729BE12DD00F9EB66 /* ExtensionWKWebView.swift */,
+				094F0FA229C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		094F0FA629C7D79F00E8BC81 /* GenerateScreen */ = {
+			isa = PBXGroup;
+			children = (
+				094F0FA729C7D7CE00E8BC81 /* GenerateScreenViewController.swift */,
+				094F0FA929C7D7DA00E8BC81 /* GenerateScreenPresenter.swift */,
+			);
+			path = GenerateScreen;
 			sourceTree = "<group>";
 		};
 		09AF28BD29BFD7FD0091839D /* Alert */ = {
@@ -242,8 +259,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0939926329BE076500F9EB66 /* main.json in Resources */,
-				0933C63F29BDF56B003259AB /* qr-scannig-process.json in Resources */,
+				09AF291429C1217E0091839D /* main.json in Resources */,
+				094F0FB129CA4F9C00E8BC81 /* qr-scannig-process.json in Resources */,
+				094F0FAF29C904AA00E8BC81 /* background.json in Resources */,
 				0933C61B29BDE923003259AB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,15 +274,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				09AF28BC29BFC6D10091839D /* Network.swift in Sources */,
-				0939926529BE129300F9EB66 /* Model.swift in Sources */,
 				0933C63D29BDEF33003259AB /* QrScannerPresenter.swift in Sources */,
 				0933C63429BDEDF7003259AB /* Router.swift in Sources */,
+				094F0FA829C7D7CF00E8BC81 /* GenerateScreenViewController.swift in Sources */,
 				0933C61629BDE922003259AB /* ViewController.swift in Sources */,
 				0933C61229BDE922003259AB /* AppDelegate.swift in Sources */,
-				0939926829BE12DD00F9EB66 /* Extension.swift in Sources */,
+				094F0FA329C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift in Sources */,
+				0939926829BE12DD00F9EB66 /* ExtensionWKWebView.swift in Sources */,
 				0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */,
 				0939926A29BE25F200F9EB66 /* Reachability.swift in Sources */,
 				09AF28BF29BFD8180091839D /* AlertView.swift in Sources */,
+				094F0FAA29C7D7DA00E8BC81 /* GenerateScreenPresenter.swift in Sources */,
 				0933C61429BDE922003259AB /* SceneDelegate.swift in Sources */,
 				0933C63929BDEE7C003259AB /* MainScreenPresenter.swift in Sources */,
 				0939926C29BE2D4400F9EB66 /* Strings.swift in Sources */,
