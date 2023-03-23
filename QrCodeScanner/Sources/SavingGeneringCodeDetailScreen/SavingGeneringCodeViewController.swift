@@ -47,6 +47,22 @@ class SavingGeneringCodeViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var buttonSave: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonSave)?.resized(to: CGSize(width: 70, height: 70)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(saveToGalery), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var buttonShare: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonShare)?.resized(to: CGSize(width: 70, height: 70)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(shareQrCode), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -63,6 +79,8 @@ class SavingGeneringCodeViewController: UIViewController {
         view.addSubview(nameCode)
         view.addSubview(imageQrCode)
         view.addSubview(dateGenering)
+        view.addSubview(buttonSave)
+        view.addSubview(buttonShare)
     }
     
     private func makeConstraints() {
@@ -78,7 +96,7 @@ class SavingGeneringCodeViewController: UIViewController {
         
         dateGenering.snp.makeConstraints { make in
             make.centerX.equalTo(view)
-            make.top.equalTo(nameCode.snp.bottom).offset(10)
+            make.top.equalTo(nameCode.snp.bottom).offset(5)
             make.height.equalTo(20)
         }
         
@@ -87,6 +105,28 @@ class SavingGeneringCodeViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.width.height.equalTo(300)
         }
+        
+        buttonSave.snp.makeConstraints { make in
+            make.left.equalTo(view.snp.left).offset(70)
+            make.top.equalTo(imageQrCode.snp.bottom).offset(70)
+            make.height.width.equalTo(100)
+        }
+        
+        buttonShare.snp.makeConstraints { make in
+            make.right.equalTo(view.snp.right).offset(-70)
+            make.height.width.equalTo(100)
+            make.top.equalTo(imageQrCode.snp.bottom).offset(70)
+        }
+    }
+    
+    // MARK: - Action
+    
+    @objc func saveToGalery() {
+        
+    }
+    
+    @objc func shareQrCode() {
+        
     }
 }
 

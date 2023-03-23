@@ -153,7 +153,6 @@ class GenerateScreenViewController: UIViewController {
         }
         imageQrCode.image = generateQRCode(from: text, size: imageQrCode.bounds.size)
         imageQrCode.isHidden = false
-        buttonSave.isHidden = false
         
         let date = Date()
         let dateFormat = DateFormatter()
@@ -190,7 +189,14 @@ class GenerateScreenViewController: UIViewController {
     // MARK: - Functions
     
     private func generateQRCode(from string: String, size: CGSize) -> UIImage? {
-        let data = string.data(using: String.Encoding.ascii)
+        var data: Data?
+        if let utf8Data = string.data(using: .utf8) {
+            data = utf8Data
+        } else if let asciiData = string.data(using: .ascii) {
+            data = asciiData
+        } else {
+            return nil
+        }
         guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
         qrFilter.setValue(data, forKey: "inputMessage")
         qrFilter.setValue("Q", forKey: "inputCorrectionLevel")
@@ -203,6 +209,7 @@ class GenerateScreenViewController: UIViewController {
         let context = CIContext(options: nil)
         guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
         buttonShare.isHidden = false
+        buttonSave.isHidden = false
         return UIImage(cgImage: cgImage)
     }
     

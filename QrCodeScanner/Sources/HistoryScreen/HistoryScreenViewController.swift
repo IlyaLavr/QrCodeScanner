@@ -74,7 +74,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(segmentControl.snp.bottom).offset(30)
+            make.top.equalTo(segmentControl.snp.bottom).offset(20)
             make.left.right.equalTo(view)
             make.bottom.equalTo(view)
         }
@@ -137,20 +137,12 @@ extension HistoryScreenViewController: UITableViewDataSource {
 extension HistoryScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if segmentControl.selectedSegmentIndex == 0 {
-            presenter?.showDetail(code: indexPath)
-        } else {
-            presenter?.showDetailGeneratedCode(code: indexPath)
-        }
+        segmentControl.selectedSegmentIndex == 0 ?  presenter?.showDetail(code: indexPath) : presenter?.showDetailGeneratedCode(code: indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if segmentControl.selectedSegmentIndex == 0 {
-                presenter?.deleteCode(index: indexPath)
-            } else {
-                presenter?.deleteCodeWithImage(index: indexPath)
-            }
+            segmentControl.selectedSegmentIndex == 0 ? presenter?.deleteCode(index: indexPath) : presenter?.deleteCodeWithImage(index: indexPath)
         }
     }
 }
