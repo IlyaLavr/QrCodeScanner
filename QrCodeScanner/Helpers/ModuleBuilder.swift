@@ -13,6 +13,7 @@ protocol BuilderProtocol {
     func createMainModule(router: RouterProtocol) -> UIViewController
     func createScanScreen(router: RouterProtocol) -> UIViewController
     func createTabBar(router: RouterProtocol) -> UITabBarController
+    func createDetailModule(code: QrCode, router: RouterProtocol) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -73,5 +74,12 @@ class ModuleBuilder: BuilderProtocol {
         tabBar.tabBar.tintColor = UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1)
         tabBar.viewControllers = [scanViewController, generateViewController, historyViewController]
         return tabBar
+    }
+    
+    func createDetailModule(code: QrCode, router: RouterProtocol) -> UIViewController {
+        let view = ScanningQrCodeDetailScreen()
+        let presenter = ScanningCodeDetailPresenter(code: code, view: view, router: router)
+        view.presenter = presenter
+        return view
     }
 }

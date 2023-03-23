@@ -137,6 +137,9 @@ extension HistoryScreenViewController: UITableViewDataSource {
 extension HistoryScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if segmentControl.selectedSegmentIndex == 0 {
+            presenter?.showDetail(code: indexPath)
+        }
         //        presenter?.showDetail(forUser: indexPath)
     }
     
