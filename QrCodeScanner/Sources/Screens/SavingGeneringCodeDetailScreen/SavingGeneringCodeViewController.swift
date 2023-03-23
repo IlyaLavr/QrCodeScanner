@@ -8,6 +8,9 @@
 import UIKit
 protocol SavingGeneringCodeViewProtocol: AnyObject {
     func setupDetailedView(name: String, date: String?, image: Data?)
+    func showAlertSaveToGalery(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?)
+    func saveQr()
+    func showAlert(with type: Alert)
 }
 
 class SavingGeneringCodeViewController: UIViewController {
@@ -122,11 +125,34 @@ class SavingGeneringCodeViewController: UIViewController {
     // MARK: - Action
     
     @objc func saveToGalery() {
-        
+        presenter?.saveInPhone()
     }
     
     @objc func shareQrCode() {
         
+    }
+    
+    @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("Error saving image to gallery: \(error.localizedDescription)")
+        } else {
+            presenter?.showAlertSuccefulSave()
+        }
+    }
+    
+    // MARK: - Functions
+    
+    func saveQr() {
+        guard let image = imageQrCode.image else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    func showAlertSaveToGalery(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
+        AlertView.showAlert(type: type, okHandler: okHandler, cancelHandler: cancelHandler, view: self)
+    }
+    
+    func showAlert(with type: Alert) {
+        AlertView.showAlertStatus(type: type, view: self)
     }
 }
 
