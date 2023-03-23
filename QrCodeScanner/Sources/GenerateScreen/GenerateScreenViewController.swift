@@ -161,7 +161,7 @@ class GenerateScreenViewController: UIViewController {
         let dateString = dateFormat.string(from: date)
         if let image = imageQrCode.image {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
-                presenter?.addCode(withName: text, date: dateString, image: imageData)
+            presenter?.addCode(withName: text, date: dateString, image: imageData, imageBarcode: nil)
             }
         }
     }
