@@ -11,6 +11,7 @@ protocol SavingGeneringCodeViewProtocol: AnyObject {
     func showAlertSaveToGalery(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?)
     func saveQr()
     func showAlert(with type: Alert)
+    func shareImageQrCode()
 }
 
 class SavingGeneringCodeViewController: UIViewController {
@@ -129,7 +130,7 @@ class SavingGeneringCodeViewController: UIViewController {
     }
     
     @objc func shareQrCode() {
-        
+        presenter?.shareQr()
     }
     
     @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -142,6 +143,10 @@ class SavingGeneringCodeViewController: UIViewController {
     
     // MARK: - Functions
     
+    func displayAlertStatusSave(with type: Alert) {
+        AlertView.showAlertStatus(type: type, view: self)
+    }
+    
     func saveQr() {
         guard let image = imageQrCode.image else { return }
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
@@ -153,6 +158,17 @@ class SavingGeneringCodeViewController: UIViewController {
     
     func showAlert(with type: Alert) {
         AlertView.showAlertStatus(type: type, view: self)
+    }
+    
+    func shareImageQrCode() {
+        guard let qrCodeImage = imageQrCode.image else { return }
+        let activityViewController = UIActivityViewController(activityItems: [qrCodeImage.jpegData(compressionQuality: 1.0) as Any], applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
+            let alert = completed ? Alert.succefulShare : Alert.errorShare
+            self.displayAlertStatusSave(with: alert)
+            
+        }
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }
 
