@@ -11,6 +11,7 @@ protocol GeneringCodeDetailProtocol {
     func setUpParametersCode()
     func saveInPhone()
     func showAlertSuccefulSave()
+    func shareQr()
     
     init(code: QrCode, view: SavingGeneringCodeViewProtocol, router: RouterProtocol)
 }
@@ -42,5 +43,9 @@ final class GeneringCodeDetailPresenter: GeneringCodeDetailProtocol {
     func showAlertSuccefulSave() {
         let alert = Alert.succefulSaveInGalery
         view?.showAlert(with: alert)
+    }
+    
+    func shareQr() {
+        view?.shareImageQrCode()
     }
 }
