@@ -109,11 +109,18 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
 extension HistoryScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if segmentControl.selectedSegmentIndex == 0 {
-                   let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-                   cell.accessoryType = .disclosureIndicator
-                   cell.textLabel?.text = presenter?.getQrCodeString(for: indexPath)
-                   cell.detailTextLabel?.text = presenter?.getQrCodeDate(for: indexPath)
-                   return cell
+//                   let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+//                   cell.accessoryType = .disclosureIndicator
+//                   cell.textLabel?.text = presenter?.getQrCodeString(for: indexPath)
+//                   cell.detailTextLabel?.text = presenter?.getQrCodeDate(for: indexPath)
+//                   return cell
+            guard let model = presenter?.fetchQrCodesWithoutImage()[indexPath.row] else {
+                return UITableViewCell()
+            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as? TableViewCell
+            cell?.configure(with: model)
+            cell?.accessoryType = .disclosureIndicator
+            return cell ?? UITableViewCell()
         } else {
             guard let model = presenter?.fetchQrCodesWithImage()[indexPath.row] else {
                 return UITableViewCell()
@@ -126,7 +133,7 @@ extension HistoryScreenViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return segmentControl.selectedSegmentIndex == 0 ? presenter?.countOfQrCodeWhithoutImage() ?? 0 : presenter?.countOfQrCodeWithImage() ?? 2
+        return segmentControl.selectedSegmentIndex == 0 ? presenter?.countOfQrCodeWhithoutImage() ?? 0 : presenter?.countOfQrCodeWithImage() ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -137,7 +144,7 @@ extension HistoryScreenViewController: UITableViewDataSource {
 extension HistoryScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        segmentControl.selectedSegmentIndex == 0 ?  presenter?.showDetail(code: indexPath) : presenter?.showDetailGeneratedCode(code: indexPath)
+        segmentControl.selectedSegmentIndex == 0 ? presenter?.showDetail(code: indexPath) : presenter?.showDetailGeneratedCode(code: indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

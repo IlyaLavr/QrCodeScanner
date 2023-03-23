@@ -2,7 +2,7 @@
 //  QrCode+CoreDataProperties.swift
 //  QrCodeScanner
 //
-//  Created by Илья on 23.03.2023.
+//  Created by Илья on 22.03.2023.
 //
 //
 
@@ -16,10 +16,9 @@ extension QrCode {
         return NSFetchRequest<QrCode>(entityName: "QrCode")
     }
 
-    @NSManaged public var date: String?
-    @NSManaged public var image: Data?
     @NSManaged public var name: String?
-    @NSManaged public var imageBarcode: Data?
+    @NSManaged public var image: Data?
+    @NSManaged public var date: String?
 
 }
 

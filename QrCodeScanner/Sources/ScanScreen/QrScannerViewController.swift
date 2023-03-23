@@ -220,12 +220,18 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 labelDetected.text = link
                 openLink(link)
                 capture.stopRunning()
+                
                 let date = Date()
                 let dateFormat = DateFormatter()
                 dateFormat.locale = Locale(identifier: "ru_RU")
                 dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
                 let dateString = dateFormat.string(from: date)
-                presenter?.addCode(withName: link, date: dateString, image: nil)
+                if let myImage = UIImage(named: "internet") {
+                    if let imageData = myImage.pngData() {
+                        presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData)
+                    }
+                }
+//                presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: <#Data?#>)
             }
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue
@@ -235,6 +241,20 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject?.bounds ?? .zero
             if let link = metadataObj.stringValue {
                 presenter?.openLinkBarCode(barcode: link)
+                
+                let date = Date()
+                let dateFormat = DateFormatter()
+                dateFormat.locale = Locale(identifier: "ru_RU")
+                dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
+                let dateString = dateFormat.string(from: date)
+                
+                if let myImage = UIImage(named: "barcode") {
+                    if let imageData = myImage.pngData() {
+                        presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData)
+                    }
+                }
+//                presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: <#Data?#>)
+                
                 capture.stopRunning()
             }
             if metadataObj.stringValue != nil {

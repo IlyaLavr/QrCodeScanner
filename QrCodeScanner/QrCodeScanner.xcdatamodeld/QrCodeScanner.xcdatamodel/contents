@@ -3,6 +3,7 @@
     <entity name="QrCode" representedClassName="QrCode" syncable="YES">
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="imageBarcode" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
 </model>
