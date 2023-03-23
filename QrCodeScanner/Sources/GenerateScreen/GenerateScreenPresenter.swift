@@ -12,6 +12,7 @@ protocol GenerateScreenPresenterProtocol: AnyObject {
     func showAlertEmptyString()
     func saveInPhone()
     func showAlertSuccefulSave()
+    func addCode(withName name: String, date: String, image: Data)
     
     init(view: GenerateScreenViewProtocol, router: RouterProtocol)
 }
@@ -19,6 +20,8 @@ protocol GenerateScreenPresenterProtocol: AnyObject {
 final class GenerateScreenPresenter: GenerateScreenPresenterProtocol {
     weak var view: GenerateScreenViewProtocol?
     var router: RouterProtocol?
+    var model = ModelData()
+    var qrCode: [QrCode]?
     
     init(view: GenerateScreenViewProtocol, router: RouterProtocol) {
         self.view = view
@@ -46,5 +49,14 @@ final class GenerateScreenPresenter: GenerateScreenPresenterProtocol {
         }, cancelHandler: { cancelAction in
             print(cancelAction)
         })
+    }
+    
+    func fetchAllQrCodes() {
+        qrCode = model.getAllQrCodes().reversed()
+    }
+    
+    func addCode(withName name: String, date: String, image: Data) {
+        model.addQrCodes(name: name, date: date, image: image)
+        fetchAllQrCodes()
     }
 }

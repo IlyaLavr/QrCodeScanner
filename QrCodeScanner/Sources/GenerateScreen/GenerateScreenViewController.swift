@@ -154,6 +154,17 @@ class GenerateScreenViewController: UIViewController {
         imageQrCode.image = generateQRCode(from: text, size: imageQrCode.bounds.size)
         imageQrCode.isHidden = false
         buttonSave.isHidden = false
+        
+        let date = Date()
+        let dateFormat = DateFormatter()
+        dateFormat.locale = Locale(identifier: "ru_RU")
+        dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
+        let dateString = dateFormat.string(from: date)
+        if let image = imageQrCode.image {
+        if let imageData = image.jpegData(compressionQuality: 1.0) {
+                presenter?.addCode(withName: text, date: dateString, image: imageData)
+            }
+        }
     }
     
     @objc private func shareQrCode() {

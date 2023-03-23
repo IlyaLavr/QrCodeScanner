@@ -15,6 +15,8 @@ protocol RouterMain {
 protocol RouterProtocol: RouterMain {
     func initialViewController()
     func showQrScanner()
+    func showDetailScanCode(code: QrCode)
+    func showDetailGeneratedCode(code: QrCode)
 }
 
 class Router: RouterProtocol {
@@ -37,6 +39,20 @@ class Router: RouterProtocol {
         if let navigationController = navigationController {
             guard let qrScannerNavigationController = assemblyBuilder?.createScanScreen(router: self) else { return }
             navigationController.present(qrScannerNavigationController, animated: true)
+        }
+    }
+    
+    func showDetailScanCode(code: QrCode) {
+        if let navigationController = navigationController {
+            guard let detailViewController = assemblyBuilder?.createDetailModule(code: code, router: self) else { return }
+            navigationController.pushViewController(detailViewController, animated: true)
+        }
+    }
+    
+    func showDetailGeneratedCode(code: QrCode) {
+        if let navigationController = navigationController {
+            guard let detailViewController = assemblyBuilder?.createDetailModuleForGeneringCode(code: code, router: self) else { return }
+            navigationController.pushViewController(detailViewController, animated: true)
         }
     }
 }

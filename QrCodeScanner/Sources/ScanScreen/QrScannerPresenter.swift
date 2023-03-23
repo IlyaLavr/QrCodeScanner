@@ -14,11 +14,14 @@ protocol PDFGeneratorPresenterProtocol: AnyObject {
     func saveAsPDF(data: NSData)
     func showAlertNoInternet()
     func openLinkBarCode(barcode: String)
+    func addCode(withName name: String, date: String, image: Data?)
 }
 
 final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
     var router: RouterProtocol?
     weak var view: PDFGeneratorViewProtocol?
+    var model = ModelData()
+    var qrCode: [QrCode]?
     
     required init(router: RouterProtocol, view: PDFGeneratorViewProtocol) {
         self.router = router
@@ -50,5 +53,14 @@ final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
             self.view?.labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
             self.view?.scanAnimation.play()
         })
+    }
+    
+    func fetchAllQrCodes() {
+        qrCode = model.getAllQrCodes().reversed()
+    }
+    
+    func addCode(withName name: String, date: String, image: Data?) {
+        model.addQrCodes(name: name, date: date, image: nil)
+        fetchAllQrCodes()
     }
 }

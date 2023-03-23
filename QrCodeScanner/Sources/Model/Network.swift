@@ -24,4 +24,13 @@ class Network {
         }
         UIApplication.shared.open(url)
     }
+    
+    func openLinkInBrowser(_ text: String) {
+        let urlString = "\(text)"
+        guard let url = URL(string: urlString) else {
+            print("Error: Invalid URL")
+            return
+        }
+        UIApplication.shared.open(url)
+    }
 }

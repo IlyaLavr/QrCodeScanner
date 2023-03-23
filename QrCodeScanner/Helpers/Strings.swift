@@ -35,5 +35,12 @@ enum Strings {
         
         static let secondTitle = "Generate"
         static let secondImage = "circle.hexagonpath"
+        
+        static let thirdTitle = "History"
+        static let thirdImage = "magazine"
+    }
+    
+    enum DetailScreenScanCode {
+        static let buttonOpenLink = "openlink"
     }
 }
