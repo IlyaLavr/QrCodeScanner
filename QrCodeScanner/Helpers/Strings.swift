@@ -39,4 +39,8 @@ enum Strings {
         static let thirdTitle = "History"
         static let thirdImage = "magazine"
     }
+    
+    enum DetailScreenScanCode {
+        static let buttonOpenLink = "openlink"
+    }
 }

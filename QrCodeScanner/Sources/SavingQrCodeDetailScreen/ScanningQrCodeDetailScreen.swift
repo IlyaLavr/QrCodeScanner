@@ -36,6 +36,17 @@ class ScanningQrCodeDetailScreen: UIViewController {
         return text
     }()
     
+    private lazy var buttonOpenLink: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: Strings.DetailScreenScanCode.buttonOpenLink), for: .normal)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 10
+        button.addTarget(self, action: #selector(openLink), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -51,6 +62,7 @@ class ScanningQrCodeDetailScreen: UIViewController {
         view.addSubview(background)
         view.addSubview(nameUrl)
         view.addSubview(dateScan)
+        view.addSubview(buttonOpenLink)
     }
     
     private func makeConstraints() {
@@ -71,6 +83,18 @@ class ScanningQrCodeDetailScreen: UIViewController {
             make.right.equalTo(view.snp.right).offset(-10)
             make.height.equalTo(40)
         }
+        
+        buttonOpenLink.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.bottom.equalTo(view.snp.bottom).offset(-150)
+            make.height.width.equalTo(100)
+        }
+    }
+    
+    // MARK: - Action
+    
+    @objc func openLink() {
+        Network.shared.openLinkInBrowser(nameUrl.text ?? "")
     }
 }
 

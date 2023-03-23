@@ -25,8 +25,6 @@ final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
     }
     
     func setUpParametersCode() {
-        view?.setupDetailedView(name: code?.name ?? "hgjfhdjghjfdhgjfd", date: code?.date, image: nil)
+        view?.setupDetailedView(name: code?.name ?? "", date: code?.date, image: nil)
     }
-    
-    
 }
