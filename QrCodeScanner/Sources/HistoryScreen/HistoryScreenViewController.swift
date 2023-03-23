@@ -139,8 +139,9 @@ extension HistoryScreenViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if segmentControl.selectedSegmentIndex == 0 {
             presenter?.showDetail(code: indexPath)
+        } else {
+            presenter?.showDetailGeneratedCode(code: indexPath)
         }
-        //        presenter?.showDetail(forUser: indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
