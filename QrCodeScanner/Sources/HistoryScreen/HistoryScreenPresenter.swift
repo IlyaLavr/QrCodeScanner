@@ -15,6 +15,7 @@ protocol HistoryScreenPresenterProtocol: AnyObject {
     func fetchQrCodesWithImage() -> [QrCode]
     func countOfQrCodeWithImage() -> Int
     func deleteCode(index: IndexPath)
+    func deleteCodeWithImage(index: IndexPath)
     
     init(view: HistoryScreenViewProtocol, router: RouterProtocol)
 }
@@ -57,7 +58,13 @@ final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {
     }
     
     func deleteCode(index: IndexPath) {
-        guard let code = qrCode?[index.row] else { return }
+        guard let code = qrCode?.filter({ $0.image == nil })[index.row] else { return }
+        model.deleteCode(code: code)
+        fetchAllQrCodes()
+    }
+    
+    func deleteCodeWithImage(index: IndexPath) {
+        guard let code = qrCode?.filter({ $0.image != nil })[index.row] else { return }
         model.deleteCode(code: code)
         fetchAllQrCodes()
     }

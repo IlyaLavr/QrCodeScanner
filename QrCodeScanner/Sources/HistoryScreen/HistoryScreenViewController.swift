@@ -142,7 +142,11 @@ extension HistoryScreenViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            presenter?.deleteCode(index: indexPath)
+            if segmentControl.selectedSegmentIndex == 0 {
+                presenter?.deleteCode(index: indexPath)
+            } else {
+                presenter?.deleteCodeWithImage(index: indexPath)
+            }
         }
     }
 }
