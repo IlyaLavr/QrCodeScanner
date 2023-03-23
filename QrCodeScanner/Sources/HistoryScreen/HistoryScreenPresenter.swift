@@ -39,7 +39,7 @@ final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {
     }
     
     func fetchQrCodesWithImage() -> [QrCode] {
-        qrCode = model.getAllQrCodes()
+        qrCode = model.getAllQrCodes().reversed()
         return qrCode?.filter { $0.image != nil } ?? []
     }
     
