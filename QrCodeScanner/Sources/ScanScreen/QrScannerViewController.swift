@@ -225,7 +225,7 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 dateFormat.locale = Locale(identifier: "ru_RU")
                 dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
                 let dateString = dateFormat.string(from: date)
-                presenter?.addCode(withName: link, date: dateString)
+                presenter?.addCode(withName: link, date: dateString, image: nil)
             }
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue

@@ -34,6 +34,7 @@
 		094F0FC429CB428300E8BC81 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FC329CB428300E8BC81 /* ModelData.swift */; };
 		094F0FC729CB533100E8BC81 /* QrCode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FC529CB533100E8BC81 /* QrCode+CoreDataClass.swift */; };
 		094F0FC829CB533100E8BC81 /* QrCode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FC629CB533100E8BC81 /* QrCode+CoreDataProperties.swift */; };
+		094F0FCA29CBBCF900E8BC81 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FC929CBBCF900E8BC81 /* ImageTableViewCell.swift */; };
 		09AF28BC29BFC6D10091839D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BB29BFC6D10091839D /* Network.swift */; };
 		09AF28BF29BFD8180091839D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BE29BFD8180091839D /* AlertView.swift */; };
 		09AF291429C1217E0091839D /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 09AF291329C1217E0091839D /* main.json */; };
@@ -67,6 +68,7 @@
 		094F0FC329CB428300E8BC81 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		094F0FC529CB533100E8BC81 /* QrCode+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QrCode+CoreDataClass.swift"; sourceTree = "<group>"; };
 		094F0FC629CB533100E8BC81 /* QrCode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QrCode+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		094F0FC929CBBCF900E8BC81 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		09AF28BB29BFC6D10091839D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		09AF28BE29BFD8180091839D /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		09AF291329C1217E0091839D /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				094F0FC129CB3E9300E8BC81 /* TableViewCell.swift */,
+				094F0FC929CBBCF900E8BC81 /* ImageTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				094F0FC429CB428300E8BC81 /* ModelData.swift in Sources */,
 				094F0FC729CB533100E8BC81 /* QrCode+CoreDataClass.swift in Sources */,
 				094F0FA829C7D7CF00E8BC81 /* GenerateScreenViewController.swift in Sources */,
+				094F0FCA29CBBCF900E8BC81 /* ImageTableViewCell.swift in Sources */,
 				0933C61629BDE922003259AB /* ViewController.swift in Sources */,
 				0933C61229BDE922003259AB /* AppDelegate.swift in Sources */,
 				094F0FA329C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift in Sources */,

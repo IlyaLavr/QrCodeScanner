@@ -8,13 +8,14 @@
 import Foundation
 
 protocol HistoryScreenPresenterProtocol: AnyObject {
-    func countOfQrCode() -> Int
+    func countOfQrCodeWhithoutImage() -> Int
     func getQrCodeString(for index: IndexPath) -> String
     func getQrCodeDate(for index: IndexPath) -> String
     func fetchAllQrCodes()
-    func fetchQrCodes() -> [QrCode]
-    
+    func fetchQrCodesWithImage() -> [QrCode]
+    func countOfQrCodeWithImage() -> Int
     func deleteCode(index: IndexPath)
+    
     init(view: HistoryScreenViewProtocol, router: RouterProtocol)
 }
 
@@ -34,21 +35,25 @@ final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {
         view?.reloadTable()
     }
     
-    func fetchQrCodes() -> [QrCode] {
+    func fetchQrCodesWithImage() -> [QrCode] {
         qrCode = model.getAllQrCodes()
-        return qrCode ?? []
+        return qrCode?.filter { $0.image != nil } ?? []
     }
     
-    func countOfQrCode() -> Int {
-        qrCode?.count ?? 0
+    func countOfQrCodeWhithoutImage() -> Int {
+        qrCode?.filter { $0.image == nil }.count ?? 0
+    }
+    
+    func countOfQrCodeWithImage() -> Int {
+        qrCode?.filter { $0.image != nil }.count ?? 0
     }
     
     func getQrCodeString(for index: IndexPath) -> String {
-        return qrCode?[index.row].name ?? ""
+        return qrCode?.filter { $0.image == nil }[index.row].name ?? ""
     }
     
     func getQrCodeDate(for index: IndexPath) -> String {
-         return qrCode?[index.row].date ?? ""
+        return qrCode?.filter { $0.image == nil }[index.row].date ?? ""
     }
     
     func deleteCode(index: IndexPath) {

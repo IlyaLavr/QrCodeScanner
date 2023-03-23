@@ -13,8 +13,17 @@ protocol HistoryScreenViewProtocol: AnyObject {
 
 class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     var presenter: HistoryScreenPresenterProtocol?
+    let items = ["Отсканированные", "Сгененированные"]
     
     // MARK: - Elements
+    
+    lazy var segmentControl: UISegmentedControl = {
+        let segmentView =  UISegmentedControl(items: items)
+        segmentView.selectedSegmentIndex = 0
+        segmentView.backgroundColor = .white
+        segmentView.addTarget(self, action: #selector(selectSaveCode), for: .valueChanged)
+        return segmentView
+    }()
     
     private lazy var background: UIImageView = {
         let obj = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
@@ -22,12 +31,13 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     }()
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = nil
         tableView.tintColor = .blue
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
+        tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
         return tableView
     }()
     
@@ -48,6 +58,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     private func setupHierarhy() {
         view.addSubview(background)
         view.addSubview(tableView)
+        view.addSubview(segmentControl)
     }
     
     private func makeConstraints() {
@@ -55,10 +66,36 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
             make.edges.equalToSuperview()
         }
         
+        segmentControl.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.left.equalTo(view.snp.left).offset(20)
+            make.right.equalTo(view.snp.right).offset(-20)
+            make.height.equalTo(30)
+        }
+        
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(30)
+            make.top.equalTo(segmentControl.snp.bottom).offset(30)
             make.left.right.equalTo(view)
             make.bottom.equalTo(view)
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @objc func selectSaveCode() {
+        UISelectionFeedbackGenerator().selectionChanged()
+
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            tableView.dataSource = self
+            reloadTable()
+            
+        case 1:
+            reloadTable()
+            tableView.dataSource = self
+        default:
+            tableView.reloadData()
+            tableView.dataSource = nil
         }
     }
     
@@ -71,15 +108,25 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
 
 extension HistoryScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = presenter?.getQrCodeString(for: indexPath)
-        cell.detailTextLabel?.text = presenter?.getQrCodeDate(for: indexPath)
-        return cell
+        if segmentControl.selectedSegmentIndex == 0 {
+                   let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+                   cell.accessoryType = .disclosureIndicator
+                   cell.textLabel?.text = presenter?.getQrCodeString(for: indexPath)
+                   cell.detailTextLabel?.text = presenter?.getQrCodeDate(for: indexPath)
+                   return cell
+        } else {
+            guard let model = presenter?.fetchQrCodesWithImage()[indexPath.row] else {
+                return UITableViewCell()
+            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier, for: indexPath) as? ImageTableViewCell
+            cell?.configure(with: model)
+            cell?.accessoryType = .disclosureIndicator
+            return cell ?? UITableViewCell()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.countOfQrCode() ?? 0
+        return segmentControl.selectedSegmentIndex == 0 ? presenter?.countOfQrCodeWhithoutImage() ?? 0 : presenter?.countOfQrCodeWithImage() ?? 2
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

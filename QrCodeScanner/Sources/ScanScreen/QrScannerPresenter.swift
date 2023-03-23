@@ -14,7 +14,7 @@ protocol PDFGeneratorPresenterProtocol: AnyObject {
     func saveAsPDF(data: NSData)
     func showAlertNoInternet()
     func openLinkBarCode(barcode: String)
-    func addCode(withName name: String, date: String)
+    func addCode(withName name: String, date: String, image: Data?)
 }
 
 final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
@@ -59,8 +59,8 @@ final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
         qrCode = model.getAllQrCodes().reversed()
     }
     
-    func addCode(withName name: String, date: String) {
-        model.addQrCodes(name: name, date: date)
+    func addCode(withName name: String, date: String, image: Data?) {
+        model.addQrCodes(name: name, date: date, image: nil)
         fetchAllQrCodes()
     }
 }
