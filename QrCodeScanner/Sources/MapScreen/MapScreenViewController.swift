@@ -48,7 +48,7 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
         makeConstraints()
         checkLocationServices()
         locationManager.delegate = self
-        
+        fetchQrCodeOnMap()
     }
     
     // MARK: - Setup
@@ -96,6 +96,17 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
         }
         if let coor = mapView.userLocation.location?.coordinate{
             mapView.setCenter(coor, animated: true)
+        }
+    }
+    
+    func fetchQrCodeOnMap() {
+        if let fetchQrCodes = presenter?.fetchAllQrCodes() {
+            for qrCode in fetchQrCodes {
+                let annotations = MKPointAnnotation()
+                annotations.title = qrCode.name
+                annotations.coordinate = CLLocationCoordinate2D(latitude: qrCode.latitude, longitude: qrCode.longitude)
+                mapView.addAnnotation(annotations)
+            }
         }
     }
 }

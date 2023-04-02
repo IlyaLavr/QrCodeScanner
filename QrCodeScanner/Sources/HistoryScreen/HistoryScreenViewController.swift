@@ -44,7 +44,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     private lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("Посмотреть на карте", for: .normal)
-        button.tintColor = .black
+        button.setTitleColor(.black, for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.2
         button.layer.shadowOffset = .zero

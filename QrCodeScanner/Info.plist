@@ -7,7 +7,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Чтобы сохранить изображение в галерею предоставьте доступ к галерее!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Разрешите доступ к Вашей геолокации</string>
+	<string>Разрешите доступ к Вашей геолокации, чтобы Вы могли смотреть историю на карте</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
