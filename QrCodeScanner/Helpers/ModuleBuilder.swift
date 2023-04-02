@@ -15,6 +15,7 @@ protocol BuilderProtocol {
     func createTabBar(router: RouterProtocol) -> UITabBarController
     func createDetailModule(code: QrCode, router: RouterProtocol) -> UIViewController
     func createDetailModuleForGeneringCode(code: QrCode, router: RouterProtocol) -> UIViewController
+    func createMapScreen(router: RouterProtocol) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -87,6 +88,13 @@ class ModuleBuilder: BuilderProtocol {
     func createDetailModuleForGeneringCode(code: QrCode, router: RouterProtocol) -> UIViewController {
         let view = SavingGeneringCodeViewController()
         let presenter = GeneringCodeDetailPresenter(code: code, view: view, router: router)
+        view.presenter = presenter
+        return view
+    }
+    
+    func createMapScreen(router: RouterProtocol) -> UIViewController {
+        let view = MapScreenViewController()
+        let presenter = MapScreenPresenter(view: view, router: router)
         view.presenter = presenter
         return view
     }
