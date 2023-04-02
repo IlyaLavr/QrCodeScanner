@@ -36,7 +36,13 @@
 		094F0FCE29CC7AFC00E8BC81 /* ScanningQrCodeDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FCD29CC7AFC00E8BC81 /* ScanningQrCodeDetailScreen.swift */; };
 		094F0FD029CC7B3000E8BC81 /* ScanningCodeDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FCF29CC7B3000E8BC81 /* ScanningCodeDetailPresenter.swift */; };
 		094F0FD329CC904F00E8BC81 /* SavingGeneringCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FD229CC904E00E8BC81 /* SavingGeneringCodeViewController.swift */; };
+
+		094F0FD529CC907200E8BC81 /* GeneringCodeDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FD429CC907200E8BC81 /* GeneringCodeDetailPresenter.swift */; };
+		094F0FD829CCD10000E8BC81 /* QrCode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FD629CCD10000E8BC81 /* QrCode+CoreDataClass.swift */; };
+		094F0FD929CCD10000E8BC81 /* QrCode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FD729CCD10000E8BC81 /* QrCode+CoreDataProperties.swift */; };
+
 		094F0FD529CC907200E8BC81 /* GeneringCodeDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094F0FD429CC907200E8BC81 /* GeneringCodeDetailProtocol.swift */; };
+
 		09AF28BC29BFC6D10091839D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BB29BFC6D10091839D /* Network.swift */; };
 		09AF28BF29BFD8180091839D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AF28BE29BFD8180091839D /* AlertView.swift */; };
 		09AF291429C1217E0091839D /* main.json in Resources */ = {isa = PBXBuildFile; fileRef = 09AF291329C1217E0091839D /* main.json */; };
@@ -76,7 +82,13 @@
 		094F0FCD29CC7AFC00E8BC81 /* ScanningQrCodeDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningQrCodeDetailScreen.swift; sourceTree = "<group>"; };
 		094F0FCF29CC7B3000E8BC81 /* ScanningCodeDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanningCodeDetailPresenter.swift; sourceTree = "<group>"; };
 		094F0FD229CC904E00E8BC81 /* SavingGeneringCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingGeneringCodeViewController.swift; sourceTree = "<group>"; };
+
+		094F0FD429CC907200E8BC81 /* GeneringCodeDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneringCodeDetailPresenter.swift; sourceTree = "<group>"; };
+		094F0FD629CCD10000E8BC81 /* QrCode+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QrCode+CoreDataClass.swift"; sourceTree = "<group>"; };
+		094F0FD729CCD10000E8BC81 /* QrCode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QrCode+CoreDataProperties.swift"; sourceTree = "<group>"; };
+
 		094F0FD429CC907200E8BC81 /* GeneringCodeDetailProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneringCodeDetailProtocol.swift; sourceTree = "<group>"; };
+
 		09AF28BB29BFC6D10091839D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		09AF28BE29BFD8180091839D /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		09AF291329C1217E0091839D /* main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = main.json; sourceTree = "<group>"; };
@@ -133,6 +145,10 @@
 		0933C62529BDEB0C003259AB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+
+				094F0FDA29CCFE1700E8BC81 /* Screens */,
+				094F0FC029CB3E7100E8BC81 /* Cells */,
+
 				09DE536129DA1BC90070D91A /* MapScreen */,
 				094F0FD129CC900600E8BC81 /* SavingGeneringCodeDetailScreen */,
 				094F0FCB29CC7A9900E8BC81 /* SavingQrCodeDetailScreen */,
@@ -141,6 +157,7 @@
 				0933C62929BDEB63003259AB /* MainScreen */,
 				0933C62A29BDEB6F003259AB /* ScanScreen */,
 				094F0FA629C7D79F00E8BC81 /* GenerateScreen */,
+
 				09AF28BD29BFD7FD0091839D /* Alert */,
 				0933C62829BDEB57003259AB /* Model */,
 			);
@@ -170,8 +187,12 @@
 		0933C62829BDEB57003259AB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+
+				094F0FDB29CCFE8000E8BC81 /* CoreData */,
+
 				09DE536629DA35AA0070D91A /* QrCode+CoreDataClass.swift */,
 				09DE536729DA35AA0070D91A /* QrCode+CoreDataProperties.swift */,
+
 				094F0FC329CB428300E8BC81 /* ModelData.swift */,
 				09AF28BB29BFC6D10091839D /* Network.swift */,
 			);
@@ -234,13 +255,13 @@
 			path = HistoryScreen;
 			sourceTree = "<group>";
 		};
-		094F0FC029CB3E7100E8BC81 /* Cell */ = {
+		094F0FC029CB3E7100E8BC81 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				094F0FC129CB3E9300E8BC81 /* TableViewCell.swift */,
 				094F0FC929CBBCF900E8BC81 /* ImageTableViewCell.swift */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		094F0FCB29CC7A9900E8BC81 /* SavingQrCodeDetailScreen */ = {
@@ -256,9 +277,31 @@
 			isa = PBXGroup;
 			children = (
 				094F0FD229CC904E00E8BC81 /* SavingGeneringCodeViewController.swift */,
-				094F0FD429CC907200E8BC81 /* GeneringCodeDetailProtocol.swift */,
+				094F0FD429CC907200E8BC81 /* GeneringCodeDetailPresenter.swift */,
 			);
 			path = SavingGeneringCodeDetailScreen;
+			sourceTree = "<group>";
+		};
+		094F0FDA29CCFE1700E8BC81 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				094F0FD129CC900600E8BC81 /* SavingGeneringCodeDetailScreen */,
+				094F0FCB29CC7A9900E8BC81 /* SavingQrCodeDetailScreen */,
+				094F0FBB29CB385800E8BC81 /* HistoryScreen */,
+				094F0FA629C7D79F00E8BC81 /* GenerateScreen */,
+				0933C62929BDEB63003259AB /* MainScreen */,
+				0933C62A29BDEB6F003259AB /* ScanScreen */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		094F0FDB29CCFE8000E8BC81 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				094F0FD629CCD10000E8BC81 /* QrCode+CoreDataClass.swift */,
+				094F0FD729CCD10000E8BC81 /* QrCode+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		09AF28BD29BFD7FD0091839D /* Alert */ = {
@@ -373,7 +416,7 @@
 				094F0FCE29CC7AFC00E8BC81 /* ScanningQrCodeDetailScreen.swift in Sources */,
 				094F0FA329C7BBBF00E8BC81 /* ExtensionUIPrintPageRenderer.swift in Sources */,
 				094F0FBF29CB388A00E8BC81 /* HistoryScreenPresenter.swift in Sources */,
-				094F0FD529CC907200E8BC81 /* GeneringCodeDetailProtocol.swift in Sources */,
+				094F0FD529CC907200E8BC81 /* GeneringCodeDetailPresenter.swift in Sources */,
 				094F0FB629CB373F00E8BC81 /* QrCodeScanner.xcdatamodeld in Sources */,
 				0939926829BE12DD00F9EB66 /* ExtensionWKWebView.swift in Sources */,
 				0933C63729BDEE26003259AB /* ModuleBuilder.swift in Sources */,

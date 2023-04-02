@@ -256,7 +256,6 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 dateFormat.locale = Locale(identifier: "ru_RU")
                 dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
                 let dateString = dateFormat.string(from: date)
-                
                 if let myImage = UIImage(named: "internet") {
                     if let imageData = myImage.pngData() {
                         // Получаем текущие координаты места

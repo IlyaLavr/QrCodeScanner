@@ -2,6 +2,7 @@
 //  QrCode+CoreDataClass.swift
 //  QrCodeScanner
 //
+
 //  Created by Илья on 03.04.2023.
 //
 //

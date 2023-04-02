@@ -2,6 +2,7 @@
 //  QrCode+CoreDataProperties.swift
 //  QrCodeScanner
 //
+
 //  Created by Илья on 03.04.2023.
 //
 //
@@ -18,6 +19,7 @@ extension QrCode {
 
     @NSManaged public var date: String?
     @NSManaged public var image: Data?
+
     @NSManaged public var imageBarcode: Data?
     @NSManaged public var name: String?
     @NSManaged public var latitude: Double

@@ -55,8 +55,10 @@ final class GenerateScreenPresenter: GenerateScreenPresenterProtocol {
         qrCode = model.getAllQrCodes().reversed()
     }
     
+
     func addCode(withName name: String, date: String, image: Data, imageBarcode: Data?, latitude: Double, longitude: Double) {
         model.addQrCodes(name: name, date: date, image: image, imageBarcode: imageBarcode, latitude: latitude, longitude: longitude)
+
         fetchAllQrCodes()
     }
 }

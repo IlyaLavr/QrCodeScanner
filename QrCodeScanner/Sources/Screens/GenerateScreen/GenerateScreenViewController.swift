@@ -19,6 +19,7 @@ protocol GenerateScreenViewProtocol: AnyObject {
 class GenerateScreenViewController: UIViewController {
     var presenter: GenerateScreenPresenterProtocol?
     let locationManager = CLLocationManager()
+
     
     // MARK: - Elements
     

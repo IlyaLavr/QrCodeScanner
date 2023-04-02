@@ -41,6 +41,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         return tableView
     }()
     
+
     private lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle("Посмотреть на карте", for: .normal)
@@ -52,7 +53,6 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         button.addTarget(self, action: #selector(goToMap), for: .touchUpInside)
         return button
     }()
-    
     // MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -91,7 +91,6 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
             make.top.equalTo(segmentControl.snp.bottom).offset(12)
             make.height.equalTo(30)
         }
-        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(segmentControl.snp.bottom).offset(20)
             make.left.right.equalTo(view)
@@ -117,11 +116,11 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
             tableView.dataSource = nil
         }
     }
-    
+ 
     @objc func goToMap() {
         presenter?.goToMapScreen()
     }
-    
+  
     // MARK: - Functions
     
     func reloadTable() {
