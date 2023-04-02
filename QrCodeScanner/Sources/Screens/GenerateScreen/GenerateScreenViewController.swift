@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreLocation
 
 protocol GenerateScreenViewProtocol: AnyObject {
     func shareImageQrCode()
@@ -17,6 +18,8 @@ protocol GenerateScreenViewProtocol: AnyObject {
 
 class GenerateScreenViewController: UIViewController {
     var presenter: GenerateScreenPresenterProtocol?
+    let locationManager = CLLocationManager()
+
     
     // MARK: - Elements
     
@@ -161,7 +164,14 @@ class GenerateScreenViewController: UIViewController {
         let dateString = dateFormat.string(from: date)
         if let image = imageQrCode.image {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
-            presenter?.addCode(withName: text, date: dateString, image: imageData, imageBarcode: nil)
+            locationManager.requestWhenInUseAuthorization()
+            if let currentLocation = locationManager.location {
+                let latitude = currentLocation.coordinate.latitude
+                let longitude = currentLocation.coordinate.longitude
+                
+                // Сохраняем данные в Core Data
+                presenter?.addCode(withName: text, date: dateString, image: imageData, imageBarcode: nil, latitude: latitude, longitude: longitude)
+            }
             }
         }
     }

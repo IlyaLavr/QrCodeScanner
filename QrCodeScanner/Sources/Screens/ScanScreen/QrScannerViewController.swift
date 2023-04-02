@@ -9,6 +9,7 @@ import UIKit
 import Lottie
 import AVFoundation
 import WebKit
+import CoreLocation
 
 protocol PDFGeneratorViewProtocol: AnyObject {
     var scanAnimation: LottieAnimationView { get }
@@ -29,6 +30,7 @@ final class QrScannerViewController: UIViewController {
     var qrCodeFrameView: UIView?
     var webView: WKWebView?
     var data = NSData()
+    let locationManager = CLLocationManager()
     
     // MARK: - Elements
     
@@ -78,6 +80,7 @@ final class QrScannerViewController: UIViewController {
         makeConstraints()
         navigationItem.rightBarButtonItem = shareButton
         scanView()
+        locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Setup
@@ -228,10 +231,16 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 let dateString = dateFormat.string(from: date)
                 if let myImage = UIImage(named: "internet") {
                     if let imageData = myImage.pngData() {
-                        presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData)
+                        // Получаем текущие координаты места
+                        locationManager.requestWhenInUseAuthorization()
+                        if let currentLocation = locationManager.location {
+                            let latitude = currentLocation.coordinate.latitude
+                            let longitude = currentLocation.coordinate.longitude
+                            // Сохраняем данные в Core Data
+                            presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
+                        }
                     }
                 }
-//                presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: <#Data?#>)
             }
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue
@@ -247,14 +256,18 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 dateFormat.locale = Locale(identifier: "ru_RU")
                 dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
                 let dateString = dateFormat.string(from: date)
-                
-                if let myImage = UIImage(named: "barcode") {
+                if let myImage = UIImage(named: "internet") {
                     if let imageData = myImage.pngData() {
-                        presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData)
+                        // Получаем текущие координаты места
+                        locationManager.requestWhenInUseAuthorization()
+                        if let currentLocation = locationManager.location {
+                            let latitude = currentLocation.coordinate.latitude
+                            let longitude = currentLocation.coordinate.longitude
+                            // Сохраняем данные в Core Data
+                            presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
+                        }
                     }
                 }
-//                presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: <#Data?#>)
-                
                 capture.stopRunning()
             }
             if metadataObj.stringValue != nil {

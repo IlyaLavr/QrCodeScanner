@@ -38,12 +38,14 @@ class ModelData {
         return codeQr
     }
     
-    func addQrCodes(name: String, date: String, image: Data?, imageBarcode: Data?) {
+    func addQrCodes(name: String, date: String, image: Data?, imageBarcode: Data?, latitude: Double, longitude: Double) {
         let data = QrCode(context: context)
         data.name = name
         data.date = date
         data.image = image
         data.imageBarcode = imageBarcode
+        data.latitude = latitude
+        data.longitude = longitude
         saveContext()
     }
     

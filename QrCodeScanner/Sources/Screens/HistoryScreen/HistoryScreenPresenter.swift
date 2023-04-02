@@ -19,6 +19,7 @@ protocol HistoryScreenPresenterProtocol: AnyObject {
     func showDetail(code index: IndexPath)
     func showDetailGeneratedCode(code index: IndexPath)
     func fetchQrCodesWithoutImage() -> [QrCode]
+    func goToMapScreen()
     
     init(view: HistoryScreenViewProtocol, router: RouterProtocol)
 }
@@ -85,5 +86,8 @@ final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {
     func showDetailGeneratedCode(code index: IndexPath) {
         guard let code = qrCode?.filter({ $0.image != nil })[index.row] else { return }
         router?.showDetailGeneratedCode(code: code)
+    }
+    func goToMapScreen() {
+        router?.showMapScreen()
     }
 }

@@ -41,6 +41,18 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         return tableView
     }()
     
+
+    private lazy var button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Посмотреть на карте", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 10
+        button.addTarget(self, action: #selector(goToMap), for: .touchUpInside)
+        return button
+    }()
     // MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -59,6 +71,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         view.addSubview(background)
         view.addSubview(tableView)
         view.addSubview(segmentControl)
+        view.addSubview(button)
     }
     
     private func makeConstraints() {
@@ -73,6 +86,11 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
             make.height.equalTo(30)
         }
         
+        button.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(segmentControl.snp.bottom).offset(12)
+            make.height.equalTo(30)
+        }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(segmentControl.snp.bottom).offset(20)
             make.left.right.equalTo(view)
@@ -98,7 +116,11 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
             tableView.dataSource = nil
         }
     }
-    
+ 
+    @objc func goToMap() {
+        presenter?.goToMapScreen()
+    }
+  
     // MARK: - Functions
     
     func reloadTable() {
@@ -109,11 +131,6 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
 extension HistoryScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if segmentControl.selectedSegmentIndex == 0 {
-//                   let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-//                   cell.accessoryType = .disclosureIndicator
-//                   cell.textLabel?.text = presenter?.getQrCodeString(for: indexPath)
-//                   cell.detailTextLabel?.text = presenter?.getQrCodeDate(for: indexPath)
-//                   return cell
             guard let model = presenter?.fetchQrCodesWithoutImage()[indexPath.row] else {
                 return UITableViewCell()
             }
