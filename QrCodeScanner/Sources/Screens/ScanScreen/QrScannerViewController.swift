@@ -62,6 +62,16 @@ final class QrScannerViewController: UIViewController {
         return progressView
     }()
     
+    private lazy var flashButton: UIButton = {
+        let button = UIButton()
+        let imageOff = UIImage(systemName: "lightbulb.slash")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+        let imageOn = UIImage(systemName: "lightbulb.led.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+        button.setImage(imageOff, for: .normal)
+        button.setImage(imageOn, for: .selected)
+        button.addTarget(self, action: #selector(flash), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var shareButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: Strings.ScanAnimationScreen.shareButtonText,
                                      style: .plain,
@@ -88,6 +98,7 @@ final class QrScannerViewController: UIViewController {
     private func setupHierarhy() {
         view.addSubview(labelDetected)
         view.addSubview(scanAnimation)
+        view.addSubview(flashButton)
     }
     
     private func makeConstraints() {
@@ -104,6 +115,12 @@ final class QrScannerViewController: UIViewController {
             make.centerY.equalTo(view)
             make.height.equalTo(300)
             make.width.equalTo(350)
+        }
+        
+        flashButton.snp.makeConstraints { make in
+            make.bottom.equalTo(labelDetected.snp.top).offset(-20)
+            make.left.equalTo(view.snp.left).offset(0)
+            make.right.equalTo(view.snp.right).offset(0)
         }
     }
     
@@ -122,6 +139,13 @@ final class QrScannerViewController: UIViewController {
     
     @objc private func saveAsPDF() {
         presenter?.saveAsPDF(data: data)
+    }
+    
+    @objc private func flash(_ sender: UIButton) {
+        toggleFlash()
+        sender.isSelected = !sender.isSelected
+            let image = sender.isSelected ? UIImage(systemName: "lightbulb.led.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue) : UIImage(systemName: "lightbulb.slash")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+            sender.setImage(image, for: .normal)
     }
     
     // MARK: - Functions
@@ -148,6 +172,7 @@ final class QrScannerViewController: UIViewController {
             }
             view.bringSubviewToFront(labelDetected)
             view.bringSubviewToFront(scanAnimation)
+            view.bringSubviewToFront(flashButton)
             qrCodeFrameView = UIView()
             
             if let qrcodeFrameView = qrCodeFrameView {
@@ -200,6 +225,23 @@ final class QrScannerViewController: UIViewController {
             progressView.setProgress(0.1, animated: true)
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
             task.resume()
+        }
+    }
+    
+    private func toggleFlash() {
+        guard let device = AVCaptureDevice.default(for: .video) else { return }
+        guard device.hasTorch else { return }
+
+        do {
+            try device.lockForConfiguration()
+            if device.torchMode == .on {
+                device.torchMode = .off
+            } else {
+                try device.setTorchModeOn(level: 1.0)
+            }
+            device.unlockForConfiguration()
+        } catch {
+            print("Error toggling flash: \(error.localizedDescription)")
         }
     }
 }
@@ -256,7 +298,7 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 dateFormat.locale = Locale(identifier: "ru_RU")
                 dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
                 let dateString = dateFormat.string(from: date)
-                if let myImage = UIImage(named: "internet") {
+                if let myImage = UIImage(named: "barcode") {
                     if let imageData = myImage.pngData() {
                         // Получаем текущие координаты места
                         locationManager.requestWhenInUseAuthorization()

@@ -204,12 +204,12 @@
 		094F0FDA29CCFE1700E8BC81 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				09DE536129DA1BC90070D91A /* MapScreen */,
 				09DE53BB29DA51780070D91A /* SavingQrCodeDetailScreen */,
 				09DE53B629DA51430070D91A /* GenerateScreen */,
 				09DE53B129DA51180070D91A /* MainScreen */,
 				09DE53AC29DA50EE0070D91A /* ScanScreen */,
 				09DE53AA29DA50C30070D91A /* HistoryScreens */,
-				09DE536129DA1BC90070D91A /* MapScreen */,
 				09DE53A529DA505D0070D91A /* SavingGeneringCodeDetailScreen */,
 			);
 			path = Screens;
