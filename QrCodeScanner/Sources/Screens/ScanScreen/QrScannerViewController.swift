@@ -82,6 +82,18 @@ final class QrScannerViewController: UIViewController {
         return button
     }()
     
+    private lazy var slider: UISlider = {
+        let slider = UISlider()
+        slider.minimumValue = 1.0
+        slider.maximumValue = 10.0
+        let thumbImage = UIImage(named: "scope")
+        slider.setThumbImage(thumbImage, for: .normal)
+        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+        return slider
+    }()
+    
+    
+    
     // MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -99,6 +111,7 @@ final class QrScannerViewController: UIViewController {
         view.addSubview(labelDetected)
         view.addSubview(scanAnimation)
         view.addSubview(flashButton)
+        view.addSubview(slider)
     }
     
     private func makeConstraints() {
@@ -118,9 +131,15 @@ final class QrScannerViewController: UIViewController {
         }
         
         flashButton.snp.makeConstraints { make in
-            make.bottom.equalTo(labelDetected.snp.top).offset(-20)
+            make.bottom.equalTo(scanAnimation.snp.top).offset(-20)
             make.left.equalTo(view.snp.left).offset(0)
             make.right.equalTo(view.snp.right).offset(0)
+        }
+        
+        slider.snp.makeConstraints { make in
+            make.bottom.equalTo(labelDetected.snp.top).offset(-20)
+            make.left.equalTo(view.snp.left).offset(20)
+            make.right.equalTo(view.snp.right).offset(-20)
         }
     }
     
@@ -148,6 +167,19 @@ final class QrScannerViewController: UIViewController {
             sender.setImage(image, for: .normal)
     }
     
+    @objc private func sliderValueChanged(_ sender: UISlider) {
+        let zoomFactor = sender.value
+        
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
+        do {
+            try captureDevice.lockForConfiguration()
+            defer { captureDevice.unlockForConfiguration() }
+            captureDevice.videoZoomFactor = CGFloat(zoomFactor)
+        } catch {
+            print("Error setting zoom level: \(error)")
+        }
+    }
+    
     // MARK: - Functions
     
     private func scanView() {
@@ -173,6 +205,7 @@ final class QrScannerViewController: UIViewController {
             view.bringSubviewToFront(labelDetected)
             view.bringSubviewToFront(scanAnimation)
             view.bringSubviewToFront(flashButton)
+            view.bringSubviewToFront(slider)
             qrCodeFrameView = UIView()
             
             if let qrcodeFrameView = qrCodeFrameView {
