@@ -12,6 +12,7 @@ protocol GeneringCodeDetailProtocol {
     func saveInPhone()
     func showAlertSuccefulSave()
     func shareQr()
+    func goToMap()
     
     init(code: QrCode, view: SavingGeneringCodeViewProtocol, router: RouterProtocol)
 }
@@ -47,5 +48,9 @@ final class GeneringCodeDetailPresenter: GeneringCodeDetailProtocol {
     
     func shareQr() {
         view?.shareImageQrCode()
+    }
+    
+    func goToMap() {
+        router?.showMapDetailScreen(code: code ?? QrCode())
     }
 }

@@ -16,6 +16,7 @@ protocol BuilderProtocol {
     func createDetailModule(code: QrCode, router: RouterProtocol) -> UIViewController
     func createDetailModuleForGeneringCode(code: QrCode, router: RouterProtocol) -> UIViewController
     func createMapScreen(router: RouterProtocol) -> UIViewController
+    func createMapDetailScreen(code: QrCode, router: RouterProtocol) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -32,7 +33,7 @@ class ModuleBuilder: BuilderProtocol {
         view.presenter = presenter
         let navigationController = UINavigationController(rootViewController: view)
         navigationController.modalPresentationStyle = .pageSheet
-        navigationController.modalTransitionStyle = .flipHorizontal
+        navigationController.modalTransitionStyle = .coverVertical
         return navigationController
     }
     
@@ -46,6 +47,13 @@ class ModuleBuilder: BuilderProtocol {
     func createHistoryScreen(router: RouterProtocol) -> UIViewController {
         let view = HistoryScreenViewController()
         let presenter = HistoryScreenPresenter(view: view, router: router)
+        view.presenter = presenter
+        return view
+    }
+    
+    func createMapDetailScreen(code: QrCode, router: RouterProtocol) -> UIViewController {
+        let view = MapDetailScreen()
+        let presenter = MapScreenDetailPresenter(code: code, view: view, router: router)
         view.presenter = presenter
         return view
     }

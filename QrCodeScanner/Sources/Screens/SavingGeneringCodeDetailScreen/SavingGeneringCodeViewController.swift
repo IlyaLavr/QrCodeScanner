@@ -67,6 +67,14 @@ class SavingGeneringCodeViewController: UIViewController {
         return button
     }()
     
+    private lazy var viewOnMap: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: Strings.DetailScreenScanCode.viewOnMap)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(viewMap), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -85,6 +93,7 @@ class SavingGeneringCodeViewController: UIViewController {
         view.addSubview(dateGenering)
         view.addSubview(buttonSave)
         view.addSubview(buttonShare)
+        view.addSubview(viewOnMap)
     }
     
     private func makeConstraints() {
@@ -108,6 +117,12 @@ class SavingGeneringCodeViewController: UIViewController {
             make.top.equalTo(nameCode.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
             make.width.height.equalTo(300)
+        }
+        
+        viewOnMap.snp.makeConstraints { make in
+            make.top.equalTo(imageQrCode.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+            make.height.equalTo(30)
         }
         
         buttonSave.snp.makeConstraints { make in
@@ -139,6 +154,10 @@ class SavingGeneringCodeViewController: UIViewController {
         } else {
             presenter?.showAlertSuccefulSave()
         }
+    }
+    
+    @objc func viewMap() {
+        presenter?.goToMap()
     }
     
     // MARK: - Functions
