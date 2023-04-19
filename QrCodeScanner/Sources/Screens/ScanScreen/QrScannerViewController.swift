@@ -31,6 +31,7 @@ final class QrScannerViewController: UIViewController {
     var webView: WKWebView?
     var data = NSData()
     let locationManager = CLLocationManager()
+    var linkToOpen: String?
     
     // MARK: - Elements
     
@@ -163,8 +164,8 @@ final class QrScannerViewController: UIViewController {
     @objc private func flash(_ sender: UIButton) {
         toggleFlash()
         sender.isSelected = !sender.isSelected
-            let image = sender.isSelected ? UIImage(systemName: "lightbulb.led.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue) : UIImage(systemName: "lightbulb.slash")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
-            sender.setImage(image, for: .normal)
+        let image = sender.isSelected ? UIImage(systemName: "lightbulb.led.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue) : UIImage(systemName: "lightbulb.slash")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+        sender.setImage(image, for: .normal)
     }
     
     @objc private func sliderValueChanged(_ sender: UISlider) {
@@ -178,6 +179,43 @@ final class QrScannerViewController: UIViewController {
         } catch {
             print("Error setting zoom level: \(error)")
         }
+    }
+    
+    @objc func closeNewView(_ sender: UIButton) {
+        if let newView = self.view.subviews.last,
+           let blurEffectView = self.view.subviews.filter({ $0 is UIVisualEffectView }).last as? UIVisualEffectView {
+            UIView.animate(withDuration: 0.3, animations: {
+                newView.alpha = 0
+                self.view.backgroundColor = .white
+                blurEffectView.alpha = 0
+            }) { _ in
+                blurEffectView.removeFromSuperview()
+                newView.removeFromSuperview()
+            }
+            UIView.animate(withDuration: 0.5, animations: {
+                newView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                newView.alpha = 0
+                DispatchQueue.global().async {
+                    self.capture.startRunning()
+                }
+                self.qrCodeFrameView?.frame = CGRect.zero
+                self.labelDetected.text = Strings.ScanAnimationScreen.labelDetectedText
+            }) { (completion: Bool) in
+                print("OK")
+            }
+        }
+    }
+    
+    @objc func copyUrl() {
+        UIPasteboard.general.string = labelDetected.text
+        presenter?.showAlertCopyUrl()
+    }
+    
+    @objc private func openLinkButtonTapped() {
+        guard let link = self.linkToOpen else {
+            return
+        }
+        self.openLink(link)
     }
     
     // MARK: - Functions
@@ -225,13 +263,13 @@ final class QrScannerViewController: UIViewController {
     }
     
     func saveFile(data: NSData) {
-    guard let pdfData = exportAsPDF(from: webView) else { return }
-    let activityViewController = UIActivityViewController(activityItems: [pdfData as Any], applicationActivities: nil)
-    activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
-    let alert = completed ? Alert.succefulSave : Alert.failedSave
-    self.displayAlertStatusSave(with: alert)
-    }
-    self.present(activityViewController, animated: true, completion: nil)
+        guard let pdfData = exportAsPDF(from: webView) else { return }
+        let activityViewController = UIActivityViewController(activityItems: [pdfData as Any], applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = { (_, completed, _, error) in
+            let alert = completed ? Alert.succefulSave : Alert.failedSave
+            self.displayAlertStatusSave(with: alert)
+        }
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     private func openLink(_ link: String) {
@@ -245,7 +283,7 @@ final class QrScannerViewController: UIViewController {
             
             view.addSubview(webView)
             webView.snp.makeConstraints { make in
-            make.edges.equalTo(view.snp.edges)
+                make.edges.equalTo(view.snp.edges)
             }
             guard let url = URL(string: link) ?? nil else { return  }
             let request = URLRequest(url: url)
@@ -264,7 +302,6 @@ final class QrScannerViewController: UIViewController {
     private func toggleFlash() {
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         guard device.hasTorch else { return }
-
         do {
             try device.lockForConfiguration()
             if device.torchMode == .on {
@@ -276,6 +313,95 @@ final class QrScannerViewController: UIViewController {
         } catch {
             print("Error toggling flash: \(error.localizedDescription)")
         }
+    }
+    
+    private func generateQRCode(from string: String, size: CGSize) -> UIImage? {
+        guard let data = string.data(using: .utf8) ?? string.data(using: .ascii) else {
+            return nil
+        }
+        guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else {
+            return nil
+        }
+        qrFilter.setValue(data, forKey: "inputMessage")
+        qrFilter.setValue("Q", forKey: "inputCorrectionLevel")
+        guard let qrCodeImage = qrFilter.outputImage else {
+            return nil
+        }
+        let scaleX = size.width / qrCodeImage.extent.size.width
+        let scaleY = size.height / qrCodeImage.extent.size.height
+        let scale = min(scaleX, scaleY)
+        let scaledImage = qrCodeImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
+        guard let cgImage = CIContext(options: nil).createCGImage(scaledImage, from: scaledImage.extent) else {
+            return nil
+        }
+        return UIImage(cgImage: cgImage)
+    }
+    
+    private func showNewView(description: String) {
+        let scanCodeView = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 450))
+        scanCodeView.backgroundColor = UIColor.systemGray5
+        scanCodeView.alpha = 1
+        scanCodeView.layer.cornerRadius = 10
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 180, height: 180))
+        imageView.center = CGPoint(x: scanCodeView.bounds.midX, y: scanCodeView.bounds.midY - 100)
+        if let qrCodeImage = generateQRCode(from: description, size: CGSize(width: 180, height: 180)) {
+            let qrCodeImageView = UIImageView(image: qrCodeImage)
+            qrCodeImageView.center = CGPoint(x: scanCodeView.bounds.width / 2, y: 100)
+            scanCodeView.addSubview(qrCodeImageView)
+        }
+        
+        let descriptionLabel = UILabel(frame: CGRect(x: 10, y: imageView.frame.maxY + 20, width: scanCodeView.bounds.width - 20, height: 100))
+        descriptionLabel.text = description
+        descriptionLabel.textAlignment = .center
+        descriptionLabel.numberOfLines = 0
+        scanCodeView.addSubview(descriptionLabel)
+        
+        let buttonWidth: CGFloat = 150
+        let buttonHeight: CGFloat = 50
+        let buttonSpacing: CGFloat = 20
+        let buttonY: CGFloat = scanCodeView.bounds.height - buttonHeight - 20
+        let buttonXOffset = (scanCodeView.bounds.width - buttonWidth * 2 - buttonSpacing) / 2
+        
+        let saveButton = UIButton(frame: CGRect(x: buttonXOffset, y: buttonY, width: buttonWidth, height: buttonHeight))
+        saveButton.backgroundColor = UIColor.blue
+        saveButton.setTitle("Копировать", for: .normal)
+        saveButton.addTarget(self, action: #selector(copyUrl), for: .touchUpInside)
+        saveButton.layer.cornerRadius = 20
+        scanCodeView.addSubview(saveButton)
+        
+        let openBrowserButton = UIButton(frame: CGRect(x: saveButton.frame.maxX + buttonSpacing, y: buttonY, width: buttonWidth, height: buttonHeight))
+        openBrowserButton.backgroundColor = UIColor.blue
+        openBrowserButton.setTitle("Открыть", for: .normal)
+        openBrowserButton.addTarget(self, action: #selector(openLinkButtonTapped), for: .touchUpInside)
+        openBrowserButton.layer.cornerRadius = 20
+        scanCodeView.addSubview(openBrowserButton)
+        self.linkToOpen = description
+        
+        let closeButton = UIButton(frame: CGRect(x: scanCodeView.bounds.width - 50, y: 10, width: 40, height: 40))
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = .black
+        closeButton.addTarget(self, action: #selector(closeNewView), for: .touchUpInside)
+        scanCodeView.addSubview(closeButton)
+        
+        self.view.addSubview(scanCodeView)
+        
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        
+        view.addSubview(blurEffectView)
+        view.addSubview(scanCodeView)
+        
+        scanCodeView.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            scanCodeView.alpha = 1
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: .curveEaseInOut, animations: {
+            scanCodeView.center = self.view.center
+            scanCodeView.transform = CGAffineTransform.identity
+        }, completion: nil)
     }
 }
 
@@ -296,16 +422,15 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject?.bounds ?? .zero
             if let link = metadataObj.stringValue {
                 labelDetected.text = link
-                openLink(link)
+                showNewView(description: link)
                 capture.stopRunning()
-                
                 let date = Date()
                 let dateFormat = DateFormatter()
                 dateFormat.locale = Locale(identifier: "ru_RU")
                 dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
                 let dateString = dateFormat.string(from: date)
-                if let myImage = UIImage(named: "internet") {
-                    if let imageData = myImage.pngData() {
+                if let image = generateQRCode(from: link, size: CGSize(width: 300, height: 300)) {
+                    if let imageData = image.pngData() {
                         // Получаем текущие координаты места
                         locationManager.requestWhenInUseAuthorization()
                         if let currentLocation = locationManager.location {
@@ -338,7 +463,6 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                         if let currentLocation = locationManager.location {
                             let latitude = currentLocation.coordinate.latitude
                             let longitude = currentLocation.coordinate.longitude
-                            // Сохраняем данные в Core Data
                             presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
                         }
                     }
