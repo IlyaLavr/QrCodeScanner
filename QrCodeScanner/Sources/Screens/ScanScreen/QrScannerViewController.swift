@@ -23,7 +23,7 @@ protocol PDFGeneratorViewProtocol: AnyObject {
     func saveFile(data: NSData)
 }
 
-final class QrScannerViewController: UIViewController {
+final class QrScannerViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     var presenter: PDFGeneratorPresenterProtocol?
     var capture = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -32,6 +32,7 @@ final class QrScannerViewController: UIViewController {
     var data = NSData()
     let locationManager = CLLocationManager()
     var linkToOpen: String?
+    let options = ["Поделиться ссылкой", "Открыть в браузере", "Сохранить как PDF"]
     
     // MARK: - Elements
     
@@ -73,16 +74,6 @@ final class QrScannerViewController: UIViewController {
         return button
     }()
     
-    private lazy var shareButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: Strings.ScanAnimationScreen.shareButtonText,
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(saveAsPDF))
-        button.isHidden = true
-        button.tintColor = .systemBlue
-        return button
-    }()
-    
     private lazy var slider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 1.0
@@ -93,7 +84,11 @@ final class QrScannerViewController: UIViewController {
         return slider
     }()
     
-    
+    private lazy var dropdownButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Options", style: .plain, target: self, action: #selector(showDropdownMenu))
+        button.image = UIImage(systemName: "square.and.arrow.up")
+        return button
+    }()
     
     // MARK: - Lyfecycle
     
@@ -101,9 +96,16 @@ final class QrScannerViewController: UIViewController {
         super.viewDidLoad()
         setupHierarhy()
         makeConstraints()
-        navigationItem.rightBarButtonItem = shareButton
+        navigationItem.rightBarButtonItem = dropdownButton
+        navigationItem.rightBarButtonItem?.isHidden = true
         scanView()
         locationManager.requestWhenInUseAuthorization()
+    }
+    
+    // MARK: - UIPopoverPresentationControllerDelegate
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
     // MARK: - Setup
@@ -156,10 +158,6 @@ final class QrScannerViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
-    @objc private func saveAsPDF() {
-        presenter?.saveAsPDF(data: data)
-    }
     
     @objc private func flash(_ sender: UIButton) {
         toggleFlash()
@@ -218,6 +216,19 @@ final class QrScannerViewController: UIViewController {
         self.openLink(link)
     }
     
+    @objc private func showDropdownMenu() {
+        let dropdownMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        for (index, option) in options.enumerated() {
+            let action = UIAlertAction(title: option, style: .default, handler: { [weak self] _ in
+                self?.handleOptionSelected(at: index)
+            })
+            dropdownMenu.addAction(action)
+        }
+        dropdownMenu.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
+        dropdownMenu.popoverPresentationController?.barButtonItem = dropdownButton
+        present(dropdownMenu, animated: true, completion: nil)
+    }
+    
     // MARK: - Functions
     
     private func scanView() {
@@ -258,6 +269,10 @@ final class QrScannerViewController: UIViewController {
         }
     }
     
+    private func saveAsPDF() {
+        presenter?.saveAsPDF(data: data)
+    }
+    
     private func exportAsPDF(from webView: WKWebView?) -> NSData? {
         webView?.exportAsPdfFromWebView()
     }
@@ -270,6 +285,11 @@ final class QrScannerViewController: UIViewController {
             self.displayAlertStatusSave(with: alert)
         }
         self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func shareUrl() {
+        let activityVC = UIActivityViewController(activityItems: [labelDetected.text ?? ""], applicationActivities: nil)
+        present(activityVC, animated: true, completion: nil)
     }
     
     private func openLink(_ link: String) {
@@ -291,7 +311,7 @@ final class QrScannerViewController: UIViewController {
             
             webView.load(request)
             self.webView = webView
-            shareButton.isHidden = false
+            navigationItem.rightBarButtonItem?.isHidden = false
             setupProgressView()
             progressView.setProgress(0.1, animated: true)
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -337,17 +357,34 @@ final class QrScannerViewController: UIViewController {
         return UIImage(cgImage: cgImage)
     }
     
+    private func handleOptionSelected(at index: Int) {
+        switch index {
+        case 0:
+            shareUrl()
+        case 1:
+            openLink()
+        case 2:
+            saveAsPDF()
+        default:
+            break
+        }
+    }
+    
+    private func openLink() {
+        presenter?.openBrowser(link: labelDetected.text ?? "")
+    }
+    
     private func showNewView(description: String) {
         let scanCodeView = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 450))
-        scanCodeView.backgroundColor = UIColor.systemGray5
+        scanCodeView.backgroundColor = UIColor.systemGray4
         scanCodeView.alpha = 1
         scanCodeView.layer.cornerRadius = 10
         
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 180, height: 180))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 190, height: 190))
         imageView.center = CGPoint(x: scanCodeView.bounds.midX, y: scanCodeView.bounds.midY - 100)
-        if let qrCodeImage = generateQRCode(from: description, size: CGSize(width: 180, height: 180)) {
+        if let qrCodeImage = generateQRCode(from: description, size: CGSize(width: 190, height: 190)) {
             let qrCodeImageView = UIImageView(image: qrCodeImage)
-            qrCodeImageView.center = CGPoint(x: scanCodeView.bounds.width / 2, y: 100)
+            qrCodeImageView.center = CGPoint(x: scanCodeView.bounds.width / 2, y: 150)
             scanCodeView.addSubview(qrCodeImageView)
         }
         
