@@ -13,12 +13,16 @@ protocol BuilderProtocol {
     func createMainModule(router: RouterProtocol) -> UIViewController
     func createScanScreen(router: RouterProtocol) -> UIViewController
     func createTabBar(router: RouterProtocol) -> UITabBarController
+    func createGenerateModule(router: RouterProtocol) -> UIViewController
+    func createHistoryScreen(router: RouterProtocol) -> UIViewController
     func createDetailModule(code: QrCode, router: RouterProtocol) -> UIViewController
     func createDetailModuleForGeneringCode(code: QrCode, router: RouterProtocol) -> UIViewController
     func createMapScreen(router: RouterProtocol) -> UIViewController
+    func createMapDetailScreen(code: QrCode, router: RouterProtocol) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
+    
     func createMainModule(router: RouterProtocol) -> UIViewController {
         let view = ViewController()
         let presenter = MainScreenPresenter(view: view, router: router)
@@ -32,7 +36,7 @@ class ModuleBuilder: BuilderProtocol {
         view.presenter = presenter
         let navigationController = UINavigationController(rootViewController: view)
         navigationController.modalPresentationStyle = .pageSheet
-        navigationController.modalTransitionStyle = .flipHorizontal
+        navigationController.modalTransitionStyle = .coverVertical
         return navigationController
     }
     
@@ -50,31 +54,15 @@ class ModuleBuilder: BuilderProtocol {
         return view
     }
     
+    func createMapDetailScreen(code: QrCode, router: RouterProtocol) -> UIViewController {
+        let view = MapDetailScreen()
+        let presenter = MapScreenDetailPresenter(code: code, view: view, router: router)
+        view.presenter = presenter
+        return view
+    }
+    
     func createTabBar(router: RouterProtocol) -> UITabBarController {
-        let scanViewController = createMainModule(router: router)
-        scanViewController.tabBarItem = UITabBarItem(
-            title: Strings.TabBar.firstTitle,
-            image: UIImage(systemName: Strings.TabBar.firstImage),
-            selectedImage: nil
-        )
-        
-        let generateViewController = createGenerateModule(router: router)
-        generateViewController.tabBarItem = UITabBarItem(
-            title: Strings.TabBar.secondTitle,
-            image: UIImage(systemName: Strings.TabBar.secondImage),
-            selectedImage: nil
-        )
-        
-        let historyViewController = createHistoryScreen(router: router)
-        historyViewController.tabBarItem = UITabBarItem(
-            title: Strings.TabBar.thirdTitle,
-            image: UIImage(systemName: Strings.TabBar.thirdImage),
-            selectedImage: nil
-        )
-        
-        let tabBar = UITabBarController()
-        tabBar.tabBar.tintColor = UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1)
-        tabBar.viewControllers = [scanViewController, generateViewController, historyViewController]
+        let tabBar = CustomTabBarController(router: router)
         return tabBar
     }
     

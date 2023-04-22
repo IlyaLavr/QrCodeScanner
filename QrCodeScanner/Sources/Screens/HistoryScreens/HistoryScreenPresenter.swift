@@ -87,6 +87,7 @@ final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {
         guard let code = qrCode?.filter({ $0.image != nil })[index.row] else { return }
         router?.showDetailGeneratedCode(code: code)
     }
+    
     func goToMapScreen() {
         router?.showMapScreen()
     }

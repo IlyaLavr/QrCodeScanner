@@ -13,7 +13,9 @@ protocol PDFGeneratorPresenterProtocol: AnyObject {
     
     func saveAsPDF(data: NSData)
     func showAlertNoInternet()
+    func showAlertCopyUrl()
     func openLinkBarCode(barcode: String)
+    func openBrowser(link: String)
     func addCode(withName name: String, date: String, image: Data?, imageBarcode: Data?, latitude: Double, longitude: Double)
 }
 
@@ -34,6 +36,11 @@ final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
     
     func showAlertNoInternet() {
         let alert = Alert.noInternet
+        self.view?.displayAlertStatusSave(with: alert)
+    }
+    
+    func showAlertCopyUrl() {
+        let alert = Alert.urlCopy
         self.view?.displayAlertStatusSave(with: alert)
     }
     
@@ -61,5 +68,9 @@ final class QrScannerPresenter: PDFGeneratorPresenterProtocol {
     func addCode(withName name: String, date: String, image: Data?, imageBarcode: Data?, latitude: Double, longitude: Double) {
         model.addQrCodes(name: name, date: date, image: nil, imageBarcode: imageBarcode, latitude: latitude, longitude: longitude)
         fetchAllQrCodes()
+    }
+    
+    func openBrowser(link: String) {
+        Network.shared.openLinkInBrowser(link)
     }
 }

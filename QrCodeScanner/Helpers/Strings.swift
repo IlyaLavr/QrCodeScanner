@@ -43,5 +43,6 @@ enum Strings {
     enum DetailScreenScanCode {
         static let buttonOpenLink = "openlink"
         static let search = "search"
+        static let viewOnMap = "mappin.and.ellipse"
     }
 }

@@ -73,4 +73,9 @@ extension Alert {
                                   message: "Попробуйте еще раз или сохраните QR код в галерею",
                                   textButtonOk: "Ok",
                                   textButtonCancel: "")
+    
+    static let urlCopy = Alert(title: "Ссылка скопирована",
+                               message: "",
+                               textButtonOk: "Ok",
+                               textButtonCancel: "")
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol ScanningCodeDetailProtocol {
     func setUpParametersCode()
-    
+    func goToMap()
     init(code: QrCode, view: ScanningQrCodeDetailScreenProtocol, router: RouterProtocol)
 }
 
@@ -26,5 +26,9 @@ final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
     
     func setUpParametersCode() {
         view?.setupDetailedView(name: code?.name ?? "", date: code?.date, image: code?.imageBarcode)
+    }
+    
+    func goToMap() {
+        router?.showMapDetailScreen(code: code ?? QrCode())
     }
 }

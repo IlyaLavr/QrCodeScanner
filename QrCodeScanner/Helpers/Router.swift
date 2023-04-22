@@ -18,6 +18,7 @@ protocol RouterProtocol: RouterMain {
     func showDetailScanCode(code: QrCode)
     func showDetailGeneratedCode(code: QrCode)
     func showMapScreen()
+    func showMapDetailScreen(code: QrCode)
 //    func popToRoot()
 }
 
@@ -61,6 +62,13 @@ class Router: RouterProtocol {
     func showMapScreen() {
         if let navigationController = navigationController {
             guard let mapNavigationController = assemblyBuilder?.createMapScreen(router: self) else { return }
+            navigationController.pushViewController(mapNavigationController, animated: true)
+        }
+    }
+    
+    func showMapDetailScreen(code: QrCode) {
+        if let navigationController = navigationController {
+            guard let mapNavigationController = assemblyBuilder?.createMapDetailScreen(code: code, router: self) else { return }
             navigationController.pushViewController(mapNavigationController, animated: true)
         }
     }
