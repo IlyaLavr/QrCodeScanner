@@ -374,7 +374,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         presenter?.openBrowser(link: labelDetected.text ?? "")
     }
     
-    private func showNewView(description: String) {
+    private func showNewViewForQr(description: String) {
         let scanCodeView = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 450))
         scanCodeView.backgroundColor = UIColor.systemGray4
         scanCodeView.alpha = 1
@@ -400,14 +400,14 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         let buttonY: CGFloat = scanCodeView.bounds.height - buttonHeight - 20
         let buttonXOffset = (scanCodeView.bounds.width - buttonWidth * 2 - buttonSpacing) / 2
         
-        let saveButton = UIButton(frame: CGRect(x: buttonXOffset, y: buttonY, width: buttonWidth, height: buttonHeight))
-        saveButton.backgroundColor = UIColor.blue
-        saveButton.setTitle("Копировать", for: .normal)
-        saveButton.addTarget(self, action: #selector(copyUrl), for: .touchUpInside)
-        saveButton.layer.cornerRadius = 20
-        scanCodeView.addSubview(saveButton)
+        let copyurlButton = UIButton(frame: CGRect(x: buttonXOffset, y: buttonY, width: buttonWidth, height: buttonHeight))
+        copyurlButton.backgroundColor = UIColor.blue
+        copyurlButton.setTitle("Копировать", for: .normal)
+        copyurlButton.addTarget(self, action: #selector(copyUrl), for: .touchUpInside)
+        copyurlButton.layer.cornerRadius = 20
+        scanCodeView.addSubview(copyurlButton)
         
-        let openBrowserButton = UIButton(frame: CGRect(x: saveButton.frame.maxX + buttonSpacing, y: buttonY, width: buttonWidth, height: buttonHeight))
+        let openBrowserButton = UIButton(frame: CGRect(x: copyurlButton.frame.maxX + buttonSpacing, y: buttonY, width: buttonWidth, height: buttonHeight))
         openBrowserButton.backgroundColor = UIColor.blue
         openBrowserButton.setTitle("Открыть", for: .normal)
         openBrowserButton.addTarget(self, action: #selector(openLinkButtonTapped), for: .touchUpInside)
@@ -459,7 +459,7 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject?.bounds ?? .zero
             if let link = metadataObj.stringValue {
                 labelDetected.text = link
-                showNewView(description: link)
+                showNewViewForQr(description: link)
                 capture.stopRunning()
                 let date = Date()
                 let dateFormat = DateFormatter()
@@ -487,7 +487,6 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject?.bounds ?? .zero
             if let link = metadataObj.stringValue {
                 presenter?.openLinkBarCode(barcode: link)
-                
                 let date = Date()
                 let dateFormat = DateFormatter()
                 dateFormat.locale = Locale(identifier: "ru_RU")
