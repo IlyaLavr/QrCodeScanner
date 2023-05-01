@@ -168,14 +168,13 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
     
     @objc private func sliderValueChanged(_ sender: UISlider) {
         let zoomFactor = sender.value
-        
         guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
         do {
             try captureDevice.lockForConfiguration()
             defer { captureDevice.unlockForConfiguration() }
             captureDevice.videoZoomFactor = CGFloat(zoomFactor)
         } catch {
-            print("Error setting zoom level: \(error)")
+            print("Error setting zoom level: \(error.localizedDescription)")
         }
     }
     
@@ -297,18 +296,22 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
             presenter?.showAlertNoInternet()
             return
         }
-        if Reachability.isConnectedToNetwork() == true {
             let webConfiguration = WKWebViewConfiguration()
             let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-            
             view.addSubview(webView)
+            let toolbar = UIToolbar()
+            view.addSubview(toolbar)
             webView.snp.makeConstraints { make in
-                make.edges.equalTo(view.snp.edges)
+                make.top.equalTo(toolbar.snp.bottom)
+                make.leading.trailing.bottom.equalToSuperview()
+            }
+            toolbar.snp.makeConstraints { make in
+                make.top.leading.trailing.equalTo(view)
             }
             guard let url = URL(string: link) ?? nil else { return  }
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request)
-            
+
             webView.load(request)
             self.webView = webView
             navigationItem.rightBarButtonItem?.isHidden = false
@@ -316,7 +319,6 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
             progressView.setProgress(0.1, animated: true)
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
             task.resume()
-        }
     }
     
     private func toggleFlash() {
