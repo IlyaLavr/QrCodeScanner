@@ -25,6 +25,9 @@ class ScanningQrCodeDetailScreen: UIViewController {
         text.textColor = .black
         text.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         text.text = ""
+        text.textAlignment = .center
+        text.numberOfLines = 2
+        text.lineBreakMode = .byCharWrapping
         return text
     }()
     
@@ -107,7 +110,8 @@ class ScanningQrCodeDetailScreen: UIViewController {
         nameUrl.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.top.equalToSuperview().offset(100)
-            make.height.equalTo(30)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
         }
         
         dateScan.snp.makeConstraints { make in
