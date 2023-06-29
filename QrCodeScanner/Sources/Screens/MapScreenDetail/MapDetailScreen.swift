@@ -83,32 +83,32 @@ class MapDetailScreen: UIViewController {
     // MARK: - Functions
     
     func checkLocationServices() {
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        DispatchQueue.global().async {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        DispatchQueue.global().async { [self] in
             if CLLocationManager.locationServicesEnabled() {
-                self.locationManager.delegate = self
-                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                self.locationManager.startUpdatingLocation()
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.startUpdatingLocation()
             }
         }
-        if let coor = mapView.userLocation.location?.coordinate{
+        if let coor = mapView.userLocation.location?.coordinate {
             mapView.setCenter(coor, animated: true)
         }
     }
 }
 
+    // MARK: - Extensions
+
 extension MapDetailScreen: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations
-                         locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue = manager.location?.coordinate else { return }
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: locValue, span: span)
         mapView.setRegion(region, animated: true)
         manager.stopUpdatingLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Ошибка получения локации: \(error.localizedDescription)")
     }

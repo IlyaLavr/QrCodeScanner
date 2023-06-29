@@ -10,7 +10,8 @@ import Foundation
 protocol ScanningCodeDetailProtocol {
     func setUpParametersCode()
     func goToMap()
-    init(code: QrCode, view: ScanningQrCodeDetailScreenProtocol, router: RouterProtocol)
+    func openLink(url: String)
+    func searchInBrowser(url: String)
 }
 
 final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
@@ -30,5 +31,13 @@ final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
     
     func goToMap() {
         router?.showMapDetailScreen(code: code ?? QrCode())
+    }
+    
+    func openLink(url: String) {
+            Network.shared.openLinkInBrowser(url)
+        }
+    
+    func searchInBrowser(url: String) {
+        Network.shared.searchProductByCode(url)
     }
 }

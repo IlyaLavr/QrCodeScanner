@@ -20,7 +20,7 @@ class ScanningQrCodeDetailScreen: UIViewController {
         return obj
     }()
     
-   private lazy var nameUrl: UILabel = {
+    private lazy var nameUrl: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -31,7 +31,7 @@ class ScanningQrCodeDetailScreen: UIViewController {
         return text
     }()
     
-   private lazy var dateScan: UILabel = {
+    private lazy var dateScan: UILabel = {
         let text = UILabel()
         text.textColor = .black
         text.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -74,7 +74,8 @@ class ScanningQrCodeDetailScreen: UIViewController {
     
     private lazy var viewOnMap: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: Strings.DetailScreenScanCode.viewOnMap)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        let image = UIImage(systemName: Strings.DetailScreenScanCode.viewOnMap)?
+            .resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor.customBlueDark)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(viewMap), for: .touchUpInside)
         return button
@@ -158,17 +159,19 @@ class ScanningQrCodeDetailScreen: UIViewController {
     // MARK: - Action
     
     @objc func openLink() {
-        Network.shared.openLinkInBrowser(nameUrl.text ?? "")
+        presenter?.openLink(url: nameUrl.text ?? "")
     }
     
     @objc func searchInBrowser() {
-        Network.shared.searchProductByCode(nameUrl.text ?? "")
+        presenter?.searchInBrowser(url: nameUrl.text ?? "")
     }
     
     @objc func viewMap() {
         presenter?.goToMap()
     }
 }
+
+    // MARK: - Extension
 
 extension ScanningQrCodeDetailScreen: ScanningQrCodeDetailScreenProtocol {
     func setupDetailedView(name: String, date: String?, image: Data?) {

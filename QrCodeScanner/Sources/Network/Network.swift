@@ -7,9 +7,6 @@
 
 import UIKit
 
-protocol NetworkProtocol: AnyObject {
-}
-
 class Network {
     static let shared = Network()
     

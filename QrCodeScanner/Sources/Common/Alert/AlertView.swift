@@ -28,6 +28,7 @@ final class AlertView {
         view.present(alert, animated: true, completion: nil)
     }
 }
+
 extension Alert {
     static let succefulSave = Alert(title: "PDF Saved",
                                     message: "Файл был успешно сохранен",

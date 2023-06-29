@@ -9,7 +9,6 @@ import Foundation
 
 protocol MainPresenterProtocol: AnyObject {
     func goToScanVc()
-    init(view: MainViewProtocol, router: RouterProtocol)
 }
 
 final class MainScreenPresenter: MainPresenterProtocol {
