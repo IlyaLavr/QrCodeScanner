@@ -158,22 +158,13 @@ class GenerateScreenViewController: UIViewController {
         imageQrCode.isHidden = false
         
         let date = Date()
-        let dateFormat = DateFormatter()
-        dateFormat.locale = Locale(identifier: "ru_RU")
-        dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
-        let dateString = dateFormat.string(from: date)
-        if let image = imageQrCode.image {
-        if let imageData = image.jpegData(compressionQuality: 1.0) {
+        let dateString = DateFormatter.localizedDateString(from: date)
+        guard let image = imageQrCode.image, let imageData = image.jpegData(compressionQuality: 1.0) else { return }
             locationManager.requestWhenInUseAuthorization()
-            if let currentLocation = locationManager.location {
+            guard let currentLocation = locationManager.location else { return }
                 let latitude = currentLocation.coordinate.latitude
                 let longitude = currentLocation.coordinate.longitude
-                
-                // Сохраняем данные в Core Data
                 presenter?.addCode(withName: text, date: dateString, image: imageData, imageBarcode: nil, latitude: latitude, longitude: longitude)
-            }
-            }
-        }
     }
     
     @objc private func shareQrCode() {
@@ -229,7 +220,7 @@ class GenerateScreenViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
+    // MARK: - Extensions
 
 extension GenerateScreenViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

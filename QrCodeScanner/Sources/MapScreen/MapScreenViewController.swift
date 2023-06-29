@@ -72,7 +72,7 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
     
     // MARK: - Actions
     
-    @objc func location() {
+    @objc private func location() {
         let status = CLLocationManager.authorizationStatus()
         if status == .authorizedAlways || status == .authorizedWhenInUse {
             locationManager.startUpdatingLocation()
@@ -83,7 +83,7 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
     
     // MARK: - Functions
     
-    func checkLocationServices() {
+    private func checkLocationServices() {
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -99,7 +99,7 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
         }
     }
     
-    func fetchQrCodeOnMap() {
+    private func fetchQrCodeOnMap() {
         if let fetchQrCodes = presenter?.fetchAllQrCodes() {
             for qrCode in fetchQrCodes {
                 let annotations = MKPointAnnotation()

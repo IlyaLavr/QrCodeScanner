@@ -14,8 +14,6 @@ protocol GenerateScreenPresenterProtocol: AnyObject {
     func showAlertSuccefulSave()
     func addCode(withName name: String, date: String, image: Data, imageBarcode: Data?, latitude: Double, longitude: Double)
     func goToMapScreen()
-    
-    init(view: GenerateScreenViewProtocol, router: RouterProtocol)
 }
 
 final class GenerateScreenPresenter: GenerateScreenPresenterProtocol {
@@ -60,7 +58,6 @@ final class GenerateScreenPresenter: GenerateScreenPresenterProtocol {
 
     func addCode(withName name: String, date: String, image: Data, imageBarcode: Data?, latitude: Double, longitude: Double) {
         model.addQrCodes(name: name, date: date, image: image, imageBarcode: imageBarcode, latitude: latitude, longitude: longitude)
-
         fetchAllQrCodes()
     }
     

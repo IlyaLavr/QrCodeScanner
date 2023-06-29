@@ -18,6 +18,14 @@ enum Strings {
         static let animationName = "qr-scannig-process"
         static let labelDetectedText = "Наведите камеру на код"
         static let shareButtonText = "Поделиться"
+        
+        static let flashButtonOn = "bolt.circle.fill"
+        static let flashButtonOff = "bolt.circle"
+        static let thumbImage = "zoom"
+        
+        static let toolBarRigthButton = "square.and.arrow.up"
+        
+        static let imageForBarcode = "barcode"
     }
     
     enum GenerateScreen {

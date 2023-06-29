@@ -51,7 +51,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         let label = UILabel()
         label.text = Strings.ScanAnimationScreen.labelDetectedText
         label.textColor = .black
-        label.backgroundColor = UIColor(red: 86/255, green: 141/255, blue: 223/255, alpha: 1)
+        label.backgroundColor = UIColor.customBlue
         label.layer.opacity = 0.8
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold, width: .compressed)
@@ -66,19 +66,27 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
     
     private lazy var flashButton: UIButton = {
         let button = UIButton()
-        let imageOff = UIImage(systemName: "lightbulb.slash")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
-        let imageOn = UIImage(systemName: "lightbulb.led.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+        let buttonEdgeInsets = UIEdgeInsets(top: -30, left: -30, bottom: -20, right: -20)
+        let imageOff = UIImage(systemName: Strings.ScanAnimationScreen.flashButtonOff)?
+            .resized(to: CGSize(width: 50, height: 50))
+            .withTintColor(.systemBlue)
+        let imageOn = UIImage(systemName: Strings.ScanAnimationScreen.flashButtonOn)?
+            .resized(to: CGSize(width: 50, height: 50))
+            .withTintColor(.systemGreen)
         button.setImage(imageOff, for: .normal)
         button.setImage(imageOn, for: .selected)
         button.addTarget(self, action: #selector(flash), for: .touchUpInside)
+        button.hitTestEdgeInsets = buttonEdgeInsets
         return button
     }()
     
     private lazy var slider: UISlider = {
         let slider = UISlider()
+        let thumbImage = UIImage(named: Strings.ScanAnimationScreen.thumbImage)?
+            .resized(to: CGSize(width: 35, height: 30))
         slider.minimumValue = 1.0
         slider.maximumValue = 10.0
-        let thumbImage = UIImage(named: "scope")
+        slider.minimumTrackTintColor = UIColor.customBlue
         slider.setThumbImage(thumbImage, for: .normal)
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
         return slider
@@ -86,7 +94,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
     
     private lazy var dropdownButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Options", style: .plain, target: self, action: #selector(showDropdownMenu))
-        button.image = UIImage(systemName: "square.and.arrow.up")
+        button.image = UIImage(systemName: Strings.ScanAnimationScreen.toolBarRigthButton)
         return button
     }()
     
@@ -96,8 +104,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         super.viewDidLoad()
         setupHierarhy()
         makeConstraints()
-        navigationItem.rightBarButtonItem = dropdownButton
-        navigationItem.rightBarButtonItem?.isHidden = true
+        configureToolbar()
         scanView()
         locationManager.requestWhenInUseAuthorization()
     }
@@ -134,9 +141,9 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         }
         
         flashButton.snp.makeConstraints { make in
-            make.bottom.equalTo(scanAnimation.snp.top).offset(-20)
-            make.left.equalTo(view.snp.left).offset(0)
-            make.right.equalTo(view.snp.right).offset(0)
+            make.top.equalTo(view.snp.top).offset(10)
+            make.trailing.equalTo(view.snp.trailing).offset(-10)
+            make.height.width.equalTo(50)
         }
         
         slider.snp.makeConstraints { make in
@@ -162,24 +169,23 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
     @objc private func flash(_ sender: UIButton) {
         toggleFlash()
         sender.isSelected = !sender.isSelected
-        let image = sender.isSelected ? UIImage(systemName: "lightbulb.led.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue) : UIImage(systemName: "lightbulb.slash")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+        let image = sender.isSelected ? UIImage(systemName: Strings.ScanAnimationScreen.flashButtonOff)?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue) : UIImage(systemName: Strings.ScanAnimationScreen.flashButtonOn)?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
         sender.setImage(image, for: .normal)
     }
     
     @objc private func sliderValueChanged(_ sender: UISlider) {
         let zoomFactor = sender.value
-        
         guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
         do {
             try captureDevice.lockForConfiguration()
             defer { captureDevice.unlockForConfiguration() }
             captureDevice.videoZoomFactor = CGFloat(zoomFactor)
         } catch {
-            print("Error setting zoom level: \(error)")
+            print(error.localizedDescription)
         }
     }
     
-    @objc func closeNewView(_ sender: UIButton) {
+    @objc private func closeNewView(_ sender: UIButton) {
         if let newView = self.view.subviews.last,
            let blurEffectView = self.view.subviews.filter({ $0 is UIVisualEffectView }).last as? UIVisualEffectView {
             UIView.animate(withDuration: 0.3, animations: {
@@ -204,7 +210,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         }
     }
     
-    @objc func copyUrl() {
+    @objc private func copyUrl() {
         UIPasteboard.general.string = labelDetected.text
         presenter?.showAlertCopyUrl()
     }
@@ -246,7 +252,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: capture)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer?.frame = view.layer.bounds
-            view.layer.addSublayer(videoPreviewLayer!)
+            view.layer.addSublayer(videoPreviewLayer ?? AVCaptureVideoPreviewLayer())
             progressView.isHidden = false
             DispatchQueue.global().async {
                 self.capture.startRunning()
@@ -287,7 +293,7 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         self.present(activityViewController, animated: true, completion: nil)
     }
     
-    func shareUrl() {
+    private func shareUrl() {
         let activityVC = UIActivityViewController(activityItems: [labelDetected.text ?? ""], applicationActivities: nil)
         present(activityVC, animated: true, completion: nil)
     }
@@ -297,26 +303,29 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
             presenter?.showAlertNoInternet()
             return
         }
-        if Reachability.isConnectedToNetwork() == true {
-            let webConfiguration = WKWebViewConfiguration()
-            let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-            
-            view.addSubview(webView)
-            webView.snp.makeConstraints { make in
-                make.edges.equalTo(view.snp.edges)
-            }
-            guard let url = URL(string: link) ?? nil else { return  }
-            let request = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: request)
-            
-            webView.load(request)
-            self.webView = webView
-            navigationItem.rightBarButtonItem?.isHidden = false
-            setupProgressView()
-            progressView.setProgress(0.1, animated: true)
-            webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-            task.resume()
+        let webConfiguration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        view.addSubview(webView)
+        let toolbar = UIToolbar()
+        view.addSubview(toolbar)
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(toolbar.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
+        toolbar.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view)
+        }
+        guard let url = URL(string: link) ?? nil else { return  }
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request)
+        
+        webView.load(request)
+        self.webView = webView
+        navigationItem.rightBarButtonItem?.isHidden = false
+        setupProgressView()
+        progressView.setProgress(0.1, animated: true)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        task.resume()
     }
     
     private func toggleFlash() {
@@ -440,6 +449,11 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
             scanCodeView.transform = CGAffineTransform.identity
         }, completion: nil)
     }
+    
+    private func configureToolbar() {
+        navigationItem.rightBarButtonItem = dropdownButton
+        navigationItem.rightBarButtonItem?.isHidden = true
+    }
 }
 
 // MARK: - Extensions
@@ -457,54 +471,42 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if metadataObj.type == AVMetadataObject.ObjectType.qr {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject?.bounds ?? .zero
-            if let link = metadataObj.stringValue {
-                labelDetected.text = link
-                showNewViewForQr(description: link)
-                capture.stopRunning()
-                let date = Date()
-                let dateFormat = DateFormatter()
-                dateFormat.locale = Locale(identifier: "ru_RU")
-                dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
-                let dateString = dateFormat.string(from: date)
-                if let image = generateQRCode(from: link, size: CGSize(width: 300, height: 300)) {
-                    if let imageData = image.pngData() {
-                        // Получаем текущие координаты места
-                        locationManager.requestWhenInUseAuthorization()
-                        if let currentLocation = locationManager.location {
-                            let latitude = currentLocation.coordinate.latitude
-                            let longitude = currentLocation.coordinate.longitude
-                            // Сохраняем данные в Core Data
-                            presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
-                        }
-                    }
-                }
-            }
+            guard let link = metadataObj.stringValue else { return }
+            labelDetected.text = link
+            showNewViewForQr(description: link)
+            capture.stopRunning()
+            let date = Date()
+            let dateString = DateFormatter.localizedDateString(from: date)
+            guard let image = generateQRCode(from: link, size: CGSize(width: 300, height: 300)),
+                  let imageData = image.pngData() else { return }
+            locationManager.requestWhenInUseAuthorization()
+            guard let currentLocation = locationManager.location else { return }
+            
+            let latitude = currentLocation.coordinate.latitude
+            let longitude = currentLocation.coordinate.longitude
+            
+            presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue
             }
         } else if metadataObj.type == AVMetadataObject.ObjectType.ean8 || metadataObj.type == AVMetadataObject.ObjectType.ean13 || metadataObj.type == AVMetadataObject.ObjectType.pdf417 {
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
             qrCodeFrameView?.frame = barCodeObject?.bounds ?? .zero
-            if let link = metadataObj.stringValue {
+            guard let link = metadataObj.stringValue else { return }
                 presenter?.openLinkBarCode(barcode: link)
                 let date = Date()
-                let dateFormat = DateFormatter()
-                dateFormat.locale = Locale(identifier: "ru_RU")
-                dateFormat.dateFormat = "d MMMM yyyy 'г.' HH:mm:ss"
-                let dateString = dateFormat.string(from: date)
-                if let myImage = UIImage(named: "barcode") {
-                    if let imageData = myImage.pngData() {
-                        // Получаем текущие координаты места
-                        locationManager.requestWhenInUseAuthorization()
-                        if let currentLocation = locationManager.location {
-                            let latitude = currentLocation.coordinate.latitude
-                            let longitude = currentLocation.coordinate.longitude
-                            presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
-                        }
-                    }
+                let dateString = DateFormatter.localizedDateString(from: date)
+                guard let myImage = UIImage(named: Strings.ScanAnimationScreen.imageForBarcode),
+                      let imageData = myImage.pngData(),
+                      let currentLocation = locationManager.location else {
+                    capture.stopRunning()
+                    return
                 }
+                let latitude = currentLocation.coordinate.latitude
+                let longitude = currentLocation.coordinate.longitude
+                presenter?.addCode(withName: link, date: dateString, image: nil, imageBarcode: imageData, latitude: latitude, longitude: longitude)
                 capture.stopRunning()
-            }
+
             if metadataObj.stringValue != nil {
                 labelDetected.text = metadataObj.stringValue
                 scanAnimation.stop()
@@ -523,7 +525,6 @@ extension QrScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 }
 
 extension QrScannerViewController: PDFGeneratorViewProtocol {
-    
     func displayAlert(with type: Alert, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
         AlertView.showAlert(type: type, okHandler: okHandler, cancelHandler: cancelHandler, view: self)
     }

@@ -29,6 +29,9 @@ class SavingGeneringCodeViewController: UIViewController {
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.text = ""
+        label.textAlignment = .center
+        label.numberOfLines = 4
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -102,9 +105,10 @@ class SavingGeneringCodeViewController: UIViewController {
         }
         
         nameCode.snp.makeConstraints { make in
-            make.centerX.equalTo(view)
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(100)
-            make.height.equalTo(30)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
         }
         
         dateGenering.snp.makeConstraints { make in

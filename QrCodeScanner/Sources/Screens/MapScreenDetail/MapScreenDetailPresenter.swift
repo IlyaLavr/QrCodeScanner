@@ -9,7 +9,6 @@ import Foundation
 
 protocol MapScreenDetailProtocol: AnyObject {
     func setupCoordinatesView()
-    init(code: QrCode, view: MapDetailScreenProtocol, router: RouterProtocol)
 }
 
 final class MapScreenDetailPresenter: MapScreenDetailProtocol {

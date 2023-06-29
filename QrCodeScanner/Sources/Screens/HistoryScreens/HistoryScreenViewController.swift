@@ -31,7 +31,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     }()
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = nil
         tableView.tintColor = .blue
         tableView.delegate = self
@@ -53,6 +53,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         button.addTarget(self, action: #selector(goToMap), for: .touchUpInside)
         return button
     }()
+    
     // MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -89,10 +90,10 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(segmentControl.snp.bottom).offset(12)
-            make.height.equalTo(30)
+            make.height.equalTo(20)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(segmentControl.snp.bottom).offset(20)
+            make.top.equalTo(button.snp.bottom).offset(20)
             make.left.right.equalTo(view)
             make.bottom.equalTo(view)
         }
