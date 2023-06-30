@@ -30,13 +30,13 @@ final class AlertView {
 }
 
 extension Alert {
-    static let succefulSave = Alert(title: "PDF Saved",
+    static let succefulSave = Alert(title: "Урааа, все прошло хорошо!",
                                     message: "Файл был успешно сохранен",
                                     textButtonOk: "Ok",
                                     textButtonCancel: "")
     
-    static let  failedSave = Alert(title: "Failed to save PDF",
-                                   message: "Не удалось сохранить файл",
+    static let  failedSave = Alert(title: "Не удалось сохранить файл",
+                                   message: "Попробуйте еще раз",
                                    textButtonOk: "Ok",
                                    textButtonCancel: "")
     
@@ -45,14 +45,14 @@ extension Alert {
                                    textButtonOk: "Перейти",
                                    textButtonCancel: "Отмена")
     
-    static let noInternet = Alert(title: "Нет Интернета",
+    static let noInternet = Alert(title: "Что-то с интернетом",
                                   message: "Проверьте соеднение с интернетом",
                                   textButtonOk: "Ok",
                                   textButtonCancel: "")
     
-    static let emptyStrig = Alert(title: "Пустая строка",
-                                  message: "Введите текст или URL для генерации QR кода",
-                                  textButtonOk: "Ok",
+    static let emptyStrig = Alert(title: "Пусто 🤷🏽‍♂️",
+                                  message: "Введите что-нибудь чтобы сгенерировать QR код",
+                                  textButtonOk: "Сейчас напишу",
                                   textButtonCancel: "")
     
     static let saveInGaleryStatus = Alert(title: "Файл будет сохранен в галерее телефона",
@@ -60,11 +60,12 @@ extension Alert {
                                           textButtonOk: "Сохранить",
                                           textButtonCancel: "Не сохранять")
     
-    static let succefulSaveInGalery = Alert(title: "Файл успешно сохранен в галерею",
+    static let succefulSaveInGalery = Alert(title: "Супер! Фото теперь у вас в галерее 🥳",
                                             message: "",
                                             textButtonOk: "Ok",
                                             textButtonCancel: "")
-    static let errorSaveGallery = Alert(title: "Вы не захотели сохранить код",
+    
+    static let errorSaveGallery = Alert(title: "Вы не захотели сохранить код 🙁",
                                         message: "Но вы можете поделиться им с друзьями!",
                                         textButtonOk: "Ok",
                                         textButtonCancel: "")
