@@ -411,21 +411,21 @@ final class QrScannerViewController: UIViewController, UIPopoverPresentationCont
         
         let copyurlButton = UIButton(frame: CGRect(x: buttonXOffset, y: buttonY, width: buttonWidth, height: buttonHeight))
         copyurlButton.backgroundColor = UIColor.blue
-        copyurlButton.setTitle("Копировать", for: .normal)
+        copyurlButton.setTitle(Strings.ScanAnimationScreen.titleCopyNewWindow, for: .normal)
         copyurlButton.addTarget(self, action: #selector(copyUrl), for: .touchUpInside)
         copyurlButton.layer.cornerRadius = 20
         scanCodeView.addSubview(copyurlButton)
         
         let openBrowserButton = UIButton(frame: CGRect(x: copyurlButton.frame.maxX + buttonSpacing, y: buttonY, width: buttonWidth, height: buttonHeight))
         openBrowserButton.backgroundColor = UIColor.blue
-        openBrowserButton.setTitle("Открыть", for: .normal)
+        openBrowserButton.setTitle(Strings.ScanAnimationScreen.titleOpenLinkNewWindow, for: .normal)
         openBrowserButton.addTarget(self, action: #selector(openLinkButtonTapped), for: .touchUpInside)
         openBrowserButton.layer.cornerRadius = 20
         scanCodeView.addSubview(openBrowserButton)
         self.linkToOpen = description
         
         let closeButton = UIButton(frame: CGRect(x: scanCodeView.bounds.width - 50, y: 10, width: 40, height: 40))
-        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.setImage(UIImage(systemName: Strings.ScanAnimationScreen.closeButtonNewWindow), for: .normal)
         closeButton.tintColor = .black
         closeButton.addTarget(self, action: #selector(closeNewView), for: .touchUpInside)
         scanCodeView.addSubview(closeButton)

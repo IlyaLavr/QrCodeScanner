@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 protocol ScanningQrCodeDetailScreenProtocol: AnyObject {
     func setupDetailedView(name: String, date: String?, image: Data?)
 }
@@ -195,7 +196,8 @@ class ScanningQrCodeDetailScreen: UIViewController {
     }
     
     @objc func deleteCode() {
-        presenter?.deleteCode(index: index ?? IndexPath())
+        guard let index = index else { return }
+        presenter?.deleteCode(index: index)
     }
 }
 

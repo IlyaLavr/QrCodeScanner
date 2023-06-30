@@ -22,7 +22,6 @@ protocol BuilderProtocol {
 }
 
 class ModuleBuilder: BuilderProtocol {
-    
     func createMainModule(router: RouterProtocol) -> UIViewController {
         let view = ViewController()
         let presenter = MainScreenPresenter(view: view, router: router)

@@ -20,8 +20,6 @@ protocol HistoryScreenPresenterProtocol: AnyObject {
     func showDetailGeneratedCode(code index: IndexPath)
     func fetchQrCodesWithoutImage() -> [QrCode]
     func goToMapScreen()
-    
-    init(view: HistoryScreenViewProtocol, router: RouterProtocol)
 }
 
 final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {

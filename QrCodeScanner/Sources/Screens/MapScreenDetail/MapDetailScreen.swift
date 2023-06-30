@@ -13,7 +13,6 @@ protocol MapDetailScreenProtocol: AnyObject {
 }
 
 class MapDetailScreen: UIViewController {
-    
     var presenter: MapScreenDetailProtocol?
     
     // MARK: - Elements
@@ -98,7 +97,7 @@ class MapDetailScreen: UIViewController {
     }
 }
 
-    // MARK: - Extensions
+// MARK: - Extensions
 
 extension MapDetailScreen: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -108,7 +107,7 @@ extension MapDetailScreen: CLLocationManagerDelegate {
         mapView.setRegion(region, animated: true)
         manager.stopUpdatingLocation()
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Ошибка получения локации: \(error.localizedDescription)")
     }

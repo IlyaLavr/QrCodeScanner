@@ -26,8 +26,8 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     }()
     
     private lazy var background: UIImageView = {
-        let obj = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
-        return obj
+        let image = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
+        return image
     }()
     
     lazy var tableView: UITableView = {
@@ -44,7 +44,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
 
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.setTitle("Посмотреть на карте", for: .normal)
+        button.setTitle(Strings.HistoryScreen.titleButtonMap, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.2

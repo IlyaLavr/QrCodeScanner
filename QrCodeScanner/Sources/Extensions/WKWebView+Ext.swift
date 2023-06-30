@@ -17,9 +17,9 @@ extension WKWebView {
     func createPdfFile(printFormatter: UIViewPrintFormatter) -> NSMutableData {
         let originalBounds = bounds
         bounds = CGRect(x: originalBounds.origin.x,
-                             y: bounds.origin.y,
-                             width: bounds.size.width,
-                             height: scrollView.contentSize.height)
+                        y: bounds.origin.y,
+                        width: bounds.size.width,
+                        height: scrollView.contentSize.height)
         let pdfPageFrame = CGRect(x: 0, y: 0, width: bounds.size.width,
                                   height: scrollView.contentSize.height)
         

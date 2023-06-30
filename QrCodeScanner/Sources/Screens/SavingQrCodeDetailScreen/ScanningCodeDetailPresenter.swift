@@ -37,8 +37,8 @@ final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
     }
     
     func openLink(url: String) {
-            Network.shared.openLinkInBrowser(url)
-        }
+        Network.shared.openLinkInBrowser(url)
+    }
     
     func searchInBrowser(url: String) {
         Network.shared.searchProductByCode(url)

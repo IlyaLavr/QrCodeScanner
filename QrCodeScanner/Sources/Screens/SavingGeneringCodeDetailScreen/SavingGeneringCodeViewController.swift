@@ -188,7 +188,8 @@ class SavingGeneringCodeViewController: UIViewController {
     }
     
     @objc func deleteCode() {
-        presenter?.deleteCode(index: index ?? IndexPath())
+        guard let index = index else { return }
+        presenter?.deleteCode(index: index)
     }
     
     // MARK: - Functions
