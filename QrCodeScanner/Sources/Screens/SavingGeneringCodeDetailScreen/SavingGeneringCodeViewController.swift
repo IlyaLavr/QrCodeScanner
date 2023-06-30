@@ -16,6 +16,7 @@ protocol SavingGeneringCodeViewProtocol: AnyObject {
 
 class SavingGeneringCodeViewController: UIViewController {
     var presenter: GeneringCodeDetailProtocol?
+    var index: IndexPath?
     
     private lazy var background: UIImageView = {
         let obj = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
@@ -56,7 +57,7 @@ class SavingGeneringCodeViewController: UIViewController {
     
     private lazy var buttonSave: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: Strings.GenerateScreen.buttonSave)?.resized(to: CGSize(width: 70, height: 70)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonSave)?.resized(to: CGSize(width: 70, height: 70)).withTintColor(UIColor.customBlueDark)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(saveToGalery), for: .touchUpInside)
         return button
@@ -64,7 +65,9 @@ class SavingGeneringCodeViewController: UIViewController {
     
     private lazy var buttonShare: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: Strings.GenerateScreen.buttonShare)?.resized(to: CGSize(width: 70, height: 70)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonShare)?
+            .resized(to: CGSize(width: 70, height: 70))
+            .withTintColor(UIColor.customBlueDark)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(shareQrCode), for: .touchUpInside)
         return button
@@ -72,9 +75,19 @@ class SavingGeneringCodeViewController: UIViewController {
     
     private lazy var viewOnMap: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: Strings.DetailScreenScanCode.viewOnMap)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        let image = UIImage(systemName: Strings.DetailScreenScanCode.viewOnMap)?
+            .resized(to: CGSize(width: 30, height: 30))
+            .withTintColor(UIColor.customBlueDark)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(viewMap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var buttonDelete: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        button.tintColor = .red
+        button.addTarget(self, action: #selector(deleteCode), for: .touchUpInside)
         return button
     }()
     
@@ -85,6 +98,16 @@ class SavingGeneringCodeViewController: UIViewController {
         setupHierarhy()
         makeConstraints()
         presenter?.setUpParametersCode()
+        configButtonNavigationBar()
+    }
+    
+    init(index: IndexPath) {
+        self.index = index
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Setup
@@ -153,8 +176,8 @@ class SavingGeneringCodeViewController: UIViewController {
     }
     
     @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            print("Error saving image to gallery: \(error.localizedDescription)")
+        if error != nil {
+            presenter?.errorSaveGallery()
         } else {
             presenter?.showAlertSuccefulSave()
         }
@@ -162,6 +185,10 @@ class SavingGeneringCodeViewController: UIViewController {
     
     @objc func viewMap() {
         presenter?.goToMap()
+    }
+    
+    @objc func deleteCode() {
+        presenter?.deleteCode(index: index ?? IndexPath())
     }
     
     // MARK: - Functions
@@ -192,6 +219,11 @@ class SavingGeneringCodeViewController: UIViewController {
             
         }
         self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    private func configButtonNavigationBar() {
+        let deleteButton = UIBarButtonItem(customView: buttonDelete)
+            navigationItem.rightBarButtonItem = deleteButton
     }
 }
 

@@ -92,6 +92,7 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
             make.top.equalTo(segmentControl.snp.bottom).offset(12)
             make.height.equalTo(20)
         }
+        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(button.snp.bottom).offset(20)
             make.left.right.equalTo(view)
@@ -101,24 +102,22 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
     
     // MARK: - Actions
     
-    @objc func selectSaveCode() {
+    @objc private func selectSaveCode() {
         UISelectionFeedbackGenerator().selectionChanged()
-
         switch segmentControl.selectedSegmentIndex {
         case 0:
             tableView.dataSource = self
             reloadTable()
-            
         case 1:
-            reloadTable()
             tableView.dataSource = self
+            reloadTable()
         default:
-            tableView.reloadData()
             tableView.dataSource = nil
+            reloadTable()
         }
     }
  
-    @objc func goToMap() {
+    @objc private func goToMap() {
         presenter?.goToMapScreen()
     }
   
@@ -128,6 +127,8 @@ class HistoryScreenViewController: UIViewController, HistoryScreenViewProtocol {
         tableView.reloadData()
     }
 }
+
+    // MARK: - Extensions
 
 extension HistoryScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

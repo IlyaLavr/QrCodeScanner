@@ -12,6 +12,7 @@ protocol ScanningQrCodeDetailScreenProtocol: AnyObject {
 
 class ScanningQrCodeDetailScreen: UIViewController {
     var presenter: ScanningCodeDetailProtocol?
+    var index: IndexPath?
     
     // MARK: - Elements
     
@@ -81,6 +82,14 @@ class ScanningQrCodeDetailScreen: UIViewController {
         return button
     }()
     
+    private lazy var buttonDelete: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        button.tintColor = .red
+        button.addTarget(self, action: #selector(deleteCode), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -89,6 +98,16 @@ class ScanningQrCodeDetailScreen: UIViewController {
         makeConstraints()
         presenter?.setUpParametersCode()
         hideButton()
+        configButtonNavigationBar()
+    }
+    
+    init(index: IndexPath) {
+        self.index = index
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Setup
@@ -148,12 +167,17 @@ class ScanningQrCodeDetailScreen: UIViewController {
     
     // MARK: - Function
     
-    func hideButton() {
+   private func hideButton() {
         if let labelText = nameUrl.text, labelText.hasPrefix("http://") || labelText.hasPrefix("https://") {
             buttonSearch.isHidden = true
         } else {
             buttonOpenLink.isHidden = true
         }
+    }
+    
+    private func configButtonNavigationBar() {
+        let deleteButton = UIBarButtonItem(customView: buttonDelete)
+            navigationItem.rightBarButtonItem = deleteButton
     }
     
     // MARK: - Action
@@ -168,6 +192,10 @@ class ScanningQrCodeDetailScreen: UIViewController {
     
     @objc func viewMap() {
         presenter?.goToMap()
+    }
+    
+    @objc func deleteCode() {
+        presenter?.deleteCode(index: index ?? IndexPath())
     }
 }
 

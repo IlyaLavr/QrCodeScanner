@@ -80,12 +80,12 @@ final class HistoryScreenPresenter: HistoryScreenPresenterProtocol {
     
     func showDetail(code index: IndexPath) {
         guard let code = qrCode?.filter({ $0.imageBarcode != nil })[index.row] else { return }
-        router?.showDetailScanCode(code: code)
+        router?.showDetailScanCode(code: code, index: index)
     }
     
     func showDetailGeneratedCode(code index: IndexPath) {
         guard let code = qrCode?.filter({ $0.image != nil })[index.row] else { return }
-        router?.showDetailGeneratedCode(code: code)
+        router?.showDetailGeneratedCode(code: code, index: index)
     }
     
     func goToMapScreen() {

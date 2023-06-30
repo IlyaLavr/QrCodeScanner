@@ -15,11 +15,11 @@ protocol RouterMain {
 protocol RouterProtocol: RouterMain {
     func initialViewController()
     func showQrScanner()
-    func showDetailScanCode(code: QrCode)
-    func showDetailGeneratedCode(code: QrCode)
+    func showDetailScanCode(code: QrCode, index: IndexPath)
+    func showDetailGeneratedCode(code: QrCode, index: IndexPath)
     func showMapScreen()
     func showMapDetailScreen(code: QrCode)
-//    func popToRoot()
+    func popToRoot()
 }
 
 class Router: RouterProtocol {
@@ -45,16 +45,16 @@ class Router: RouterProtocol {
         }
     }
     
-    func showDetailScanCode(code: QrCode) {
+    func showDetailScanCode(code: QrCode, index: IndexPath) {
         if let navigationController = navigationController {
-            guard let detailViewController = assemblyBuilder?.createDetailModule(code: code, router: self) else { return }
+            guard let detailViewController = assemblyBuilder?.createDetailModule(code: code, router: self, index: index) else { return }
             navigationController.pushViewController(detailViewController, animated: true)
         }
     }
     
-    func showDetailGeneratedCode(code: QrCode) {
+    func showDetailGeneratedCode(code: QrCode, index: IndexPath) {
         if let navigationController = navigationController {
-            guard let detailViewController = assemblyBuilder?.createDetailModuleForGeneringCode(code: code, router: self) else { return }
+            guard let detailViewController = assemblyBuilder?.createDetailModuleForGeneringCode(code: code, router: self, index: index) else { return }
             navigationController.pushViewController(detailViewController, animated: true)
         }
     }
@@ -73,9 +73,9 @@ class Router: RouterProtocol {
         }
     }
     
-//    func popToRoot() {
-//        if let navigationController = navigationController {
-//            navigationController.popToRootViewController(animated: true)
-//        }
-//    }
+    func popToRoot() {
+        if let navigationController = navigationController {
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
 }
