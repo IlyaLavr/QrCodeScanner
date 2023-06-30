@@ -64,6 +64,10 @@ extension Alert {
                                             message: "",
                                             textButtonOk: "Ok",
                                             textButtonCancel: "")
+    static let errorSaveGallery = Alert(title: "Вы не захотели сохранить код",
+                                        message: "Но вы можете поделиться им с друзьями!",
+                                        textButtonOk: "Ok",
+                                        textButtonCancel: "")
     
     static let succefulShare = Alert(title: "Все прошло хорошо!",
                                      message: "Вы успешно поделились QR кодом",

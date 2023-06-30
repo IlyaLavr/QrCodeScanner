@@ -12,12 +12,15 @@ protocol ScanningCodeDetailProtocol {
     func goToMap()
     func openLink(url: String)
     func searchInBrowser(url: String)
+    func deleteCode(index: IndexPath)
 }
 
 final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
     var code: QrCode?
     weak var view: ScanningQrCodeDetailScreenProtocol?
     var router: RouterProtocol?
+    var model = ModelData()
+    var qrCode: [QrCode]?
     
     init(code: QrCode, view: ScanningQrCodeDetailScreenProtocol, router: RouterProtocol) {
         self.code = code
@@ -34,10 +37,20 @@ final class ScanningCodeDetailPresenter: ScanningCodeDetailProtocol {
     }
     
     func openLink(url: String) {
-            Network.shared.openLinkInBrowser(url)
-        }
+        Network.shared.openLinkInBrowser(url)
+    }
     
     func searchInBrowser(url: String) {
         Network.shared.searchProductByCode(url)
+    }
+    
+    func fetchAllQrCodes() {
+        qrCode = model.getAllQrCodes().reversed()
+    }
+    
+    func deleteCode(index: IndexPath) {
+        model.deleteCode(code: code ?? QrCode())
+        router?.popToRoot()
+        fetchAllQrCodes()
     }
 }

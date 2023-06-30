@@ -26,6 +26,10 @@ enum Strings {
         static let toolBarRigthButton = "square.and.arrow.up"
         
         static let imageForBarcode = "barcode"
+        
+        static let closeButtonNewWindow = "xmark"
+        static let titleCopyNewWindow = "Копировать"
+        static let titleOpenLinkNewWindow = "Открыть"
     }
     
     enum GenerateScreen {
@@ -52,5 +56,13 @@ enum Strings {
         static let buttonOpenLink = "openlink"
         static let search = "search"
         static let viewOnMap = "mappin.and.ellipse"
+    }
+    
+    enum MapScreen {
+        static let currentLocationImage = "location.circle.fill"
+    }
+    
+    enum HistoryScreen {
+        static let titleButtonMap = "Посмотреть на карте"
     }
 }

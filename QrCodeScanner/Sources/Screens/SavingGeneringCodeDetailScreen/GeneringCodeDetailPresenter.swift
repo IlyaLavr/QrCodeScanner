@@ -11,16 +11,18 @@ protocol GeneringCodeDetailProtocol {
     func setUpParametersCode()
     func saveInPhone()
     func showAlertSuccefulSave()
+    func errorSaveGallery()
+    func deleteCode(index: IndexPath)
     func shareQr()
     func goToMap()
-    
-    init(code: QrCode, view: SavingGeneringCodeViewProtocol, router: RouterProtocol)
 }
 
 final class GeneringCodeDetailPresenter: GeneringCodeDetailProtocol {
     var code: QrCode?
     weak var view: SavingGeneringCodeViewProtocol?
     var router: RouterProtocol?
+    var model = ModelData()
+    var qrCode: [QrCode]?
     
     init(code: QrCode, view: SavingGeneringCodeViewProtocol, router: RouterProtocol) {
         self.code = code
@@ -37,12 +39,18 @@ final class GeneringCodeDetailPresenter: GeneringCodeDetailProtocol {
         view?.showAlertSaveToGalery(with: alertType, okHandler: { action in
             self.view?.saveQr()
         }, cancelHandler: { cancelAction in
-            print(cancelAction)
+            let alert = Alert.errorSaveGallery
+            self.view?.showAlert(with: alert)
         })
     }
     
     func showAlertSuccefulSave() {
         let alert = Alert.succefulSaveInGalery
+        view?.showAlert(with: alert)
+    }
+    
+    func errorSaveGallery() {
+        let alert = Alert.errorSaveGallery
         view?.showAlert(with: alert)
     }
     
@@ -52,5 +60,15 @@ final class GeneringCodeDetailPresenter: GeneringCodeDetailProtocol {
     
     func goToMap() {
         router?.showMapDetailScreen(code: code ?? QrCode())
+    }
+    
+    func fetchAllQrCodes() {
+        qrCode = model.getAllQrCodes().reversed()
+    }
+    
+    func deleteCode(index: IndexPath) {
+        model.deleteCode(code: code ?? QrCode())
+        router?.popToRoot()
+        fetchAllQrCodes()
     }
 }

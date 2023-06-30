@@ -28,7 +28,9 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
     
     private lazy var buttonLocation: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "location.circle.fill")?.resized(to: CGSize(width: 60, height: 60)).withTintColor(.systemBlue)
+        let image = UIImage(systemName: Strings.MapScreen.currentLocationImage)?
+            .resized(to: CGSize(width: 50, height: 50))
+            .withTintColor(.systemBlue)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(location), for: .touchUpInside)
         return button
@@ -94,19 +96,17 @@ class MapScreenViewController: UIViewController, MapScreenViewProtocol {
                 self.locationManager.startUpdatingLocation()
             }
         }
-        if let coor = mapView.userLocation.location?.coordinate{
-            mapView.setCenter(coor, animated: true)
-        }
+        guard let coordinate = mapView.userLocation.location?.coordinate else { return }
+        mapView.setCenter(coordinate, animated: true)
     }
     
     private func fetchQrCodeOnMap() {
-        if let fetchQrCodes = presenter?.fetchAllQrCodes() {
-            for qrCode in fetchQrCodes {
-                let annotations = MKPointAnnotation()
-                annotations.title = qrCode.name
-                annotations.coordinate = CLLocationCoordinate2D(latitude: qrCode.latitude, longitude: qrCode.longitude)
-                mapView.addAnnotation(annotations)
-            }
+        guard let fetchQrCodes = presenter?.fetchAllQrCodes() else { return }
+        fetchQrCodes.forEach { qrCode in
+            let annotation = MKPointAnnotation()
+            annotation.title = qrCode.name
+            annotation.coordinate = CLLocationCoordinate2D(latitude: qrCode.latitude, longitude: qrCode.longitude)
+            mapView.addAnnotation(annotation)
         }
     }
 }

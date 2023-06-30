@@ -25,8 +25,8 @@ final class MapScreenDetailPresenter: MapScreenDetailProtocol {
     
     func setupCoordinatesView() {
         guard let latitude = qrCode?.latitude, let longitude = qrCode?.longitude, let name = qrCode?.name else {
-                return
-            }
+            return
+        }
         view?.setupCodeOnMap(latitude: latitude, longitude: longitude, name: name)
     }
 }

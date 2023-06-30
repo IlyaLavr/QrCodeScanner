@@ -184,9 +184,8 @@
 		0933C62829BDEB57003259AB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				099C89172A4F6BE90084561F /* CoreData */,
 				094F0FC329CB428300E8BC81 /* ModelData.swift */,
-				094F0FD629CCD10000E8BC81 /* QrCode+CoreDataClass.swift */,
-				094F0FD729CCD10000E8BC81 /* QrCode+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -226,15 +225,15 @@
 		094F0FDA29CCFE1700E8BC81 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				099D91B229E7736400052E9D /* TabBar */,
-				092D902729E4D06900563A50 /* MapScreenDetail */,
-				09DE536129DA1BC90070D91A /* MapScreen */,
-				09DE53BB29DA51780070D91A /* SavingQrCodeDetailScreen */,
-				09DE53B629DA51430070D91A /* GenerateScreen */,
 				09DE53B129DA51180070D91A /* MainScreen */,
 				09DE53AC29DA50EE0070D91A /* ScanScreen */,
+				09DE53B629DA51430070D91A /* GenerateScreen */,
 				09DE53AA29DA50C30070D91A /* HistoryScreens */,
+				09DE53BB29DA51780070D91A /* SavingQrCodeDetailScreen */,
 				09DE53A529DA505D0070D91A /* SavingGeneringCodeDetailScreen */,
+				09DE536129DA1BC90070D91A /* MapScreen */,
+				092D902729E4D06900563A50 /* MapScreenDetail */,
+				099D91B229E7736400052E9D /* TabBar */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -263,6 +262,15 @@
 				0933C61129BDE922003259AB /* AppDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		099C89172A4F6BE90084561F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				094F0FD629CCD10000E8BC81 /* QrCode+CoreDataClass.swift */,
+				094F0FD729CCD10000E8BC81 /* QrCode+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		099D91B229E7736400052E9D /* TabBar */ = {

@@ -19,13 +19,13 @@ protocol GenerateScreenViewProtocol: AnyObject {
 class GenerateScreenViewController: UIViewController {
     var presenter: GenerateScreenPresenterProtocol?
     let locationManager = CLLocationManager()
-
+    
     
     // MARK: - Elements
     
     private lazy var background: UIImageView = {
-        let obj = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
-        return obj
+        let image = UIImageView(image: UIImage(named: Strings.GenerateScreen.background))
+        return image
     }()
     
     lazy var textFieldLink: UITextField = {
@@ -68,7 +68,9 @@ class GenerateScreenViewController: UIViewController {
     
     private lazy var buttonSave: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: Strings.GenerateScreen.buttonSave)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonSave)?
+            .resized(to: CGSize(width: 30, height: 30))
+            .withTintColor(UIColor.customBlueDark)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(saveToGalery), for: .touchUpInside)
         button.isHidden = true
@@ -77,7 +79,9 @@ class GenerateScreenViewController: UIViewController {
     
     private lazy var buttonShare: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: Strings.GenerateScreen.buttonShare)?.resized(to: CGSize(width: 30, height: 30)).withTintColor(UIColor(red: 76/255, green: 166/255, blue: 203/255, alpha: 1))
+        let image = UIImage(systemName: Strings.GenerateScreen.buttonShare)?
+            .resized(to: CGSize(width: 30, height: 30))
+            .withTintColor(UIColor.customBlueDark)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(shareQrCode), for: .touchUpInside)
         button.isHidden = true
@@ -150,8 +154,7 @@ class GenerateScreenViewController: UIViewController {
                 self.imageQrCode.isHidden = true
             }
             presenter?.showAlertEmptyString()
-            buttonShare.isHidden = true
-            buttonSave.isHidden = true
+            hideButtons()
             return
         }
         imageQrCode.image = generateQRCode(from: text, size: imageQrCode.bounds.size)
@@ -160,11 +163,11 @@ class GenerateScreenViewController: UIViewController {
         let date = Date()
         let dateString = DateFormatter.localizedDateString(from: date)
         guard let image = imageQrCode.image, let imageData = image.jpegData(compressionQuality: 1.0) else { return }
-            locationManager.requestWhenInUseAuthorization()
-            guard let currentLocation = locationManager.location else { return }
-                let latitude = currentLocation.coordinate.latitude
-                let longitude = currentLocation.coordinate.longitude
-                presenter?.addCode(withName: text, date: dateString, image: imageData, imageBarcode: nil, latitude: latitude, longitude: longitude)
+        locationManager.requestWhenInUseAuthorization()
+        guard let currentLocation = locationManager.location else { return }
+        let latitude = currentLocation.coordinate.latitude
+        let longitude = currentLocation.coordinate.longitude
+        presenter?.addCode(withName: text, date: dateString, image: imageData, imageBarcode: nil, latitude: latitude, longitude: longitude)
     }
     
     @objc private func shareQrCode() {
@@ -209,8 +212,7 @@ class GenerateScreenViewController: UIViewController {
         let scaledImage = qrCodeImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
         let context = CIContext(options: nil)
         guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
-        buttonShare.isHidden = false
-        buttonSave.isHidden = false
+        showButtons()
         return UIImage(cgImage: cgImage)
     }
     
@@ -218,9 +220,19 @@ class GenerateScreenViewController: UIViewController {
         guard let image = imageQrCode.image else { return }
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
+    
+    private func hideButtons() {
+        buttonShare.isHidden = true
+        buttonSave.isHidden = true
+    }
+    
+    private func showButtons() {
+        buttonShare.isHidden = false
+        buttonSave.isHidden = false
+    }
 }
 
-    // MARK: - Extensions
+// MARK: - Extensions
 
 extension GenerateScreenViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
